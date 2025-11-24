@@ -9,10 +9,12 @@ class User
     public $email;
     public $role;
     public $status;
+    public $conn;
 
     // Constructor để khởi tạo thực thể User
     public function __construct($data = [])
     {
+        $this->conn = getDB();
         // Nếu truyền vào mảng dữ liệu thì gán vào các thuộc tính
         if (is_array($data)) {
             $this->id = $data['id'] ?? null;
@@ -23,6 +25,26 @@ class User
         } else {
             // Nếu truyền vào string thì coi như tên (tương thích với code cũ)
             $this->name = $data;
+        }
+    }
+
+    public function checkLogin($email, $password)
+    {
+        try {
+            $sql = "SELECT * FROM users WHERE email = :email AND password_hash = :password_hash LIMIT 1";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindValue(':email', $email);
+            $stmt->bindValue(':password_hash', md5($password));
+            $stmt->execute();
+            $userData = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($userData) {
+                return new User($userData);
+            } else {
+                return null;
+            }
+        } catch (PDOException $e) {
+            echo "Lỗi: " . $e->getMessage();
         }
     }
 
