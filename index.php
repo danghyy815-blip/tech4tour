@@ -46,6 +46,8 @@ match ($act) {
     'update-policy' => $chinhSachController->updatePolicy(),
     'detail-policy' => $chinhSachController->detailPolicy(),
 
+    // booking
+
     // Đường dẫn không tồn tại
     default => $homeController->notFound(),
 };
