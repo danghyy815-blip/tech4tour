@@ -60,9 +60,9 @@ function loginUser($user)
 {
     startSession();
     $_SESSION['user_id'] = $user->id;
-    $_SESSION['user_name'] = $user->name;
+    $_SESSION['user_name'] = $user->ho_ten;
     $_SESSION['user_email'] = $user->email;
-    $_SESSION['user_role'] = $user->role;
+    $_SESSION['user_role'] = $user->chuc_vu;
 }
 
 // Đăng xuất: xóa toàn bộ thông tin user khỏi session
@@ -95,9 +95,9 @@ function getCurrentUser()
     // startSession();
     return new User([
         'id' => $_SESSION['user_id'],
-        'name' => $_SESSION['user_name'],
+        'ho_ten' => $_SESSION['user_name'],
         'email' => $_SESSION['user_email'],
-        'role' => $_SESSION['user_role'],
+        'chuc_vu' => $_SESSION['user_role'],
     ]);
 }
 

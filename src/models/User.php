@@ -5,10 +5,11 @@ class User
 {
     // Các thuộc tính của User
     public $id;
-    public $name;
+    public $ho_ten;
     public $email;
     public $role;
     public $status;
+    public $chuc_vu;
     public $conn;
 
     // Constructor để khởi tạo thực thể User
@@ -16,15 +17,16 @@ class User
     {
         $this->conn = getDB();
         // Nếu truyền vào mảng dữ liệu thì gán vào các thuộc tính
+
         if (is_array($data)) {
             $this->id = $data['id'] ?? null;
-            $this->name = $data['name'] ?? '';
+            $this->ho_ten = $data['ho_ten'] ?? '';
             $this->email = $data['email'] ?? '';
-            $this->role = $data['role'] ?? 'huong_dan_vien';
             $this->status = $data['status'] ?? 1;
+            $this->chuc_vu = $data['chuc_vu'] ?? 'huong_dan_vien';
         } else {
             // Nếu truyền vào string thì coi như tên (tương thích với code cũ)
-            $this->name = $data;
+            $this->ho_ten = $data;
         }
     }
 
@@ -37,7 +39,6 @@ class User
             $stmt->bindValue(':password_hash', md5($password));
             $stmt->execute();
             $userData = $stmt->fetch(PDO::FETCH_ASSOC);
-
             if ($userData) {
                 return new User($userData);
             } else {
@@ -51,20 +52,21 @@ class User
     // Trả về tên người dùng để hiển thị
     public function getName()
     {
-        return $this->name;
+        return $this->ho_ten;
     }
 
     // Kiểm tra xem user có phải là admin không
     // @return bool true nếu là admin, false nếu không
     public function isAdmin()
     {
-        return $this->role === 'admin';
+
+        return $this->chuc_vu === 'Admin';
     }
 
     // Kiểm tra xem user có phải là hướng dẫn viên không
     // @return bool true nếu là hướng dẫn viên, false nếu không
     public function isGuide()
     {
-        return $this->role === 'huong_dan_vien';
+        return $this->chuc_vu === 'huong_dan_vien';
     }
 }

@@ -30,7 +30,7 @@ ob_start();
               Đăng nhập thành công!
             </h4>
             <p class="mb-0">
-              Xin chào, <strong><?= htmlspecialchars($user->name) ?></strong>! 
+              Xin chào, <strong><?= htmlspecialchars($user->ho_ten) ?></strong>! 
               Bạn đã đăng nhập với quyền <strong><?= $user->isAdmin() ? 'Admin' : 'Hướng dẫn viên' ?></strong>.
             </p>
           </div>

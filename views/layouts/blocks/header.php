@@ -59,7 +59,7 @@
               class="user-image rounded-circle shadow"
               alt="User Image"
             />
-            <span class="d-none d-md-inline"><?= $currentUser->name ?></span>
+            <span class="d-none d-md-inline"><?= $currentUser->ho_ten ?></span>
           </a>
           <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
             <!--begin::User Image-->
@@ -70,7 +70,7 @@
                 alt="User Image"
               />
               <p>
-                <?= $currentUser->name ?> - <?= $currentUser->isAdmin() ? 'Quản trị viên' : 'Hướng dẫn viên' ?>
+                <?= $currentUser->ho_ten ?> - <?= $currentUser->isAdmin() ? 'Quản trị viên' : 'Hướng dẫn viên' ?>
                 <small><?= date('M. Y') ?></small>
               </p>
             </li>
