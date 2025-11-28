@@ -3,7 +3,7 @@
   <!--begin::Sidebar Brand-->
   <div class="sidebar-brand">
     <!--begin::Brand Link-->
-    <a href="<?= BASE_URL_HDV . 'home' ?>" class="brand-link">
+    <a href="<?= BASE_URL . 'home' ?>" class="brand-link">
       <!--begin::Brand Image-->
       <img
         src="<?= asset('dist/assets/img/AdminLTELogo.png') ?>"
@@ -27,7 +27,7 @@
         role="menu"
         data-accordion="false">
         <li class="nav-item">
-          <a href="<?= BASE_URL_HDV . 'home' ?>" class="nav-link">
+          <a href="<?= BASE_URL . 'home' ?>" class="nav-link">
             <i class="nav-icon bi bi-speedometer"></i>
             <p>Dashboard</p>
           </a>
@@ -40,7 +40,7 @@
         </li>
         <li class="nav-header">HỆ THỐNG</li>
         <li class="nav-item">
-          <a href="<?= BASE_URL_HDV . 'logout' ?>" class="nav-link">
+          <a href="<?= BASE_URL . 'logout' ?>" class="nav-link">
             <i class="nav-icon bi bi-box-arrow-right"></i>
             <p>Đăng xuất</p>
           </a>

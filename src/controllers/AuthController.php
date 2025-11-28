@@ -82,11 +82,6 @@ class AuthController
 
         // Đăng nhập thành công: lưu vào session
         loginUser($user);
-        if($user->isAdmin()){
-            $redirect = BASE_URL . 'home';
-        }else{
-            $redirect = BASE_URL_HDV . 'home';
-        }
         // Chuyển hướng về trang được yêu cầu hoặc trang chủ
         header('Location: ' . $redirect);
         exit;

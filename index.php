@@ -65,6 +65,7 @@ match ($act) {
     'home' => $homeController->home(),
     'hdv/booking' => $bookingController->getListBooking(),
     'detail-booking' => $bookingController->detailBooking(),
+    'check-in' => $bookingController->detailBooking(),
     // Đường dẫn không tồn tại
     default => $homeController->notFound(),
 };

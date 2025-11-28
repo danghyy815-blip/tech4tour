@@ -108,7 +108,15 @@ ob_start();
                                                 <td><?= htmlspecialchars($customer['so_dien_thoai']) ?></td>
                                                 <td><?= htmlspecialchars($customer['ghi_chu']) ?></td>
                                                 <td><?= htmlspecialchars($customer['trang_thai']) ?></td>
-                                                <td><?= htmlspecialchars($customer['diem_danh'] == '1' ? 'Có mặt' : 'Vắng mặt') ?></td>
+                                                <td><?php 
+                                                if ($customer['diem_danh'] == '1') {
+                                                    echo 'Có mặt';
+                                                } else if ($customer['diem_danh'] == '0') {
+                                                    echo 'Chưa điểm danh';
+                                                }else {
+                                                    echo 'Vắng mặt';
+                                                }
+                                                ?></td>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>
