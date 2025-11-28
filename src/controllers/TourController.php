@@ -26,7 +26,7 @@ class TourController
     // ==========================
     // 2. FORM THÊM TOUR
     // ==========================
-    public function formAddTour()
+    public function formAddTour(): void
     {
         if (!isLoggedIn()) {
             header("Location: " . BASE_URL . "welcome");
