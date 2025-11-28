@@ -1,43 +1,44 @@
 <?php
 
-// Nạp cấu hình chung của ứng dụng
+// Nạp cấu hình chung
 $config = require __DIR__ . '/config/config.php';
 
-// Nạp các file chứa hàm trợ giúp
-require_once __DIR__ . '/src/helpers/helpers.php'; // Helper chứa các hàm trợ giúp (hàm xử lý view, block, asset, session, ...)
-require_once __DIR__ . '/src/helpers/database.php'; // Helper kết nối database(kết nối với cơ sở dữ liệu)
+// Nạp helpers
+require_once __DIR__ . '/src/helpers/helpers.php';
+require_once __DIR__ . '/src/helpers/database.php';
 
-// Nạp các file chứa model
+// Nạp model
 require_once __DIR__ . '/src/models/User.php';
 require_once __DIR__ . '/src/models/ChinhSach.php';
+require_once __DIR__ . '/src/models/Tour.php';
 
-// Nạp các file chứa controller
+// Nạp controller
 require_once __DIR__ . '/src/controllers/HomeController.php';
 require_once __DIR__ . '/src/controllers/AuthController.php';
 require_once __DIR__ . '/src/controllers/ChinhSachController.php';
+require_once __DIR__ . '/src/controllers/TourController.php';
 
-// Khởi tạo các controller
+// Khởi tạo controller
 $homeController = new HomeController();
 $authController = new AuthController();
 $chinhSachController = new ChinhSachController();
+$tourController = new TourController(); 
 
-// Xác định route dựa trên tham số act (mặc định là trang chủ '/')
+// Lấy act
 $act = $_GET['act'] ?? '/';
 
-// Match đảm bảo chỉ một action tương ứng được gọi
+// Router
 match ($act) {
-    // Trang welcome (cho người chưa đăng nhập) - mặc định khi truy cập '/'
+
     '/', 'welcome' => $homeController->welcome(),
 
-    // Trang home (cho người đã đăng nhập)
     'home' => $homeController->home(),
 
-    // Đường dẫn đăng nhập, đăng xuất
     'login' => $authController->login(),
     'check-login' => $authController->checkLogin(),
     'logout' => $authController->logout(),
 
-    // Route chính sách
+    // Chính sách
     'policy' => $chinhSachController->getListPolicy(),
     'form-add-policy' => $chinhSachController->formAddPolicy(),
     'add-policy' => $chinhSachController->addPolicy(),
@@ -46,8 +47,15 @@ match ($act) {
     'update-policy' => $chinhSachController->updatePolicy(),
     'detail-policy' => $chinhSachController->detailPolicy(),
 
-    // booking
+    // TOUR
+    'tour' => $tourController->getListTour(),
+    'form-add-tour' => $tourController->formAddTour(),
+    'add-tour' => $tourController->addTour(),
+    'delete-tour' => $tourController->deleteTour(),
+    'form-update-tour' => $tourController->formUpdateTour(),
+    'update-tour' => $tourController->updateTour(),
+    'detail-tour' => $tourController->detailTour(),
 
-    // Đường dẫn không tồn tại
     default => $homeController->notFound(),
 };
+
