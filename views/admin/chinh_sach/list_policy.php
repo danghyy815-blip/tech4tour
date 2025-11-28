@@ -33,17 +33,22 @@ ob_start();
                                     <?php foreach ($policies as $key => $policy) : ?>
                                         <tr>
                                             <td><?= $key + 1 ?></td>
-                                            <td><a href="<?= BASE_URL . '?act=detail-policy&id=' . $policy['id'] ?>"><?= $policy['ten_chinh_sach'] ?></a></td>
+                                            <td><a
+                                                    href="<?= BASE_URL . '?act=detail-policy&id=' . $policy['id'] ?>"><?= $policy['ten_chinh_sach'] ?></a>
+                                            </td>
                                             <td><?= $policy['loai_chinh_sach'] ?></td>
                                             <td><?= date('d-m-Y', strtotime($policy['ngay_ap_dung'])) ?></td>
                                             <td><?= date('d-m-Y', strtotime($policy['ngay_het_han'])) ?></td>
                                             <td><?= $policy['trang_thai'] ?></td>
                                             <td>
                                                 <button type="button" class="btn btn-primary btn-sm">
-                                                    <a href="<?= BASE_URL . '?act=form-update-policy&id=' . $policy['id'] ?>" style="color: white;">Sửa</a>
+                                                    <a href="<?= BASE_URL . '?act=form-update-policy&id=' . $policy['id'] ?>"
+                                                        style="color: white;">Sửa</a>
                                                 </button>
                                                 <button type="button" class="btn btn-danger btn-sm">
-                                                    <a href="?act=delete-policy&id=<?= $policy['id'] ?>" style="color: white;" onclick="return confirm('Bạn có đồng ý xóa chính sách này không?')">Xóa</a>
+                                                    <a href="?act=delete-policy&id=<?= $policy['id'] ?>"
+                                                        style="color: white;"
+                                                        onclick="return confirm('Bạn có đồng ý xóa chính sách này không?')">Xóa</a>
                                                 </button>
                                             </td>
                                         </tr>
@@ -103,7 +108,8 @@ ob_start();
                     var rel = elem.rel;
                     if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
                         var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
-                        elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+                        elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date()
+                            .valueOf());
                     }
                     parent.appendChild(elem);
                 }
