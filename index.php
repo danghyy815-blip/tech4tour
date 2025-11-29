@@ -12,6 +12,7 @@ require_once __DIR__ . '/src/models/User.php';
 require_once __DIR__ . '/src/models/ChinhSach.php';
 require_once __DIR__ . '/src/models/Booking.php';
 require_once __DIR__ . '/src/models/DanhMucTour.php';
+require_once __DIR__ . '/src/models/Customer.php';
 
 // Nạp các file chứa controller
 require_once __DIR__ . '/src/controllers/HomeController.php';
@@ -19,6 +20,7 @@ require_once __DIR__ . '/src/controllers/AuthController.php';
 require_once __DIR__ . '/src/controllers/ChinhSachController.php';
 require_once __DIR__ . '/src/controllers/BookingController.php';
 require_once __DIR__ . '/src/controllers/DanhMucTourController.php';
+require_once __DIR__ . '/src/controllers/CustomerController.php';
 
 // Khởi tạo các controller
 $homeController = new HomeController();
@@ -26,6 +28,7 @@ $authController = new AuthController();
 $chinhSachController = new ChinhSachController();
 $bookingController = new BookingController();
 $danhmuctourController = new DanhMucTourController();
+$customerController = new CustomerController();
 
 // Xác định route dựa trên tham số act (mặc định là trang chủ '/')
 $act = $_GET['act'] ?? '/';
@@ -60,6 +63,16 @@ match ($act) {
     'form-update-danh-muc-tour' => $danhmuctourController->formUpdate(),
     'update-danh-muc-tour'   => $danhmuctourController->update(),
     'detail-danh-muc-tour'   => $danhmuctourController->detail(),
+
+    // Route khách hàng
+    'khach-hang'         => $customerController->getList(),
+    'form-add-khach-hang' => $customerController->formAdd(),
+    'add-khach-hang'      => $customerController->add(),
+    'delete-khach-hang'   => $customerController->delete(),
+    'form-update-khach-hang' => $customerController->formUpdate(),
+    'update-khach-hang'   => $customerController->update(),
+    'detail-khach-hang'   => $customerController->detail(),
+
 
     // đường dẫn cho HDV
     'home' => $homeController->home(),
