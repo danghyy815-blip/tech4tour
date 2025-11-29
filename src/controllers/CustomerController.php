@@ -70,7 +70,7 @@ class CustomerController
                 $errors['email'] = "Email không hợp lệ.";
             }
 
-            if (!empty($cccd) && !preg_match('/^[0-9]{9,12}$/', $cccd)) {
+            if (!empty($cccd)) {
                 $errors['cccd'] = "CCCD không hợp lệ.";
             }
 
@@ -178,7 +178,7 @@ class CustomerController
                 $errors['email'] = "Email không hợp lệ.";
             }
 
-            if (!empty($cccd) && !preg_match('/^[0-9]{9,12}$/', $cccd)) {
+            if (!empty($cccd)) {
                 $errors['cccd'] = "CCCD không hợp lệ.";
             }
 
