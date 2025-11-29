@@ -94,9 +94,15 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="<?= BASE_URL . 'khach-hang' ?>" class="nav-link">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Danh sách Khách hàng</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?= BASE_URL . 'form-add-khach-hang' ?>" class="nav-link">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Thêm khách hàng</p>
                             </a>
                         </li>
                     </ul>
