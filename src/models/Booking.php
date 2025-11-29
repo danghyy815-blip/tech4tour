@@ -139,4 +139,23 @@ class Booking
             echo "Lỗi: " . $e->getMessage();
         }
     }
+
+    public function updateCheckinMultiple($bookingId, $data)
+    {
+        $sql = "UPDATE booking_khach_hang 
+            SET ghi_chu = :ghichu, diem_danh = :diemdanh
+            WHERE booking_id = :bid AND khach_hang_id = :kid";
+
+        $stmt = $this->conn->prepare($sql);
+
+        foreach ($data as $khachHangId => $info) {
+            $stmt->bindParam(':ghichu', $info['ghi_chu']);
+            $stmt->bindParam(':diemdanh', $info['diem_danh']);
+            $stmt->bindParam(':bid', $bookingId);
+            $stmt->bindParam(':kid', $khachHangId);
+            $stmt->execute();
+        }
+
+        return true;
+    }
 }

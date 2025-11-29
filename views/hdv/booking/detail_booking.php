@@ -80,7 +80,7 @@ ob_start();
                                 <i class="fas fa-align-left"></i> Khách hàng trong tour
                             </h3>
                             <div class="card-tools">
-                                <a href="?act=delete-policy&id=<?= $policy['id'] ?>" style="color: white;" class="btn btn-sm btn-success">
+                                <a href="?act=check-in&id=<?= $booking['id'] ?>" style="color: white;" class="btn btn-sm btn-success">
                                     <i class="fas fa-trash"></i> Điểm danh
                                 </a>
                             </div>
@@ -132,17 +132,11 @@ ob_start();
 
 <aside class="control-sidebar control-sidebar-dark"></aside>
 
-<script>
-    function confirmDelete() {
-        return confirm('Bạn chắc chắn muốn xóa Booking này? Hành động không thể hoàn tác.');
-    }
-</script>
-
 <?php
 $content = ob_get_clean();
 
 // Hiển thị layout với nội dung
-view('layouts.AdminLayout', [
+view('layouts.HDVLayout', [
     'title' => $title ?? 'Chi tiết Booking - Website Quản Lý Tour',
     'pageTitle' => 'Chi tiết Booking',
     'content' => $content,
