@@ -42,6 +42,26 @@ class ChinhSach
             echo "Lỗi: " . $e->getMessage();
         }
     }
+    public function getPoliciesByIds(array $ids)
+    {
+        if (empty($ids))
+            return [];
+
+        // Chuyển các giá trị sang int để tránh SQL Injection
+        $ids = array_map('intval', $ids);
+        $placeholders = rtrim(str_repeat('?,', count($ids)), ',');
+
+        try {
+            $sql = "SELECT * FROM chinh_sach WHERE id IN ($placeholders)";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute($ids);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo "Lỗi: " . $e->getMessage();
+            return [];
+        }
+    }
+
 
     public function addPolicy($ten_chinh_sach, $loai_chinh_sach, $ngay_ap_dung, $ngay_het_han, $trang_thai, $mo_ta)
     {
