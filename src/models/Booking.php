@@ -70,7 +70,7 @@ class Booking
     {
         try {
             if ($user_id) {
-                $sql = "SELECT booking.*, tour.* 
+                $sql = "SELECT booking.*, tour.*, booking.trang_thai as booking_trang_thai 
                     FROM booking 
                     JOIN tour ON booking.tour_id = tour.id 
                     WHERE booking.id = :id AND booking.user_id = :user_id";
@@ -157,5 +157,26 @@ class Booking
         }
 
         return true;
+    }
+
+    public function updateHDVBooking($bookingId, $status, $notes)
+    {
+        try {
+            $sql = "UPDATE booking 
+                SET trang_thai = :status,
+                    ghi_chu = :notes
+                WHERE id = :id";
+
+            $stmt = $this->conn->prepare($sql);
+
+            $stmt->bindParam(':status', $status);
+            $stmt->bindParam(':notes', $notes);
+            $stmt->bindParam(':id', $bookingId);
+
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            echo "Lỗi: " . $e->getMessage();
+            return false;
+        }
     }
 }

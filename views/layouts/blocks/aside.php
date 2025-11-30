@@ -60,7 +60,7 @@
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon bi bi-airplane-engines"></i>
+                        <i class="nav-icon bi bi-collection"></i>
                         <p>
                             Danh Mục
                             <i class="nav-arrow bi bi-chevron-right"></i>

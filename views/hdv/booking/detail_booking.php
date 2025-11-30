@@ -13,8 +13,8 @@ ob_start();
                                 <i class="fas fa-info-circle"></i> Thông tin booking
                             </h3>
                             <div class="card-tools">
-                                <a href="?act=delete-policy&id=<?= $policy['id'] ?>" style="color: white;" class="btn btn-sm btn-success">
-                                    <i class="fas fa-trash"></i> Thêm nhật ký
+                                <a href="?act=update-booking-hdv-form&booking_id=<?= $booking['id'] ?>" style="color: white;" class="btn btn-sm btn-success">
+                                    <i class="fas fa-edit"></i> Cập nhật chuyến đi
                                 </a>
                             </div>
                         </div>
@@ -36,7 +36,12 @@ ob_start();
 
                                 <dt class="col-sm-4">Trạng thái</dt>
                                 <dd class="col-sm-8">
-                                    <span class=""><?= htmlspecialchars($booking['trang_thai']) ?></span>
+                                    <span class=""><?php
+                                                    if ($booking['booking_trang_thai'] == "DaXacNhan") echo "Đã xác nhận";
+                                                    else if ($booking['booking_trang_thai'] == "ChoDuyet") echo "Chờ duyệt";
+                                                    else if ($booking['booking_trang_thai'] == "Huy") echo "Đã huỷ";
+                                                    else if ($booking['booking_trang_thai'] == "HoanThanh") echo "Hoàn thành";
+                                                    ?></span>
                                 </dd>
 
                                 <dt class="col-sm-4">Giá tiền</dt>
@@ -108,15 +113,15 @@ ob_start();
                                                 <td><?= htmlspecialchars($customer['so_dien_thoai']) ?></td>
                                                 <td><?= htmlspecialchars($customer['ghi_chu']) ?></td>
                                                 <td><?= htmlspecialchars($customer['trang_thai']) ?></td>
-                                                <td><?php 
-                                                if ($customer['diem_danh'] == '1') {
-                                                    echo 'Có mặt';
-                                                } else if ($customer['diem_danh'] == '0') {
-                                                    echo 'Chưa điểm danh';
-                                                }else {
-                                                    echo 'Vắng mặt';
-                                                }
-                                                ?></td>
+                                                <td><?php
+                                                    if ($customer['diem_danh'] == '1') {
+                                                        echo 'Có mặt';
+                                                    } else if ($customer['diem_danh'] == '0') {
+                                                        echo 'Chưa điểm danh';
+                                                    } else {
+                                                        echo 'Vắng mặt';
+                                                    }
+                                                    ?></td>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>

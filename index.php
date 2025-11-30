@@ -80,6 +80,8 @@ match ($act) {
     'detail-booking' => $bookingController->detailBooking(),
     'check-in' => $bookingController->checkInCustomer(),
     'update-checkin' => $bookingController->updateCheckin(),
+    'update-booking-hdv-form' => $bookingController->updateHDVBookingForm(),
+    'update-booking-hdv' => $bookingController->updateBookingHDV(),
 
     // Đường dẫn không tồn tại
     default => $homeController->notFound(),

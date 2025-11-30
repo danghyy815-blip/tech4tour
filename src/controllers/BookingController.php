@@ -126,4 +126,58 @@ class BookingController
             }
         }
     }
+    public function updateHDVBookingForm()
+    {
+        if (!isLoggedIn()) {
+            header('Location: ' . BASE_URL_HDV . 'welcome');
+            exit;
+        }
+        if (isset($_GET['booking_id'])) {
+            $id = $_GET['booking_id'];
+            $currentUser = getCurrentUser();
+            if ($currentUser->isAdmin()) {
+                echo "<script>
+                        alert('Admin không thể vào chức năng này.');
+                        window.history.back();
+                    </script>";
+                exit;
+            } else {
+                $bookingId = $_POST['booking_id'] ?? $_GET['booking_id'] ?? null;   
+                $booking = $this->modelBooking->getBookingById($bookingId, $currentUser->id);
+                if (!$booking) {
+                    view('not_found', [
+                        'title' => 'Không tìm thấy trang',
+                    ]);
+                }
+                require_once './views/hdv/booking/update_booking.php';
+            }
+        }
+    }
+
+    public function updateBookingHDV(){
+        if (!isLoggedIn()) {
+            header('Location: ' . BASE_URL_HDV . 'welcome');
+            exit;
+        }
+        if (isset($_POST['booking_id'])) {
+            $bookingId = $_POST['booking_id'];
+            $currentUser = getCurrentUser();
+            if ($currentUser->isAdmin()) {
+                echo "<script>
+                        alert('Admin không thể vào chức năng này.');
+                        window.history.back();
+                    </script>";
+                exit;
+            } else {
+                $status = $_POST['trang_thai'] ?? '';
+                $notes = $_POST['ghi_chu'] ?? '';
+                $ok = $this->modelBooking->updateHDVBooking($bookingId, $status, $notes);
+                $booking = $this->modelBooking->getBookingById($bookingId, $currentUser->id);
+                $customers = $this->modelBooking->getCustomersByBookingId($bookingId);
+
+                require_once './views/hdv/booking/detail_booking.php';
+            }
+        }
+        
+    }
 }
