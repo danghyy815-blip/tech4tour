@@ -82,7 +82,6 @@ class AuthController
 
         // Đăng nhập thành công: lưu vào session
         loginUser($user);
-
         // Chuyển hướng về trang được yêu cầu hoặc trang chủ
         header('Location: ' . $redirect);
         exit;

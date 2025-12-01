@@ -11,45 +11,68 @@ ob_start();
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <a href="?act=form-add-policy">
-                                <button type="button" class="btn btn-success">Thêm chính sách</button>
+                            <a href="?act=form-add-user">
+                                <button type="button" class="btn btn-success">Thêm nhân viên</button>
                             </a>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
+                            <?php if ($msg = getFlash('success')): ?>
+                                <div class="alert alert-success" role="alert"><?= htmlspecialchars($msg) ?></div>
+                            <?php endif; ?>
+                            <?php if ($msg = getFlash('error')): ?>
+                                <div class="alert alert-danger" role="alert"><?= htmlspecialchars($msg) ?></div>
+                            <?php endif; ?>
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>STT</th>
-                                        <th>Tên chính sách</th>
-                                        <th>Loại chính sách</th>
-                                        <th>Ngày áp dụng</th>
-                                        <th>Ngày hết hạn</th>
+                                        <th>Họ và tên</th>
+                                        <th>Giới tính</th>
+                                        
+                                        
+                                        <th>Email</th>
+                                        <th>Địa chỉ</th>
+                                        
+                                        <th>Chức vụ</th>
+                                        
+                                        
                                         <th>Trạng thái</th>
                                         <th>Thao tác</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($policies as $key => $policy) : ?>
-                                        <tr>
+                                    <?php
+                                    $currentUser = getCurrentUser();
+                                    foreach ($users as $key => $user) :
+                                        $isCurrent = $currentUser && isset($currentUser->id) && $currentUser->id == $user['id'];
+                                    ?>
+                                        <tr class="<?= $isCurrent ? 'table-success' : '' ?>">
                                             <td><?= $key + 1 ?></td>
-                                            <td><a
-                                                    href="<?= BASE_URL . '?act=detail-policy&id=' . $policy['id'] ?>"><?= $policy['ten_chinh_sach'] ?></a>
-                                            </td>
-                                            <td><?= $policy['loai_chinh_sach'] ?></td>
-                                            <td><?= date('d-m-Y', strtotime($policy['ngay_ap_dung'])) ?></td>
-                                            <td><?= date('d-m-Y', strtotime($policy['ngay_het_han'])) ?></td>
-                                            <td><?= $policy['trang_thai'] ?></td>
+                                            
+                                            <td><?= htmlspecialchars($user['ho_ten']) ?></td>
+                                            <td><?= htmlspecialchars($user['gioi_tinh']) ?></td>
+                                            
+                                            
+                                            <td><?= htmlspecialchars($user['email']) ?></td>
+                                            <td><?= htmlspecialchars($user['dia_chi']) ?></td>
+                                            
+                                            <td><?= htmlspecialchars($user['chuc_vu']) ?></td>
+                                           
+                                            <td><?= $user['trang_thai'] ? 'Kích hoạt' : 'Vô hiệu' ?></td>
                                             <td>
                                                 <button type="button" class="btn btn-primary btn-sm">
-                                                    <a href="<?= BASE_URL . '?act=form-update-policy&id=' . $policy['id'] ?>"
-                                                        style="color: white;">Sửa</a>
+                                                    <a href="<?= BASE_URL . '?act=form-update-user&id=' . $user['id'] ?>" style="color: white;">Sửa</a>
                                                 </button>
-                                                <button type="button" class="btn btn-danger btn-sm">
-                                                    <a href="?act=delete-policy&id=<?= $policy['id'] ?>"
-                                                        style="color: white;"
-                                                        onclick="return confirm('Bạn có đồng ý xóa chính sách này không?')">Xóa</a>
-                                                </button>
+                                                <?php if ($isCurrent) : ?>
+                                                    <button type="button" class="btn btn-danger btn-sm" disabled title="Không thể xóa chính bạn">
+                                                        Xóa
+                                                    </button>
+                                                <?php else : ?>
+                                                    <button type="button" class="btn btn-danger btn-sm">
+                                                        <a href="?act=delete-user&id=<?= $user['id'] ?>" style="color: white;" onclick="return confirm('Bạn có đồng ý xóa nhân viên này không?')">Xóa</a>
+                                                    </button>
+                                                <?php endif; ?>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -108,8 +131,7 @@ ob_start();
                     var rel = elem.rel;
                     if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
                         var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
-                        elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date()
-                            .valueOf());
+                        elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
                     }
                     parent.appendChild(elem);
                 }
@@ -140,11 +162,11 @@ $content = ob_get_clean();
 
 // Hiển thị layout với nội dung
 view('layouts.AdminLayout', [
-    'title' => $title ?? 'Quản lý chính sách - Website Quản Lý Tour',
-    'pageTitle' => 'Quản lý chính sách',
+    'title' => $title ?? 'Quản lý nhân viên - Website Quản Lý Tour',
+    'pageTitle' => 'Quản lý nhân viên',
     'content' => $content,
     'breadcrumb' => [
-        ['label' => 'Quản lý chính sách', 'url' => BASE_URL . 'policy', 'active' => true],
+        ['label' => 'Quản lý nhân viên', 'url' => BASE_URL . '?act=user', 'active' => true],
     ],
 ]);
 ?>

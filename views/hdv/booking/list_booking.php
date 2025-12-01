@@ -10,45 +10,33 @@ ob_start();
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
-                            <a href="?act=form-add-policy">
-                                <button type="button" class="btn btn-success">Thêm chính sách</button>
-                            </a>
-                        </div>
                         <!-- /.card-header -->
                         <div class="card-body">
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>STT</th>
-                                        <th>Tên chính sách</th>
-                                        <th>Loại chính sách</th>
-                                        <th>Ngày áp dụng</th>
-                                        <th>Ngày hết hạn</th>
+                                        <th>Tên tour</th>
+                                        <th>Ngày đặt</th>
+                                        <th>Giá tiền</th>
                                         <th>Trạng thái</th>
                                         <th>Thao tác</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($policies as $key => $policy) : ?>
+                                    <?php foreach ($bookings as $key => $booking) : ?>
                                         <tr>
                                             <td><?= $key + 1 ?></td>
-                                            <td><a
-                                                    href="<?= BASE_URL . '?act=detail-policy&id=' . $policy['id'] ?>"><?= $policy['ten_chinh_sach'] ?></a>
-                                            </td>
-                                            <td><?= $policy['loai_chinh_sach'] ?></td>
-                                            <td><?= date('d-m-Y', strtotime($policy['ngay_ap_dung'])) ?></td>
-                                            <td><?= date('d-m-Y', strtotime($policy['ngay_het_han'])) ?></td>
-                                            <td><?= $policy['trang_thai'] ?></td>
+                                            <td><a href="<?= BASE_URL_HDV . '?act=detail-booking&id=' . $booking['id'] ?>"><?= $booking['ten_tour'] ?></a></td>
+                                            <td><?= date('d-m-Y', strtotime($booking['ngay_dat'])) ?></td>
+                                            <td><?= $booking['gia_tien'] ?></td>
+                                            <td><?php if ($booking['trang_thai'] == "DaXacNhan") echo "Đã xác nhận";
+                                                      else if ($booking['trang_thai'] == "ChoDuyet") echo "Chờ duyệt";
+                                                      else if ($booking['trang_thai'] == "Hủy") echo "Hủy";
+                                                      else echo "Đã hoàn thành"; ?></td>
                                             <td>
                                                 <button type="button" class="btn btn-primary btn-sm">
-                                                    <a href="<?= BASE_URL . '?act=form-update-policy&id=' . $policy['id'] ?>"
-                                                        style="color: white;">Sửa</a>
-                                                </button>
-                                                <button type="button" class="btn btn-danger btn-sm">
-                                                    <a href="?act=delete-policy&id=<?= $policy['id'] ?>"
-                                                        style="color: white;"
-                                                        onclick="return confirm('Bạn có đồng ý xóa chính sách này không?')">Xóa</a>
+                                                    <a href="<?= BASE_URL_HDV . '?act=detail-booking&id=' . $booking['id'] ?>" style="color: white;">Xem chi tiết</a>
                                                 </button>
                                             </td>
                                         </tr>
@@ -108,8 +96,7 @@ ob_start();
                     var rel = elem.rel;
                     if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
                         var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
-                        elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date()
-                            .valueOf());
+                        elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
                     }
                     parent.appendChild(elem);
                 }
@@ -139,12 +126,12 @@ ob_start();
 $content = ob_get_clean();
 
 // Hiển thị layout với nội dung
-view('layouts.AdminLayout', [
+view('layouts.HDVLayout', [
     'title' => $title ?? 'Quản lý chính sách - Website Quản Lý Tour',
     'pageTitle' => 'Quản lý chính sách',
     'content' => $content,
     'breadcrumb' => [
-        ['label' => 'Quản lý chính sách', 'url' => BASE_URL . 'policy', 'active' => true],
+        ['label' => 'Quản lý chính sách', 'url' => BASE_URL_HDV . 'booking', 'active' => true],
     ],
 ]);
 ?>
