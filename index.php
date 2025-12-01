@@ -13,6 +13,7 @@ require_once __DIR__ . '/src/models/ChinhSach.php';
 require_once __DIR__ . '/src/models/Booking.php';
 require_once __DIR__ . '/src/models/DanhMucTour.php';
 require_once __DIR__ . '/src/models/Customer.php';
+require_once __DIR__ . '/src/models/Tour.php';
 
 // Nạp các file chứa controller
 require_once __DIR__ . '/src/controllers/HomeController.php';
@@ -22,6 +23,8 @@ require_once __DIR__ . '/src/controllers/BookingController.php';
 require_once __DIR__ . '/src/controllers/DanhMucTourController.php';
 require_once __DIR__ . '/src/controllers/CustomerController.php';
 require_once __DIR__ . '/src/controllers/UserController.php';
+require_once __DIR__ . '/src/controllers/ReportController.php';
+require_once __DIR__ . '/src/controllers/TourController.php';
 
 // Khởi tạo các controller
 $homeController = new HomeController();
@@ -31,7 +34,8 @@ $bookingController = new BookingController();
 $danhmuctourController = new DanhMucTourController();
 $customerController = new CustomerController();
 $userController = new UserController();
-
+$reportController  = new ReportController();
+$tourController  = new TourController();
 // Xác định route dựa trên tham số act (mặc định là trang chủ '/')
 $act = $_GET['act'] ?? '/';
 
@@ -92,6 +96,34 @@ match ($act) {
     'update-checkin' => $bookingController->updateCheckin(),
     'update-booking-hdv-form' => $bookingController->updateHDVBookingForm(),
     'update-booking-hdv' => $bookingController->updateBookingHDV(),
+
+
+    // Route khách hàng
+    'khach-hang' => $customerController->getList(),
+    'form-add-khach-hang' => $customerController->formAdd(),
+    'add-khach-hang' => $customerController->add(),
+    'delete-khach-hang' => $customerController->delete(),
+    'form-update-khach-hang' => $customerController->formUpdate(),
+    'update-khach-hang' => $customerController->update(),
+    'detail-khach-hang' => $customerController->detail(),
+
+    // Route tour
+    'tour' => $tourController->getListTour(),
+    'form-add-tour' => $tourController->formAddTour(),
+    'add-tour' => $tourController->addTour(),
+    'delete-tour' => $tourController->deleteTour(),
+    'form-update-tour' => $tourController->formUpdateTour(),
+    'update-tour' => $tourController->updateTour(),
+    'detail-tour' => $tourController->detailTour(),
+
+    // Route booking
+    'booking' => $bookingController->getListBooking(),
+    'detail-booking' => $bookingController->detailBooking(),
+
+    // Route báo cáo thống kê
+    'report' => $reportController->getStatistics(),
+
+
 
     // Đường dẫn không tồn tại
     default => $homeController->notFound(),

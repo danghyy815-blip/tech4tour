@@ -124,6 +124,12 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="nav-item">
+                        <a href="<?= BASE_URL . '?act=report' ?>" class="nav-link">
+                            <i class="nav-icon bi bi-graph-up"></i>
+                            <p>Báo cáo thống kê</p>
+                        </a>
+                    </li>
                 <?php endif; ?>
                 <li class="nav-header">HỆ THỐNG</li>
                 <li class="nav-item">
