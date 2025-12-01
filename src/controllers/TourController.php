@@ -298,8 +298,11 @@ class TourController
             $tour = $this->modelTour->getTourById($id);
 
             // Lấy các ID chính sách từ tour (lưu dưới dạng chuỗi "1,2,3")
-            $policyIds = !empty($tour['chinh_sach_id']) ? explode(',', $tour['chinh_sach_id']) : [];
-
+            $policyIds = !empty($tour['chinh_sach_ids']) ? explode(',', $tour['chinh_sach_ids']) : [];
+            // echo "<pre>";
+            // print_r($policyIds);
+            // echo "</pre>";
+            // die;
             $policyModel = new ChinhSach();
             $policies = $policyModel->getPoliciesByIds($policyIds);
 

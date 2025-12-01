@@ -56,18 +56,19 @@ class Tour
         }
     }
 
-    public function addTour($ten_tour, $id_danh_muc, $lich_trinh, $hinh_anh, $gia, $chinh_sach_id, $nha_cung_cap, $loai_tour, $trang_thai, $dia_diem, $price)
+    public function addTour($ten_tour, $id_danh_muc, $lich_trinh, $hinh_anh, $gia, $chinh_sach_ids, $nha_cung_cap, $loai_tour, $trang_thai, $dia_diem, $price)
     {
+
         try {
-            $sql = "INSERT INTO tour (ten_tour, id_danh_muc, lich_trinh, hinh_anh, gia, chinh_sach_id, nha_cung_cap, loai_tour, trang_thai, ngay_tao, ngay_cap_nhat, dia_diem, price)
-                    VALUES (:ten_tour, :id_danh_muc, :lich_trinh, :hinh_anh, :gia, :chinh_sach_id, :nha_cung_cap, :loai_tour, :trang_thai, NOW(), NOW(), :dia_diem, :price)";
+            $sql = "INSERT INTO tour (ten_tour, id_danh_muc, lich_trinh, hinh_anh, gia, chinh_sach_ids, nha_cung_cap, loai_tour, trang_thai, ngay_tao, ngay_cap_nhat, dia_diem, price)
+                    VALUES (:ten_tour, :id_danh_muc, :lich_trinh, :hinh_anh, :gia, :chinh_sach_ids, :nha_cung_cap, :loai_tour, :trang_thai, NOW(), NOW(), :dia_diem, :price)";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':ten_tour', $ten_tour);
             $stmt->bindParam(':id_danh_muc', $id_danh_muc);
             $stmt->bindParam(':lich_trinh', $lich_trinh);
             $stmt->bindParam(':hinh_anh', $hinh_anh);
             $stmt->bindParam(':gia', $gia);
-            $stmt->bindParam(':chinh_sach_id', $chinh_sach_id);
+            $stmt->bindParam(':chinh_sach_ids', $chinh_sach_ids);
             $stmt->bindParam(':nha_cung_cap', $nha_cung_cap);
             $stmt->bindParam(':loai_tour', $loai_tour);
             $stmt->bindParam(':trang_thai', $trang_thai);

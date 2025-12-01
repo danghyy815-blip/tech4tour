@@ -19,11 +19,11 @@ class BookingController
         $currentUser = getCurrentUser();
         if ($currentUser->isAdmin()) {
             $bookings = $this->modelBooking->getAllBookings();
+            require_once "./views/admin/booking/list_booking.php";
         } else {
             $bookings = $this->modelBooking->getBookingsByUserId($currentUser->id);
+            require_once "./views/hdv/booking/list_booking.php";
         }
-
-        require_once "./views/hdv/booking/list_booking.php";
     }
 
 
@@ -48,6 +48,8 @@ class BookingController
             $currentUser = getCurrentUser();
             if ($currentUser->isAdmin()) {
                 $booking = $this->modelBooking->getBookingById($id);
+                $customers = $this->modelBooking->getCustomersByBookingId($booking['id']);
+                require_once './views/admin/booking/detail_booking.php';
             } else {
                 $booking = $this->modelBooking->getBookingById($id, $currentUser->id);
                 if (!$booking) {
@@ -56,9 +58,8 @@ class BookingController
                     ]);
                 }
                 $customers = $this->modelBooking->getCustomersByBookingId($booking['id']);
+                require_once './views/hdv/booking/detail_booking.php';
             }
-
-            require_once './views/hdv/booking/detail_booking.php';
         }
     }
 

@@ -11,6 +11,10 @@ ob_start();
         margin-bottom: 25px;
     }
 
+    .inner {
+        color: #f1f1f1ff;
+    }
+
     .card-header {
         padding: 16px 20px;
         background: linear-gradient(90deg, #4a6cf7, #6f87ff);
@@ -22,6 +26,11 @@ ob_start();
         font-size: 18px;
         font-weight: 600;
         margin: 0;
+    }
+
+    .small-box-footer{
+        color: #e4e4e4ff !important;
+        text-decoration: none;
     }
 
     .small-box {
@@ -48,19 +57,6 @@ ob_start();
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            <!-- Page header -->
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Báo cáo thống kê</h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= BASE_URL . 'home' ?>">Trang chủ</a></li>
-                        <li class="breadcrumb-item active">Báo cáo thống kê</li>
-                    </ol>
-                </div>
-            </div>
-
             <!-- Stats row -->
             <div class="row">
                 <div class="col-lg-2 col-6">
@@ -132,7 +128,7 @@ ob_start();
                     <!-- AREA CHART -->
                     <div class="card card-primary">
                         <div class="card-header with-border">
-                            <h3 class="card-title">Phân bố doanh thu theo tour</h3>
+                            <h3 class="card-title">Phân bố nhân viên theo vai trò</h3>
                             <div class="card-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse">
                                     <i class="fas fa-minus"></i>

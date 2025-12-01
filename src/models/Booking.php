@@ -27,7 +27,7 @@ class Booking
     public function getAllBookings()
     {
         try {
-            $sql = "SELECT * FROM chinh_sach ORDER BY id DESC";
+            $sql = "SELECT booking.*, tour.ten_tour FROM booking join tour on booking.tour_id = tour.id ORDER BY booking.id DESC";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll();
@@ -75,7 +75,7 @@ class Booking
                     JOIN tour ON booking.tour_id = tour.id 
                     WHERE booking.id = :id AND booking.user_id = :user_id";
             } else {
-                $sql = "SELECT booking.*, tour.* 
+                $sql = "SELECT booking.*, tour.*, booking.trang_thai as booking_trang_thai 
                     FROM booking 
                     JOIN tour ON booking.tour_id = tour.id 
                     WHERE booking.id = :id";

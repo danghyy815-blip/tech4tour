@@ -4,13 +4,12 @@ ob_start();
 
 <div class="content-wrapper">
 
-    <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <!-- /.card-header -->
+
                         <div class="card-body">
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
@@ -35,30 +34,32 @@ ob_start();
                                                 else if ($booking['trang_thai'] == "Hủy") echo "Hủy";
                                                 else echo "Đã hoàn thành"; ?></td>
                                             <td>
-                                                <button type="button" class="btn btn-primary btn-sm">
-                                                    <a href="<?= BASE_URL . 'detail-booking&id=' . $booking['id'] ?>" style="color: white;">Xem chi tiết</a>
+                                                <button type="button" class="btn btn-warning btn-sm">
+                                                    <a href="<?= BASE_URL . 'delete-booking&id=' . $booking['id'] ?>" style="color: white;">Sửa</a>
                                                 </button>
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <a href="<?= BASE_URL . 'delete-booking&id=' . $booking['id'] ?>" style="color: white;">Xóa</a>
+                                                </button>
+
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
-                        <!-- /.card-body -->
+
                     </div>
-                    <!-- /.card -->
+
                 </div>
-                <!-- /.col -->
+
             </div>
-            <!-- /.row -->
+
         </div>
-        <!-- /.container-fluid -->
+
     </section>
-    <!-- /.content -->
 </div>
 
 <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
 </aside>
 </div>
 
@@ -81,6 +82,7 @@ ob_start();
         });
     });
 </script>
+
 </body>
 
 </html>
@@ -89,7 +91,7 @@ ob_start();
 $content = ob_get_clean();
 
 // Hiển thị layout với nội dung
-view('layouts.HDVLayout', [
+view('layouts.AdminLayout', [
     'title' => $title ?? 'Quản lý booking - Website Quản Lý Tour',
     'pageTitle' => 'Quản lý booking',
     'content' => $content,
