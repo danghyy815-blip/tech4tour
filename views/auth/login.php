@@ -36,7 +36,7 @@ ob_start();
                         </ul>
                     </div>
                 <?php endif; ?>
-                <form action="<?= BASE_URL ?>check-login" method="post" autocomplete="on" novalidate>
+                <form action="<?= BASE_URL ?>?act=check-login" method="post" autocomplete="on" novalidate>
                     <input type="hidden" name="redirect" value="<?= $redirect ?? BASE_URL . 'home' ?>" />
 
                     <div class="mb-3">

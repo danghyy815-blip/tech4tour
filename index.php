@@ -17,13 +17,16 @@ require_once __DIR__ . '/src/models/Customer.php';
 // Nạp các file chứa controller
 require_once __DIR__ . '/src/controllers/HomeController.php';
 require_once __DIR__ . '/src/controllers/AuthController.php';
+require_once __DIR__ . '/src/controllers/ChinhSachController.php';
 require_once __DIR__ . '/src/controllers/UserController.php';
+require_once __DIR__ . '/src/controllers/ReportController.php';
 
 // Khởi tạo các controller
 $homeController = new HomeController();
 $authController = new AuthController();
 $chinhSachController = new ChinhSachController();
 $userController = new UserController();
+$reportController = new ReportController();
 // Xác định route dựa trên tham số act (mặc định là trang chủ '/')
 $act = $_GET['act'] ?? '/';
 
@@ -55,6 +58,9 @@ match ($act) {
     'form-add-user' => $userController->formAddUser(),
     'add-user' => $userController->addUser(),
     'delete-user' => $userController->deleteUser(),
+
+    // Route báo cáo thống kê
+    'report' => $reportController->getStatistics(),
     // Đường dẫn không tồn tại
     default => $homeController->notFound(),
 };
