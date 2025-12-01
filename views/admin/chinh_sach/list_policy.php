@@ -11,7 +11,7 @@ ob_start();
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <a href="?act=form-add-policy">
+                            <a href="<?= BASE_URL . 'form-add-policy'?>">
                                 <button type="button" class="btn btn-success">Thêm chính sách</button>
                             </a>
                         </div>
@@ -34,7 +34,7 @@ ob_start();
                                         <tr>
                                             <td><?= $key + 1 ?></td>
                                             <td><a
-                                                    href="<?= BASE_URL . '?act=detail-policy&id=' . $policy['id'] ?>"><?= $policy['ten_chinh_sach'] ?></a>
+                                                    href="<?= BASE_URL . 'detail-policy&id=' . $policy['id'] ?>"><?= $policy['ten_chinh_sach'] ?></a>
                                             </td>
                                             <td><?= $policy['loai_chinh_sach'] ?></td>
                                             <td><?= date('d-m-Y', strtotime($policy['ngay_ap_dung'])) ?></td>
@@ -42,11 +42,11 @@ ob_start();
                                             <td><?= $policy['trang_thai'] ?></td>
                                             <td>
                                                 <button type="button" class="btn btn-primary btn-sm">
-                                                    <a href="<?= BASE_URL . '?act=form-update-policy&id=' . $policy['id'] ?>"
+                                                    <a href="<?= BASE_URL . 'form-update-policy&id=' . $policy['id'] ?>"
                                                         style="color: white;">Sửa</a>
                                                 </button>
                                                 <button type="button" class="btn btn-danger btn-sm">
-                                                    <a href="?act=delete-policy&id=<?= $policy['id'] ?>"
+                                                    <a href="delete-policy&id=<?= $policy['id'] ?>"
                                                         style="color: white;"
                                                         onclick="return confirm('Bạn có đồng ý xóa chính sách này không?')">Xóa</a>
                                                 </button>

@@ -15,7 +15,7 @@ ob_start();
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <a href="<?= BASE_URL . '?act=form-add-danh-muc-tour' ?>">
+                            <a href="<?= BASE_URL . 'form-add-danh-muc-tour' ?>">
                                 <button type="button" class="btn btn-primary">
                                     <i class="fas fa-plus-circle"></i> Thêm danh mục tour
                                 </button>
@@ -39,7 +39,7 @@ ob_start();
                                             <tr>
                                                 <td><?= htmlspecialchars($dm['id']) ?></td>
                                                 <td>
-                                                    <a href="<?= BASE_URL . '?act=detail-danh-muc-tour&id=' . htmlspecialchars($dm['id']) ?>"
+                                                    <a href="<?= BASE_URL . 'detail-danh-muc-tour&id=' . htmlspecialchars($dm['id']) ?>"
                                                         class="font-weight-bold">
                                                         <?= htmlspecialchars($dm['ten_danh_muc']) ?>
                                                     </a>
@@ -57,12 +57,12 @@ ob_start();
                                                 </td>
                                                 <td>
                                                     <button type="button"
-                                                        onclick="window.location.href='<?= BASE_URL . '?act=form-update-danh-muc-tour&id=' . htmlspecialchars($dm['id']) ?>'"
+                                                        onclick="window.location.href='<?= BASE_URL . 'form-update-danh-muc-tour&id=' . htmlspecialchars($dm['id']) ?>'"
                                                         class="btn btn-primary btn-sm mb-1" title="Sửa">
                                                         <i class="fas fa-edit"></i> Sửa
                                                     </button>
                                                     <button type="button"
-                                                        onclick="if(confirm('Bạn có chắc chắn muốn xoá danh mục [<?= htmlspecialchars($dm['ten_danh_muc']) ?>] này không? Hành động này có thể ảnh hưởng đến các Tour liên quan!')) { window.location.href='<?= BASE_URL . '?act=delete-danh-muc-tour&id=' . htmlspecialchars($dm['id']) ?>'; }"
+                                                        onclick="if(confirm('Bạn có chắc chắn muốn xoá danh mục [<?= htmlspecialchars($dm['ten_danh_muc']) ?>] này không? Hành động này có thể ảnh hưởng đến các Tour liên quan!')) { window.location.href='<?= BASE_URL . 'delete-danh-muc-tour&id=' . htmlspecialchars($dm['id']) ?>'; }"
                                                         class="btn btn-danger btn-sm mb-1" title="Xóa">
                                                         <i class="fas fa-trash"></i> Xóa
                                                     </button>
@@ -129,7 +129,7 @@ view('layouts.AdminLayout', [
     'pageTitle' => 'Quản lý Danh Mục Tour',
     'content' => $content,
     'breadcrumb' => [
-        ['label' => 'Quản lý danh mục tour', 'url' => BASE_URL . '?act=danh-muc-tour', 'active' => true],
+        ['label' => 'Quản lý danh mục tour', 'url' => BASE_URL . 'danh-muc-tour', 'active' => true],
     ],
 ]);
 ?>

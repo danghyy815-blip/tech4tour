@@ -1,18 +1,20 @@
 <?php
 
-// Nạp cấu hình chung
+// Nạp cấu hình chung của ứng dụng
 $config = require __DIR__ . '/config/config.php';
 
-// Nạp helpers
-require_once __DIR__ . '/src/helpers/helpers.php';
-require_once __DIR__ . '/src/helpers/database.php';
+// Nạp các file chứa hàm trợ giúp
+require_once __DIR__ . '/src/helpers/helpers.php'; // Helper chứa các hàm trợ giúp (hàm xử lý view, block, asset, session, ...)
+require_once __DIR__ . '/src/helpers/database.php'; // Helper kết nối database(kết nối với cơ sở dữ liệu)
 
-// Nạp model
+// Nạp các file chứa model
 require_once __DIR__ . '/src/models/User.php';
 require_once __DIR__ . '/src/models/ChinhSach.php';
+require_once __DIR__ . '/src/models/Booking.php';
+require_once __DIR__ . '/src/models/DanhMucTour.php';
+require_once __DIR__ . '/src/models/Customer.php';
 
-
-// Nạp controller
+// Nạp các file chứa controller
 require_once __DIR__ . '/src/controllers/HomeController.php';
 require_once __DIR__ . '/src/controllers/AuthController.php';
 require_once __DIR__ . '/src/controllers/ChinhSachController.php';
@@ -21,8 +23,7 @@ require_once __DIR__ . '/src/controllers/DanhMucTourController.php';
 require_once __DIR__ . '/src/controllers/CustomerController.php';
 require_once __DIR__ . '/src/controllers/UserController.php';
 
-
-// Khởi tạo controller
+// Khởi tạo các controller
 $homeController = new HomeController();
 $authController = new AuthController();
 $chinhSachController = new ChinhSachController();
@@ -34,18 +35,20 @@ $userController = new UserController();
 // Xác định route dựa trên tham số act (mặc định là trang chủ '/')
 $act = $_GET['act'] ?? '/';
 
-// Router
+// Match đảm bảo chỉ một action tương ứng được gọi
 match ($act) {
-
+    // Trang welcome (cho người chưa đăng nhập) - mặc định khi truy cập '/'
     '/', 'welcome' => $homeController->welcome(),
 
+    // Trang home (cho người đã đăng nhập)
     'home' => $homeController->home(),
 
+    // Đường dẫn đăng nhập, đăng xuất
     'login' => $authController->login(),
     'check-login' => $authController->checkLogin(),
     'logout' => $authController->logout(),
 
-    // Chính sách
+    // Route chính sách
     'policy' => $chinhSachController->getListPolicy(),
     'form-add-policy' => $chinhSachController->formAddPolicy(),
     'add-policy' => $chinhSachController->addPolicy(),
@@ -83,7 +86,7 @@ match ($act) {
 
     // đường dẫn cho HDV
     'home' => $homeController->home(),
-    'hdv/booking' => $bookingController->getListBooking(),
+    'booking' => $bookingController->getListBooking(),
     'detail-booking' => $bookingController->detailBooking(),
     'check-in' => $bookingController->checkInCustomer(),
     'update-checkin' => $bookingController->updateCheckin(),

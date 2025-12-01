@@ -52,7 +52,7 @@ if (empty($id)) {
                             <h3 class="card-title"><i class="fas fa-edit"></i> Thông tin Khách hàng</h3>
                         </div>
 
-                        <form action="<?= BASE_URL . '?act=update-khach-hang' ?>" method="POST">
+                        <form action="<?= BASE_URL . 'update-khach-hang' ?>" method="POST">
                             <input type="hidden" name="id" value="<?= $id ?>">
 
                             <div class="card-body">
@@ -170,9 +170,9 @@ if (empty($id)) {
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Cập
                                     nhật</button>
-                                <a href="<?= BASE_URL . '?act=detail-khach-hang&id=' . $id ?>"
+                                <a href="<?= BASE_URL . 'detail-khach-hang&id=' . $id ?>"
                                     class="btn btn-info ml-2"><i class="fas fa-eye"></i> Xem Chi Tiết</a>
-                                <a href="<?= BASE_URL . '?act=khach-hang' ?>" class="btn btn-secondary ml-2"><i
+                                <a href="<?= BASE_URL . 'khach-hang' ?>" class="btn btn-secondary ml-2"><i
                                         class="fas fa-arrow-left"></i> Quay lại Danh sách</a>
                             </div>
                         </form>
@@ -195,7 +195,7 @@ view('layouts.AdminLayout', [
     'pageTitle' => 'Cập nhật Khách Hàng',
     'content' => $content,
     'breadcrumb' => [
-        ['label' => 'Khách hàng', 'url' => BASE_URL . '?act=khach-hang', 'active' => false],
+        ['label' => 'Khách hàng', 'url' => BASE_URL . 'khach-hang', 'active' => false],
         ['label' => 'Cập nhật', 'url' => '#', 'active' => true],
     ],
 ]);

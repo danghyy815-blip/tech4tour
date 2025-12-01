@@ -26,7 +26,7 @@ $errors = $errors ?? [];
                             <h3 class="card-title"><i class="fas fa-user-plus"></i> Thông tin Khách hàng</h3>
                         </div>
 
-                        <form action="<?= BASE_URL . '?act=add-khach-hang' ?>" method="POST">
+                        <form action="<?= BASE_URL . 'add-khach-hang' ?>" method="POST">
                             <div class="card-body">
 
                                 <div class="row">
@@ -142,7 +142,7 @@ $errors = $errors ?? [];
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Thêm Khách
                                     hàng</button>
-                                <a href="<?= BASE_URL . '?act=khach-hang' ?>" class="btn btn-secondary ml-2"><i
+                                <a href="<?= BASE_URL . 'khach-hang' ?>" class="btn btn-secondary ml-2"><i
                                         class="fas fa-arrow-left"></i> Quay lại</a>
                             </div>
                         </form>
@@ -164,7 +164,7 @@ view('layouts.AdminLayout', [
     'pageTitle' => 'Thêm Khách Hàng Mới',
     'content' => $content,
     'breadcrumb' => [
-        ['label' => 'Khách hàng', 'url' => BASE_URL . '?act=khach-hang', 'active' => false],
+        ['label' => 'Khách hàng', 'url' => BASE_URL . 'khach-hang', 'active' => false],
         ['label' => 'Thêm mới', 'url' => '#', 'active' => true],
     ],
 ]);

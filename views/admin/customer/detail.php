@@ -26,12 +26,12 @@ function get_customer_value($customer, $key, $default = 'Chưa cập nhật')
                             </h3>
                             <div class="card-tools">
                                 <!-- Nút Sửa -->
-                                <a href="<?= BASE_URL . '?act=form-update-khach-hang&id=' . get_customer_value($customer, 'id', 0) ?>"
+                                <a href="<?= BASE_URL . 'form-update-khach-hang&id=' . get_customer_value($customer, 'id', 0) ?>"
                                     class="btn btn-sm btn-info">
                                     <i class="fas fa-edit"></i> Sửa
                                 </a>
                                 <!-- Nút Quay lại -->
-                                <a href="<?= BASE_URL . '?act=khach-hang' ?>" class="btn btn-sm btn-secondary">
+                                <a href="<?= BASE_URL . 'khach-hang' ?>" class="btn btn-sm btn-secondary">
                                     <i class="fas fa-arrow-left"></i> Quay lại
                                 </a>
                             </div>
@@ -137,7 +137,7 @@ view('layouts.AdminLayout', [
     'pageTitle' => 'Chi tiết Khách Hàng',
     'content' => $content,
     'breadcrumb' => [
-        ['label' => 'Khách hàng', 'url' => BASE_URL . '?act=khach-hang', 'active' => false],
+        ['label' => 'Khách hàng', 'url' => BASE_URL . 'khach-hang', 'active' => false],
         ['label' => 'Chi tiết', 'url' => '#', 'active' => true],
     ],
 ]);

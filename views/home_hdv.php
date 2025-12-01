@@ -15,8 +15,7 @@ ob_start();
             type="button"
             class="btn btn-tool"
             data-lte-toggle="card-collapse"
-            title="Collapse"
-          >
+            title="Collapse">
             <i data-lte-icon="expand" class="bi bi-plus-lg"></i>
             <i data-lte-icon="collapse" class="bi bi-dash-lg"></i>
           </button>
@@ -30,7 +29,7 @@ ob_start();
               Đăng nhập thành công!
             </h4>
             <p class="mb-0">
-              Xin chào, <strong><?= htmlspecialchars($user->ho_ten) ?></strong>! 
+              Xin chào, <strong><?= htmlspecialchars($user->ho_ten) ?></strong>!
               Bạn đã đăng nhập với quyền <strong><?= $user->isAdmin() ? 'Admin' : 'Hướng dẫn viên' ?></strong>.
             </p>
           </div>
@@ -70,7 +69,7 @@ ob_start();
               Chưa đăng nhập
             </h4>
             <p class="mb-0">
-              Vui lòng <a href="<?= BASE_URL ?>?act=login" class="alert-link">đăng nhập</a> để sử dụng đầy đủ chức năng.
+              Vui lòng <a href="<?= BASE_URL ?>login" class="alert-link">đăng nhập</a> để sử dụng đầy đủ chức năng.
             </p>
           </div>
         <?php endif; ?>
@@ -87,11 +86,11 @@ $content = ob_get_clean();
 
 // Hiển thị layout với nội dung
 view('layouts.HDVLayout', [
-    'title' => $title ?? 'Trang chủ - Website Quản Lý Tour',
-    'pageTitle' => 'Trang chủ',
-    'content' => $content,
-    'breadcrumb' => [
-        ['label' => 'Trang chủ', 'url' => BASE_URL_HDV . 'home', 'active' => true],
-    ],
+  'title' => $title ?? 'Trang chủ - Website Quản Lý Tour',
+  'pageTitle' => 'Trang chủ',
+  'content' => $content,
+  'breadcrumb' => [
+    ['label' => 'Trang chủ', 'url' => BASE_URL . 'home', 'active' => true],
+  ],
 ]);
 ?>

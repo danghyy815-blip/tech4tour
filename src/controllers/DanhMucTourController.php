@@ -53,7 +53,7 @@ class DanhMucTourController
 
             if (empty($errors)) {
                 $this->modelDanhMuc->add($ten_danh_muc, $mo_ta, $loai);
-                header("Location: ?act=danh-muc-tour");
+                header("Location: danh-muc-tour");
                 exit();
             }
         }
@@ -73,7 +73,7 @@ class DanhMucTourController
             $this->modelDanhMuc->delete($id);
         }
 
-        header("Location: ?act=danh-muc-tour");
+        header("Location: danh-muc-tour");
         exit();
     }
 
@@ -91,7 +91,7 @@ class DanhMucTourController
 
             if (!$danhMuc) {
 
-                header("Location: ?act=danh-muc-tour");
+                header("Location: danh-muc-tour");
                 exit();
             }
 
@@ -114,7 +114,7 @@ class DanhMucTourController
             $loai = $_POST['loai'] ?? '';
 
             if (!$id) {
-                header("Location: ?act=danh-muc-tour");
+                header("Location: danh-muc-tour");
                 exit();
             }
 
@@ -128,7 +128,7 @@ class DanhMucTourController
 
             if (empty($errors)) {
                 $this->modelDanhMuc->update($id, $ten_danh_muc, $mo_ta, $loai);
-                header("Location: ?act=danh-muc-tour");
+                header("Location: danh-muc-tour");
                 exit();
             } else {
                 $danhMuc = [
@@ -154,7 +154,7 @@ class DanhMucTourController
             $id = $_GET['id'];
             $danhMuc = $this->modelDanhMuc->getById($id);
             if (!$danhMuc) {
-                header("Location: ?act=danh-muc-tour");
+                header("Location: danh-muc-tour");
                 exit();
             }
             require_once "./views/admin/danh_muc_tour/detail.php";

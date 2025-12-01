@@ -14,7 +14,7 @@ ob_start();
                             </h3>
                         </div>
                         <div class="card-body">
-                            <form method="POST" action="?act=update-checkin&booking_id=<?= $booking['id'] ?>">
+                            <form method="POST" action="update-checkin&booking_id=<?= $booking['id'] ?>">
                                 <table class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
@@ -82,7 +82,7 @@ view('layouts.HDVLayout', [
     'pageTitle' => 'Điểm danh',
     'content' => $content,
     'breadcrumb' => [
-        ['label' => 'Điểm danh', 'url' => BASE_URL_HDV . 'booking', 'active' => true],
+        ['label' => 'Điểm danh', 'url' => BASE_URL . 'booking', 'active' => true],
     ],
 ]);
 ?>

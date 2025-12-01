@@ -11,7 +11,7 @@ ob_start();
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <a href="?act=form-add-user">
+                            <a href="form-add-user">
                                 <button type="button" class="btn btn-success">Thêm nhân viên</button>
                             </a>
                         </div>
@@ -62,7 +62,7 @@ ob_start();
                                             <td><?= $user['trang_thai'] ? 'Kích hoạt' : 'Vô hiệu' ?></td>
                                             <td>
                                                 <button type="button" class="btn btn-primary btn-sm">
-                                                    <a href="<?= BASE_URL . '?act=form-update-user&id=' . $user['id'] ?>" style="color: white;">Sửa</a>
+                                                    <a href="<?= BASE_URL . 'form-update-user&id=' . $user['id'] ?>" style="color: white;">Sửa</a>
                                                 </button>
                                                 <?php if ($isCurrent) : ?>
                                                     <button type="button" class="btn btn-danger btn-sm" disabled title="Không thể xóa chính bạn">
@@ -70,7 +70,7 @@ ob_start();
                                                     </button>
                                                 <?php else : ?>
                                                     <button type="button" class="btn btn-danger btn-sm">
-                                                        <a href="?act=delete-user&id=<?= $user['id'] ?>" style="color: white;" onclick="return confirm('Bạn có đồng ý xóa nhân viên này không?')">Xóa</a>
+                                                        <a href="delete-user&id=<?= $user['id'] ?>" style="color: white;" onclick="return confirm('Bạn có đồng ý xóa nhân viên này không?')">Xóa</a>
                                                     </button>
                                                 <?php endif; ?>
                                             </td>
@@ -166,7 +166,7 @@ view('layouts.AdminLayout', [
     'pageTitle' => 'Quản lý nhân viên',
     'content' => $content,
     'breadcrumb' => [
-        ['label' => 'Quản lý nhân viên', 'url' => BASE_URL . '?act=user', 'active' => true],
+        ['label' => 'Quản lý nhân viên', 'url' => BASE_URL . 'user', 'active' => true],
     ],
 ]);
 ?>

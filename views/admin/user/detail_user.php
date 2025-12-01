@@ -17,7 +17,7 @@ ob_start();
                                 $currentUser = getCurrentUser();
                                 $isCurrent = $currentUser && isset($currentUser->id) && $currentUser->id == $user['id'];
                                 ?>
-                                <a href="<?= BASE_URL . '?act=form-update-user&id=' . $user['id'] ?>" class="btn btn-sm btn-info">
+                                <a href="<?= BASE_URL . 'form-update-user&id=' . $user['id'] ?>" class="btn btn-sm btn-info">
                                     <i class="fas fa-edit"></i> Sửa
                                 </a>
                                 <?php if ($isCurrent) : ?>
@@ -25,7 +25,7 @@ ob_start();
                                         <i class="fas fa-trash"></i> Xóa
                                     </button>
                                 <?php else : ?>
-                                    <a href="?act=delete-user&id=<?= $user['id'] ?>" style="color: white;" onclick="return confirmDelete()" class="btn btn-sm btn-danger">
+                                    <a href="delete-user&id=<?= $user['id'] ?>" style="color: white;" onclick="return confirmDelete()" class="btn btn-sm btn-danger">
                                         <i class="fas fa-trash"></i> Xóa
                                     </a>
                                 <?php endif; ?>

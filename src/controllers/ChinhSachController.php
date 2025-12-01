@@ -62,7 +62,7 @@ class ChinhSachController
 
             if (empty($errors)) {
                 $this->modelPolicy->addPolicy($ten_chinh_sach, $loai_chinh_sach, $ngay_ap_dung, $ngay_het_han, $trang_thai, $mo_ta);
-                header("Location: ?act=policy");
+                header("Location: policy");
                 exit();
             }
         }
@@ -80,7 +80,7 @@ class ChinhSachController
         if ($id) {
             $this->modelPolicy->deletePolicy($id);
         }
-        header("Location: ?act=policy");
+        header("Location: policy");
         exit();
     }
 
@@ -133,7 +133,7 @@ class ChinhSachController
 
             if (empty($errors)) {
                 $this->modelPolicy->updatePolicy($id, $ten_chinh_sach, $loai_chinh_sach, date('Y-m-d', strtotime($ngay_ap_dung)), date('Y-m-d', strtotime($ngay_het_han)), $trang_thai, $mo_ta);
-                header("Location: ?act=policy");
+                header("Location: policy");
                 exit();
             } else {
                 $policy = [

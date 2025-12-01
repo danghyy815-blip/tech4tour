@@ -27,16 +27,16 @@ ob_start();
                                     <?php foreach ($bookings as $key => $booking) : ?>
                                         <tr>
                                             <td><?= $key + 1 ?></td>
-                                            <td><a href="<?= BASE_URL_HDV . '?act=detail-booking&id=' . $booking['id'] ?>"><?= $booking['ten_tour'] ?></a></td>
+                                            <td><a href="<?= BASE_URL . 'detail-booking&id=' . $booking['id'] ?>"><?= $booking['ten_tour'] ?></a></td>
                                             <td><?= date('d-m-Y', strtotime($booking['ngay_dat'])) ?></td>
                                             <td><?= $booking['gia_tien'] ?></td>
                                             <td><?php if ($booking['trang_thai'] == "DaXacNhan") echo "Đã xác nhận";
-                                                      else if ($booking['trang_thai'] == "ChoDuyet") echo "Chờ duyệt";
-                                                      else if ($booking['trang_thai'] == "Hủy") echo "Hủy";
-                                                      else echo "Đã hoàn thành"; ?></td>
+                                                else if ($booking['trang_thai'] == "ChoDuyet") echo "Chờ duyệt";
+                                                else if ($booking['trang_thai'] == "Hủy") echo "Hủy";
+                                                else echo "Đã hoàn thành"; ?></td>
                                             <td>
                                                 <button type="button" class="btn btn-primary btn-sm">
-                                                    <a href="<?= BASE_URL_HDV . '?act=detail-booking&id=' . $booking['id'] ?>" style="color: white;">Xem chi tiết</a>
+                                                    <a href="<?= BASE_URL . 'detail-booking&id=' . $booking['id'] ?>" style="color: white;">Xem chi tiết</a>
                                                 </button>
                                             </td>
                                         </tr>
@@ -131,7 +131,7 @@ view('layouts.HDVLayout', [
     'pageTitle' => 'Quản lý chính sách',
     'content' => $content,
     'breadcrumb' => [
-        ['label' => 'Quản lý chính sách', 'url' => BASE_URL_HDV . 'booking', 'active' => true],
+        ['label' => 'Quản lý chính sách', 'url' => BASE_URL . 'booking', 'active' => true],
     ],
 ]);
 ?>

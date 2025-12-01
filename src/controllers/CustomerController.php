@@ -12,7 +12,7 @@ class CustomerController
     public function getList()
     {
         if (!isLoggedIn()) {
-            header('Location: ' . BASE_URL . '?act=welcome');
+            header('Location: ' . BASE_URL . 'welcome');
             exit;
         }
         $customers = $this->modelCustomer->getAll();
@@ -22,7 +22,7 @@ class CustomerController
     public function formAdd()
     {
         if (!isLoggedIn()) {
-            header('Location: ' . BASE_URL . '?act=welcome');
+            header('Location: ' . BASE_URL . 'welcome');
             exit;
         }
 
@@ -32,7 +32,7 @@ class CustomerController
     public function add()
     {
         if (!isLoggedIn()) {
-            header('Location: ' . BASE_URL . '?act=welcome');
+            header('Location: ' . BASE_URL . 'welcome');
             exit;
         }
 
@@ -87,7 +87,7 @@ class CustomerController
                     $yeu_cau_dac_biet,
                     $trang_thai
                 );
-                header("Location: " . BASE_URL . "?act=khach-hang");
+                header("Location: " . BASE_URL . "khach-hang");
                 exit();
             }
         }
@@ -97,7 +97,7 @@ class CustomerController
     public function delete()
     {
         if (!isLoggedIn()) {
-            header('Location: ' . BASE_URL . '?act=welcome');
+            header('Location: ' . BASE_URL . 'welcome');
             exit;
         }
 
@@ -107,14 +107,14 @@ class CustomerController
             $this->modelCustomer->softDelete($id);
         }
 
-        header("Location: " . BASE_URL . "?act=khach-hang");
+        header("Location: " . BASE_URL . "khach-hang");
         exit();
     }
 
     public function formUpdate()
     {
         if (!isLoggedIn()) {
-            header('Location: ' . BASE_URL . '?act=welcome');
+            header('Location: ' . BASE_URL . 'welcome');
             exit;
         }
 
@@ -123,7 +123,7 @@ class CustomerController
             $customer = $this->modelCustomer->getById($id);
 
             if (!$customer) {
-                header("Location: " . BASE_URL . "?act=khach-hang");
+                header("Location: " . BASE_URL . "khach-hang");
                 exit();
             }
 
@@ -134,7 +134,7 @@ class CustomerController
     public function update()
     {
         if (!isLoggedIn()) {
-            header('Location: ' . BASE_URL . '?act=welcome');
+            header('Location: ' . BASE_URL . 'welcome');
             exit;
         }
 
@@ -154,7 +154,7 @@ class CustomerController
             $trang_thai = $_POST['trang_thai'] ?? 'đang hoạt động';
 
             if (!$id) {
-                header("Location: " . BASE_URL . "?act=khach-hang");
+                header("Location: " . BASE_URL . "khach-hang");
                 exit();
             }
 
@@ -196,7 +196,7 @@ class CustomerController
                     $yeu_cau_dac_biet,
                     $trang_thai
                 );
-                header("Location: " . BASE_URL . "?act=khach-hang");
+                header("Location: " . BASE_URL . "khach-hang");
                 exit();
             } else {
                 $customer = [
@@ -220,7 +220,7 @@ class CustomerController
     public function detail()
     {
         if (!isLoggedIn()) {
-            header('Location: ' . BASE_URL . '?act=welcome');
+            header('Location: ' . BASE_URL . 'welcome');
             exit;
         }
 
@@ -228,7 +228,7 @@ class CustomerController
             $id = $_GET['id'];
             $customer = $this->modelCustomer->getById($id);
             if (!$customer) {
-                header("Location: " . BASE_URL . "?act=khach-hang");
+                header("Location: " . BASE_URL . "khach-hang");
                 exit();
             }
             require_once "./views/admin/customer/detail.php";

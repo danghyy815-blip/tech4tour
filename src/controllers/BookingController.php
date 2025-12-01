@@ -40,7 +40,7 @@ class BookingController
     public function detailBooking()
     {
         if (!isLoggedIn()) {
-            header('Location: ' . BASE_URL_HDV . 'welcome');
+            header('Location: ' . BASE_URL . 'welcome');
             exit;
         }
         if (isset($_GET['id'])) {
@@ -65,7 +65,7 @@ class BookingController
     public function checkInCustomer()
     {
         if (!isLoggedIn()) {
-            header('Location: ' . BASE_URL_HDV . 'welcome');
+            header('Location: ' . BASE_URL . 'welcome');
             exit;
         }
         if (isset($_GET['id'])) {
@@ -95,7 +95,7 @@ class BookingController
     public function updateCheckin()
     {
         if (!isLoggedIn()) {
-            header('Location: ' . BASE_URL_HDV . 'welcome');
+            header('Location: ' . BASE_URL . 'welcome');
             exit;
         }
         if (isset($_GET['booking_id'])) {
@@ -129,7 +129,7 @@ class BookingController
     public function updateHDVBookingForm()
     {
         if (!isLoggedIn()) {
-            header('Location: ' . BASE_URL_HDV . 'welcome');
+            header('Location: ' . BASE_URL . 'welcome');
             exit;
         }
         if (isset($_GET['booking_id'])) {
@@ -142,7 +142,7 @@ class BookingController
                     </script>";
                 exit;
             } else {
-                $bookingId = $_POST['booking_id'] ?? $_GET['booking_id'] ?? null;   
+                $bookingId = $_POST['booking_id'] ?? $_GET['booking_id'] ?? null;
                 $booking = $this->modelBooking->getBookingById($bookingId, $currentUser->id);
                 if (!$booking) {
                     view('not_found', [
@@ -154,9 +154,10 @@ class BookingController
         }
     }
 
-    public function updateBookingHDV(){
+    public function updateBookingHDV()
+    {
         if (!isLoggedIn()) {
-            header('Location: ' . BASE_URL_HDV . 'welcome');
+            header('Location: ' . BASE_URL . 'welcome');
             exit;
         }
         if (isset($_POST['booking_id'])) {
@@ -178,6 +179,5 @@ class BookingController
                 require_once './views/hdv/booking/detail_booking.php';
             }
         }
-        
     }
 }

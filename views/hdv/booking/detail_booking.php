@@ -13,7 +13,7 @@ ob_start();
                                 <i class="fas fa-info-circle"></i> Thông tin booking
                             </h3>
                             <div class="card-tools">
-                                <a href="?act=update-booking-hdv-form&booking_id=<?= $booking['id'] ?>" style="color: white;" class="btn btn-sm btn-success">
+                                <a href="update-booking-hdv-form&booking_id=<?= $booking['id'] ?>" style="color: white;" class="btn btn-sm btn-success">
                                     <i class="fas fa-edit"></i> Cập nhật chuyến đi
                                 </a>
                             </div>
@@ -85,7 +85,7 @@ ob_start();
                                 <i class="fas fa-align-left"></i> Khách hàng trong tour
                             </h3>
                             <div class="card-tools">
-                                <a href="?act=check-in&id=<?= $booking['id'] ?>" style="color: white;" class="btn btn-sm btn-success">
+                                <a href="check-in&id=<?= $booking['id'] ?>" style="color: white;" class="btn btn-sm btn-success">
                                     <i class="fas fa-trash"></i> Điểm danh
                                 </a>
                             </div>
@@ -146,7 +146,7 @@ view('layouts.HDVLayout', [
     'pageTitle' => 'Chi tiết Booking',
     'content' => $content,
     'breadcrumb' => [
-        ['label' => 'Chi tiết Booking', 'url' => BASE_URL_HDV . 'booking', 'active' => true],
+        ['label' => 'Chi tiết Booking', 'url' => BASE_URL . 'booking', 'active' => true],
     ],
 ]);
 ?>

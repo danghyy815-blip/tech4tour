@@ -33,7 +33,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="<?= BASE_URL_HDV . 'booking' ?>" class="nav-link">
+          <a href="<?= BASE_URL . 'booking' ?>" class="nav-link">
             <i class="bi bi-journal-check"></i>
             <p>Quản lý booking</p>
           </a>

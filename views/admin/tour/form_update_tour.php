@@ -18,7 +18,7 @@ if (!empty($old['chinh_sach_id'])) {
 ?>
 
 <div class="container mt-4">
-    <form action="?act=update-tour" method="POST" enctype="multipart/form-data">
+    <form action="update-tour" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="id" value="<?= $tour['id'] ?>">
         <input type="hidden" name="old_image" value="<?= $tour['hinh_anh'] ?>">
 
@@ -136,7 +136,7 @@ if (!empty($old['chinh_sach_id'])) {
         </div>
 
         <button type="submit" class="btn btn-success">Cập nhật</button>
-        <a href="?act=tour" class="btn btn-secondary">Quay lại</a>
+        <a href="tour" class="btn btn-secondary">Quay lại</a>
     </form>
 </div>
 

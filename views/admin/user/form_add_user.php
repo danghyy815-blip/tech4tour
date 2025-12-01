@@ -65,7 +65,7 @@
         <h3 class="card-title">Thêm nhân viên</h3>
     </div>
 
-    <form action="?act=add-user" method="POST">
+    <form action="add-user" method="POST">
         <div class="card-body">
 
             <!-- Username + Password -->
@@ -249,7 +249,7 @@ view('layouts.AdminLayout', [
     'pageTitle' => 'Thêm nhân viên',
     'content' => $content,
     'breadcrumb' => [
-        ['label' => 'Thêm nhân viên', 'url' => BASE_URL . '?act=user', 'active' => true],
+        ['label' => 'Thêm nhân viên', 'url' => BASE_URL . 'user', 'active' => true],
     ],
 ]);
 ?>

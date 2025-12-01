@@ -13,13 +13,13 @@ ob_start();
                                 <i class="fas fa-info-circle"></i> Thông tin booking
                             </h3>
                             <div class="card-tools">
-                                <a href="?act=update-booking-hdv&boooking_id=<?= $booking['id'] ?>" style="color: white;" class="btn btn-sm btn-success">
+                                <a href="update-booking-hdv&boooking_id=<?= $booking['id'] ?>" style="color: white;" class="btn btn-sm btn-success">
                                     <i class="fas fa-edit"></i> Cập nhật chuyến đi
                                 </a>
                             </div>
                         </div>
                         <div class="card-body">
-                            <form method="POST" action="?act=update-booking-hdv">
+                            <form method="POST" action="update-booking-hdv">
                                 <input type="hidden" name="booking_id" value="<?= $booking['id'] ?>">
 
                                 <dl class="row">
@@ -122,7 +122,7 @@ view('layouts.HDVLayout', [
     'pageTitle' => 'Cập nhật Booking',
     'content' => $content,
     'breadcrumb' => [
-        ['label' => 'Cập nhật Booking', 'url' => BASE_URL_HDV . 'booking', 'active' => true],
+        ['label' => 'Cập nhật Booking', 'url' => BASE_URL . 'booking', 'active' => true],
     ],
 ]);
 ?>

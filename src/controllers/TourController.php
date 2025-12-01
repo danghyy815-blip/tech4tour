@@ -107,7 +107,7 @@ class TourController
                 $dia_diem,
                 $price
             );
-            header("Location: ?act=tour");
+            header("Location: tour");
             exit;
         } else {
             // Giữ dữ liệu cũ để form hiển thị lại
@@ -151,7 +151,7 @@ class TourController
             $this->modelTour->deleteTour($id);
         }
 
-        header("Location: ?act=tour");
+        header("Location: tour");
         exit;
     }
 
@@ -166,7 +166,7 @@ class TourController
         }
 
         if (!isset($_GET['id'])) {
-            header("Location: ?act=tour");
+            header("Location: tour");
             exit;
         }
 
@@ -252,7 +252,7 @@ class TourController
                 $price
             );
 
-            header("Location: ?act=tour");
+            header("Location: tour");
             exit;
         } else {
             // Hiển thị lại form với dữ liệu đã nhập

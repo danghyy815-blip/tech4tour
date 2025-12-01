@@ -13,11 +13,11 @@ ob_start();
                                 <i class="fas fa-th-list"></i> Chi tiết danh mục Tour
                             </h3>
                             <div class="card-tools">
-                                <a href="<?= BASE_URL . '?act=form-update-danh-muc-tour&id=' . $danhMuc['id'] ?>"
+                                <a href="<?= BASE_URL . 'form-update-danh-muc-tour&id=' . $danhMuc['id'] ?>"
                                     class="btn btn-sm btn-info">
                                     <i class="fas fa-edit"></i> Sửa
                                 </a>
-                                <a href="<?= BASE_URL . '?act=danh-muc-tour' ?>" class="btn btn-sm btn-secondary">
+                                <a href="<?= BASE_URL . 'danh-muc-tour' ?>" class="btn btn-sm btn-secondary">
                                     <i class="fas fa-arrow-left"></i> Quay lại
                                 </a>
                             </div>
@@ -65,7 +65,7 @@ view('layouts.AdminLayout', [
     'pageTitle' => 'Chi tiết danh mục tour',
     'content' => $content,
     'breadcrumb' => [
-        ['label' => 'Danh mục tour', 'url' => BASE_URL . '?act=danh-muc-tour', 'active' => false],
+        ['label' => 'Danh mục tour', 'url' => BASE_URL . 'danh-muc-tour', 'active' => false],
         ['label' => 'Chi tiết', 'url' => '#', 'active' => true],
     ],
 ]);

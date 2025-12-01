@@ -13,10 +13,10 @@ ob_start();
                                 <i class="fas fa-info-circle"></i> Thông tin cơ bản
                             </h3>
                             <div class="card-tools">
-                                <a  href="<?= BASE_URL . '?act=form-update-policy&id=' . $policy['id'] ?>" class="btn btn-sm btn-info">
+                                <a  href="<?= BASE_URL . 'form-update-policy&id=' . $policy['id'] ?>" class="btn btn-sm btn-info">
                                     <i class="fas fa-edit"></i> Sửa
                                 </a>
-                                <a href="?act=delete-policy&id=<?= $policy['id'] ?>" style="color: white;" onclick="return confirm('Bạn có đồng ý xóa chính sách này không?')" class="btn btn-sm btn-danger">
+                                <a href="delete-policy&id=<?= $policy['id'] ?>" style="color: white;" onclick="return confirm('Bạn có đồng ý xóa chính sách này không?')" class="btn btn-sm btn-danger">
                                     <i class="fas fa-trash"></i> Xóa
                                 </a>
                             </div>

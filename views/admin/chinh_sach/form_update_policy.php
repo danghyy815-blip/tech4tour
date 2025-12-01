@@ -14,7 +14,7 @@ ob_start();
             <div class="card-header">
               <h3 class="card-title">Cập nhật chính sách</h3>
             </div>
-            <form action="?act=update-policy" method="POST">
+            <form action="update-policy" method="POST">
               <input type="hidden" name="id" value="<?= $policy['id'] ?>">
               <div class="card-body">
                 <div class="form-group">

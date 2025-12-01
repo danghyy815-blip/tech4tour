@@ -67,7 +67,7 @@ if (!isset($customers) || !is_array($customers)) {
                                             <tr>
                                                 <td><?= htmlspecialchars($customer['id']) ?></td>
                                                 <td>
-                                                    <a href="<?= BASE_URL . '?act=detail-khach-hang&id=' . htmlspecialchars($customer['id']) ?>"
+                                                    <a href="<?= BASE_URL . 'detail-khach-hang&id=' . htmlspecialchars($customer['id']) ?>"
                                                         class="font-weight-bold">
                                                         <?= htmlspecialchars($customer['ho_ten']) ?>
                                                     </a>
@@ -97,12 +97,12 @@ if (!isset($customers) || !is_array($customers)) {
                                                 </td>
                                                 <td>
                                                     <button type="button"
-                                                        onclick="window.location.href='<?= BASE_URL . '?act=form-update-khach-hang&id=' . htmlspecialchars($customer['id']) ?>'"
+                                                        onclick="window.location.href='<?= BASE_URL . 'form-update-khach-hang&id=' . htmlspecialchars($customer['id']) ?>'"
                                                         class="btn btn-primary btn-sm mb-1" title="Sửa">
                                                         <i class="fas fa-edit"></i>Sửa
                                                     </button>
                                                     <button type="button"
-                                                        onclick="if(confirm('Bạn có chắc chắn muốn XÓA (đưa vào trạng thái \'xóa\') khách hàng [<?= htmlspecialchars($customer['ho_ten']) ?>] này không?')) { window.location.href='<?= BASE_URL . '?act=delete-khach-hang&id=' . htmlspecialchars($customer['id']) ?>'; }"
+                                                        onclick="if(confirm('Bạn có chắc chắn muốn XÓA (đưa vào trạng thái \'xóa\') khách hàng [<?= htmlspecialchars($customer['ho_ten']) ?>] này không?')) { window.location.href='<?= BASE_URL . 'delete-khach-hang&id=' . htmlspecialchars($customer['id']) ?>'; }"
                                                         class="btn btn-danger btn-sm mb-1" title="Xóa">
                                                         <i class="fas fa-trash"></i>Xóa
                                                     </button>
@@ -170,7 +170,7 @@ view('layouts.AdminLayout', [
     'pageTitle' => 'Danh Sách Khách Hàng',
     'content' => $content,
     'breadcrumb' => [
-        ['label' => 'Quản lý khách hàng', 'url' => BASE_URL . '?act=khach-hang', 'active' => true],
+        ['label' => 'Quản lý khách hàng', 'url' => BASE_URL . 'khach-hang', 'active' => true],
     ],
 ]);
 ?>

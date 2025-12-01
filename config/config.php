@@ -8,8 +8,8 @@ if (!defined('BASE_URL')) {
     define('BASE_URL', '/tech4tour/'); // URL cơ bản của dự án(Lưu ý cấp độ trong htdocs hoặc www)
 }
 
-if (!defined('BASE_URL_HDV')) {
-    define('BASE_URL_HDV', '/tech4tour/hdv/'); // URL cơ bản của dự án(Lưu ý cấp độ trong htdocs hoặc www)
+if (!defined('BASE_URL')) {
+    define('BASE_URL', '/tech4tour/hdv/'); // URL cơ bản của dự án(Lưu ý cấp độ trong htdocs hoặc www)
 }
 
 // Cấu hình cơ bản cho kết nối CSDL

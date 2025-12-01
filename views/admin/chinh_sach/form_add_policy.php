@@ -12,7 +12,7 @@ ob_start();
             <div class="card-header">
               <h3 class="card-title">Thêm chính sách</h3>
             </div>
-            <form action="?act=add-policy" method="POST">
+            <form action="<?= BASE_URL . 'add-policy'?>" method="POST">
               <div class="card-body">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Tên chính sách</label>

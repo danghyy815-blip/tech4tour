@@ -13,7 +13,7 @@ ob_start();
                     <h3 class="fw-bold text-primary">
                         <i class="bi bi-map"></i> Danh sách Tour
                     </h3>
-                    <a href="?act=form-add-tour" class="btn btn-success">
+                    <a href="form-add-tour" class="btn btn-success">
                         <i class="bi bi-plus-circle"></i> Thêm tour mới
                     </a>
                 </div>
@@ -42,7 +42,7 @@ ob_start();
                                         <tr>
                                             <td><?= $key + 1 ?></td>
                                             <td><a
-                                                    href="?act=detail-tour&id=<?= $tour['id'] ?>"><?= $tour['ten_tour'] ?></a>
+                                                    href="detail-tour&id=<?= $tour['id'] ?>"><?= $tour['ten_tour'] ?></a>
                                             </td>
                                             <td>
                                                 <?php if (!empty($tour['hinh_anh'])): ?>
@@ -62,11 +62,11 @@ ob_start();
                                                 <?php endif; ?>
                                             </td>
                                             <td>
-                                                <a href="?act=form-update-tour&id=<?= $tour['id'] ?>"
+                                                <a href="form-update-tour&id=<?= $tour['id'] ?>"
                                                     class="btn btn-primary btn-sm me-1">
                                                     Sửa
                                                 </a>
-                                                <a href="?act=delete-tour&id=<?= $tour['id'] ?>"
+                                                <a href="delete-tour&id=<?= $tour['id'] ?>"
                                                     class="btn btn-danger btn-sm"
                                                     onclick="return confirm('Bạn có chắc chắn muốn xóa tour này không?')">
                                                     Xóa

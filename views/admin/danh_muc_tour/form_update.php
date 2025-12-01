@@ -15,7 +15,7 @@ ob_start();
                             <h3 class="card-title"><i class="fas fa-edit"></i> Cập nhật Danh mục Tour</h3>
                         </div>
 
-                        <form action="?act=update-danh-muc-tour" method="POST">
+                        <form action="update-danh-muc-tour" method="POST">
                             <input type="hidden" name="id" value="<?= $danhMuc['id'] ?>">
 
                             <div class="card-body">
@@ -64,7 +64,7 @@ ob_start();
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Cập
                                     nhật</button>
-                                <a href="?act=danh-muc-tour" class="btn btn-secondary ml-2"><i
+                                <a href="danh-muc-tour" class="btn btn-secondary ml-2"><i
                                         class="fas fa-arrow-left"></i> Quay lại</a>
                             </div>
                         </form>
@@ -86,7 +86,7 @@ view('layouts.AdminLayout', [
     'pageTitle' => 'Cập nhật Danh Mục Tour',
     'content' => $content,
     'breadcrumb' => [
-        ['label' => 'Danh mục tour', 'url' => BASE_URL . '?act=danh-muc-tour', 'active' => false],
+        ['label' => 'Danh mục tour', 'url' => BASE_URL . 'danh-muc-tour', 'active' => false],
         ['label' => 'Cập nhật', 'url' => '#', 'active' => true],
     ],
 ]);

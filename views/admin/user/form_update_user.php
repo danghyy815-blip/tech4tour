@@ -97,7 +97,7 @@
     <h3 class="card-title">Cập nhật nhân viên</h3>
   </div>
 
-  <form action="?act=update-user" method="POST">
+  <form action="update-user" method="POST">
 
     <input type="hidden" name="id" value="<?= htmlspecialchars($user['id'] ?? '') ?>">
 
@@ -296,7 +296,7 @@ view('layouts.AdminLayout', [
   'pageTitle' => 'Cập nhật nhân viên',
   'content' => $content,
   'breadcrumb' => [
-    ['label' => 'Cập nhật nhân viên', 'url' => BASE_URL . '?act=user', 'active' => true],
+    ['label' => 'Cập nhật nhân viên', 'url' => BASE_URL . 'user', 'active' => true],
   ],
 ]);
 ?>

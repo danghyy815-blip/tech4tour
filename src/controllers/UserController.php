@@ -102,7 +102,7 @@ class UserController
                     setFlash('error', 'Thêm nhân viên thất bại.');
                 }
                 // Sau khi thêm, chuyển về trang quản lý người dùng
-                header("Location: ?act=user");
+                header("Location: user");
                 exit();
             }
         }
@@ -122,7 +122,7 @@ class UserController
             if ($current && isset($current->id) && $current->id == $id) {
                 // Không cho xóa chính tài khoản đang đăng nhập
                 setFlash('error', 'Không thể xóa chính bạn.');
-                header("Location: ?act=user");
+                header("Location: user");
                 exit();
             }
 
@@ -133,7 +133,7 @@ class UserController
                 setFlash('error', 'Xóa nhân viên thất bại.');
             }
         }
-        header("Location: ?act=user");
+        header("Location: user");
         exit();
     }
 
@@ -219,7 +219,7 @@ class UserController
                 } else {
                     setFlash('error', 'Cập nhật nhân viên thất bại.');
                 }
-                header("Location: ?act=user");
+                header("Location: user");
                 exit();
             } else {
                 $user = [
