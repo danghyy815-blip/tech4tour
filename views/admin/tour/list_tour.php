@@ -45,13 +45,9 @@ ob_start();
                                                     href="?act=detail-tour&id=<?= $tour['id'] ?>"><?= $tour['ten_tour'] ?></a>
                                             </td>
                                             <td>
-                                                <!-- Display the image as a clickable link -->
-                                                <?php if ($tour['hinh_anh']): ?>
-                                                    <a href="<?= $tour['hinh_anh'] ?>" target="_blank">
-                                                        <img src="<?= $tour['hinh_anh'] ?>" alt="Image" width="100">
-                                                    </a>
-                                                <?php else: ?>
-                                                    <span>Chưa có hình</span> <!-- No image -->
+                                                <?php if (!empty($tour['hinh_anh'])): ?>
+                                                    <img src="uploads/tours/<?= htmlspecialchars($tour['hinh_anh']) ?>"
+                                                        class="img-fluid rounded shadow-sm" width="150" >
                                                 <?php endif; ?>
                                             </td>
                                             <td class="text-danger fw-bold"><?= number_format($tour['gia']) ?>đ</td>
