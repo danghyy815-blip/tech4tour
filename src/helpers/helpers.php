@@ -132,7 +132,7 @@ function requireLogin($redirectUrl = null)
 function requireAdmin()
 {
     requireLogin();
-    
+
     if (!isAdmin()) {
         header('Location: ' . BASE_URL);
         exit;
@@ -143,12 +143,13 @@ function requireAdmin()
 function requireGuideOrAdmin()
 {
     requireLogin();
-    
+
     if (!isGuide() && !isAdmin()) {
         header('Location: ' . BASE_URL);
         exit;
     }
 }
+
 
 // Flash message helpers
 function setFlash(string $key, string $message)

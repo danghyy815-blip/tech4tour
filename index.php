@@ -10,18 +10,19 @@ require_once __DIR__ . '/src/helpers/database.php'; // Helper kết nối databa
 // Nạp các file chứa model
 require_once __DIR__ . '/src/models/User.php';
 require_once __DIR__ . '/src/models/ChinhSach.php';
+require_once __DIR__ . '/src/models/Booking.php';
+require_once __DIR__ . '/src/models/DanhMucTour.php';
+require_once __DIR__ . '/src/models/Customer.php';
 
 // Nạp các file chứa controller
 require_once __DIR__ . '/src/controllers/HomeController.php';
 require_once __DIR__ . '/src/controllers/AuthController.php';
 require_once __DIR__ . '/src/controllers/ChinhSachController.php';
-require_once __DIR__ . '/src/controllers/UserController.php';
 
 // Khởi tạo các controller
 $homeController = new HomeController();
 $authController = new AuthController();
 $chinhSachController = new ChinhSachController();
-$userController = new UserController();
 
 // Xác định route dựa trên tham số act (mặc định là trang chủ '/')
 $act = $_GET['act'] ?? '/';
@@ -47,15 +48,6 @@ match ($act) {
     'form-update-policy' => $chinhSachController->formUpdatePolicy(),
     'update-policy' => $chinhSachController->updatePolicy(),
     'detail-policy' => $chinhSachController->detailPolicy(),
-
-    // Route nguoi dung
-    'user' => $userController->getListUser(),
-    'form-add-user' => $userController->formAddUser(),
-    'add-user' => $userController->addUser(),
-    'delete-user' => $userController->deleteUser(),
-    'form-update-user' => $userController->formUpdateUser(),
-    'update-user' => $userController->updateUser(),
-    'detail-user' => $userController->detailUser(),
 
     // Đường dẫn không tồn tại
     default => $homeController->notFound(),

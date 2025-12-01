@@ -24,17 +24,17 @@ ob_start();
                     Đăng nhập để tiếp tục
                 </h4>
                 <?php if (!empty($errors)): ?>
-                <div class="alert alert-danger fade show" role="alert">
-                    <div class="d-flex align-items-center mb-2">
-                        <i class="bi bi-exclamation-circle-fill me-2 fs-5"></i>
-                        <strong>Lỗi đăng nhập</strong>
+                    <div class="alert alert-danger fade show" role="alert">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="bi bi-exclamation-circle-fill me-2 fs-5"></i>
+                            <strong>Lỗi đăng nhập</strong>
+                        </div>
+                        <ul class="mb-0 ps-3">
+                            <?php foreach ($errors as $error): ?>
+                                <li><?= htmlspecialchars($error) ?></li>
+                            <?php endforeach; ?>
+                        </ul>
                     </div>
-                    <ul class="mb-0 ps-3">
-                        <?php foreach ($errors as $error): ?>
-                        <li><?= htmlspecialchars($error) ?></li>
-                        <?php endforeach; ?>
-                    </ul>
-                </div>
                 <?php endif; ?>
                 <form action="<?= BASE_URL ?>check-login" method="post" autocomplete="on" novalidate>
                     <input type="hidden" name="redirect" value="<?= $redirect ?? BASE_URL . 'home' ?>" />
@@ -45,14 +45,9 @@ ob_start();
                         </label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                            <input type="email"
-                                   class="form-control"
-                                   id="loginEmail"
-                                   name="email"
-                                   value="<?= htmlspecialchars($email ?? '') ?>"
-                                   placeholder="Nhập email"
-                                   required
-                                   autofocus />
+                            <input type="email" class="form-control" id="loginEmail" name="email"
+                                value="<?= htmlspecialchars($email ?? '') ?>" placeholder="Nhập email" required
+                                autofocus />
                         </div>
                     </div>
                     <div class="mb-2">
@@ -61,21 +56,18 @@ ob_start();
                         </label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
-                            <input type="password"
-                                   class="form-control"
-                                   id="loginPassword"
-                                   name="password"
-                                   placeholder="Nhập mật khẩu"
-                                   required
-                                   autocomplete="current-password"/>
-                            <button type="button" class="btn btn-outline-secondary btn-sm" tabindex="-1" id="togglePassword" title="Hiện/ẩn mật khẩu">
+                            <input type="password" class="form-control" id="loginPassword" name="password"
+                                placeholder="Nhập mật khẩu" required autocomplete="current-password" />
+                            <button type="button" class="btn btn-outline-secondary btn-sm" tabindex="-1"
+                                id="togglePassword" title="Hiện/ẩn mật khẩu">
                                 <i class="bi bi-eye" id="togglePasswordIcon"></i>
                             </button>
                         </div>
                     </div>
                     <div class="mb-4 d-flex justify-content-between align-items-center">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="1" id="rememberMe" name="remember_me">
+                            <input class="form-check-input" type="checkbox" value="1" id="rememberMe"
+                                name="remember_me">
                             <label class="form-check-label" for="rememberMe">
                                 Ghi nhớ tài khoản
                             </label>

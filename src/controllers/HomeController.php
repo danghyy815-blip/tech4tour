@@ -32,7 +32,14 @@ class HomeController
         $currentUser = getCurrentUser();
 
         // Hiển thị view home với dữ liệu title và user
-        view('home', [
+        if($currentUser->isAdmin()){
+            view('home', [
+                'title' => 'Trang chủ - Website Quản Lý Tour',
+                'user' => $currentUser,
+            ]);
+            return;
+        }
+        view('home_hdv', [
             'title' => 'Trang chủ - Website Quản Lý Tour',
             'user' => $currentUser,
         ]);
