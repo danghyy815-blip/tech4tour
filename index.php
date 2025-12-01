@@ -20,6 +20,8 @@ require_once __DIR__ . '/src/controllers/AuthController.php';
 require_once __DIR__ . '/src/controllers/ChinhSachController.php';
 require_once __DIR__ . '/src/controllers/UserController.php';
 require_once __DIR__ . '/src/controllers/ReportController.php';
+require_once __DIR__ . '/src/controllers/CustomerController.php';
+require_once __DIR__ . '/src/controllers/BookingController.php';
 
 // Khởi tạo các controller
 $homeController = new HomeController();
@@ -27,6 +29,8 @@ $authController = new AuthController();
 $chinhSachController = new ChinhSachController();
 $userController = new UserController();
 $reportController = new ReportController();
+$customerController = new CustomerController();
+$bookingController = new BookingController();
 // Xác định route dựa trên tham số act (mặc định là trang chủ '/')
 $act = $_GET['act'] ?? '/';
 
@@ -58,6 +62,19 @@ match ($act) {
     'form-add-user' => $userController->formAddUser(),
     'add-user' => $userController->addUser(),
     'delete-user' => $userController->deleteUser(),
+
+    // Route khách hàng
+    'khach-hang' => $customerController->getList(),
+    'form-add-khach-hang' => $customerController->formAdd(),
+    'add-khach-hang' => $customerController->add(),
+    'delete-khach-hang' => $customerController->delete(),
+    'form-update-khach-hang' => $customerController->formUpdate(),
+    'update-khach-hang' => $customerController->update(),
+    'detail-khach-hang' => $customerController->detail(),
+
+    // Route booking
+    'booking' => $bookingController->getListBooking(),
+    'detail-booking' => $bookingController->detailBooking(),
 
     // Route báo cáo thống kê
     'report' => $reportController->getStatistics(),

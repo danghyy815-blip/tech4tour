@@ -30,7 +30,7 @@ ob_start();
                         <div class="icon">
                             <i class="fas fa-user-friends"></i>
                         </div>
-                        <a href="?act=khach-hang" class="small-box-footer">Xem chi tiết <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="<?= BASE_URL . '?act=khach-hang' ?>" class="small-box-footer">Xem chi tiết <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-2 col-6">
@@ -42,7 +42,7 @@ ob_start();
                         <div class="icon">
                             <i class="fas fa-user-tie"></i>
                         </div>
-                        <a href="?act=user" class="small-box-footer">Xem chi tiết <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="<?= BASE_URL . '?act=user' ?>" class="small-box-footer">Xem chi tiết <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-2 col-6">
@@ -54,7 +54,7 @@ ob_start();
                         <div class="icon">
                             <i class="fas fa-book"></i>
                         </div>
-                        <a href="?act=booking" class="small-box-footer">Xem chi tiết <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="<?= BASE_URL_HDV . '?act=booking' ?>" class="small-box-footer">Xem chi tiết <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-2 col-6">
@@ -66,7 +66,7 @@ ob_start();
                         <div class="icon">
                             <i class="fas fa-hiking"></i>
                         </div>
-                        <a href="?act=tours" class="small-box-footer">Xem chi tiết <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="<?= BASE_URL . '?act=tour' ?>" class="small-box-footer">Xem chi tiết <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-12">
