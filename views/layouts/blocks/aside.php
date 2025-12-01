@@ -83,15 +83,21 @@
             <a href="#" class="nav-link">
               <i class="nav-icon bi bi-person-gear"></i>
               <p>
-                Quản lý Người dùng
+                Quản lý Nhân viên
                 <i class="nav-arrow bi bi-chevron-right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="<?= BASE_URL . '?act=user' ?>" class="nav-link">
                   <i class="nav-icon bi bi-circle"></i>
-                  <p>Danh sách Người dùng</p>
+                  <p>Danh sách Nhân viên</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= BASE_URL . '?act=form-add-user' ?>" class="nav-link">
+                  <i class="nav-icon bi bi-circle"></i>
+                  <p>Thêm Nhân viên</p>
                 </a>
               </li>
             </ul>
