@@ -56,21 +56,16 @@ ob_start();
                                                 <td><?= htmlspecialchars(substr($dm['mo_ta'], 0, 80)) . (strlen($dm['mo_ta']) > 80 ? '...' : '') ?>
                                                 </td>
                                                 <td>
-
-                                                    <a href="<?= BASE_URL . '?act=form-update-danh-muc-tour&id=' . htmlspecialchars($dm['id']) ?>"
+                                                    <button type="button"
+                                                        onclick="window.location.href='<?= BASE_URL . '?act=form-update-danh-muc-tour&id=' . htmlspecialchars($dm['id']) ?>'"
                                                         class="btn btn-primary btn-sm mb-1" title="Sửa">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a>
-
-                                                    <a href="<?= BASE_URL . '?act=detail-danh-muc-tour&id=' . htmlspecialchars($dm['id']) ?>"
-                                                        class="btn btn-info btn-sm mb-1" title="Chi tiết">
-                                                        <i class="fas fa-eye"></i>
-                                                    </a>
-
-                                                    <a href="<?= BASE_URL . '?act=delete-danh-muc-tour&id=' . htmlspecialchars($dm['id']) ?>"
-                                                        onclick="return confirm('Bạn có chắc chắn muốn xoá danh mục [<?= htmlspecialchars($dm['ten_danh_muc']) ?>] này không? Hành động này có thể ảnh hưởng đến các Tour liên quan!')"
+                                                        <i class="fas fa-edit"></i> Sửa
+                                                    </button>
+                                                    <button type="button"
+                                                        onclick="if(confirm('Bạn có chắc chắn muốn xoá danh mục [<?= htmlspecialchars($dm['ten_danh_muc']) ?>] này không? Hành động này có thể ảnh hưởng đến các Tour liên quan!')) { window.location.href='<?= BASE_URL . '?act=delete-danh-muc-tour&id=' . htmlspecialchars($dm['id']) ?>'; }"
                                                         class="btn btn-danger btn-sm mb-1" title="Xóa">
-                                                        <i class="fas fa-trash"></i>
+                                                        <i class="fas fa-trash"></i> Xóa
+                                                    </button>
                                                     </a>
                                                 </td>
                                             </tr>

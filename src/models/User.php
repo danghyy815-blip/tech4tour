@@ -87,7 +87,7 @@ class User
         return $this->chuc_vu === 'Hướng dẫn viên';
     }
     public function getAllUser() {
-        return $this->conn->query("SELECT * FROM users")->fetchAll(PDO::FETCH_ASSOC);
+        return $this->conn->query("SELECT * FROM users where chuc_vu <> 'Admin' order by id desc")->fetchAll(PDO::FETCH_ASSOC);
     }
 
     // Thêm người dùng mới

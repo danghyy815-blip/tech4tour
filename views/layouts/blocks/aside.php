@@ -109,16 +109,15 @@
                 </li>
                 <?php if (isAdmin()): ?>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="<?= BASE_URL . '?act=user' ?>" class="nav-link">
                             <i class="nav-icon bi bi-person-gear"></i>
                             <p>
-                                Quản lý Người dùng
-                                <i class="nav-arrow bi bi-chevron-right"></i>
+                                Quản lý nhân viên
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="<?= BASE_URL . '?act=form-add-user' ?>" class="nav-link">
                                     <i class="nav-icon bi bi-circle"></i>
                                     <p>Danh sách Người dùng</p>
                                 </a>
