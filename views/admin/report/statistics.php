@@ -1,6 +1,48 @@
 <?php
 ob_start();
 ?>
+<style>
+    /* Card đẹp hiện đại */
+    .card {
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        border: none;
+        overflow: hidden;
+        margin-bottom: 25px;
+    }
+
+    .card-header {
+        padding: 16px 20px;
+        background: linear-gradient(90deg, #4a6cf7, #6f87ff);
+        color: #fff !important;
+        border-bottom: none;
+    }
+
+    .card-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .small-box {
+        border-radius: 12px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        transition: 0.25s ease;
+    }
+
+    .small-box:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .card-body {
+        padding: 20px 22px;
+    }
+
+    .chart canvas {
+        max-height: 260px;
+    }
+</style>
 
 <div class="content-wrapper">
     <!-- Main content -->
@@ -30,7 +72,7 @@ ob_start();
                         <div class="icon">
                             <i class="fas fa-user-friends"></i>
                         </div>
-                        <a href="<?= BASE_URL . '?act=khach-hang' ?>" class="small-box-footer">Xem chi tiết <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="<?= BASE_URL . 'khach-hang' ?>" class="small-box-footer">Xem chi tiết <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-2 col-6">
@@ -42,7 +84,7 @@ ob_start();
                         <div class="icon">
                             <i class="fas fa-user-tie"></i>
                         </div>
-                        <a href="<?= BASE_URL . '?act=user' ?>" class="small-box-footer">Xem chi tiết <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="<?= BASE_URL . 'user' ?>" class="small-box-footer">Xem chi tiết <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-2 col-6">
@@ -54,7 +96,7 @@ ob_start();
                         <div class="icon">
                             <i class="fas fa-book"></i>
                         </div>
-                        <a href="<?= BASE_URL_HDV . '?act=booking' ?>" class="small-box-footer">Xem chi tiết <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="<?= BASE_URL . 'booking' ?>" class="small-box-footer">Xem chi tiết <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-2 col-6">
@@ -66,7 +108,7 @@ ob_start();
                         <div class="icon">
                             <i class="fas fa-hiking"></i>
                         </div>
-                        <a href="<?= BASE_URL . '?act=tour' ?>" class="small-box-footer">Xem chi tiết <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="<?= BASE_URL . 'tour' ?>" class="small-box-footer">Xem chi tiết <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-12">
@@ -90,7 +132,7 @@ ob_start();
                     <!-- AREA CHART -->
                     <div class="card card-primary">
                         <div class="card-header with-border">
-                            <h3 class="card-title">Phân bố người dùng theo chức vụ</h3>
+                            <h3 class="card-title">Phân bố doanh thu theo tour</h3>
                             <div class="card-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse">
                                     <i class="fas fa-minus"></i>
@@ -181,7 +223,7 @@ view('layouts.AdminLayout', [
     'pageTitle' => 'Báo cáo thống kê',
     'content' => $content,
     'breadcrumb' => [
-        ['label' => 'Báo cáo thống kê', 'url' => BASE_URL . '?act=report', 'active' => true],
+        ['label' => 'Báo cáo thống kê', 'url' => BASE_URL . 'report', 'active' => true],
     ],
 ]);
 ?>

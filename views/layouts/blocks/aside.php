@@ -7,8 +7,7 @@
             <!--begin::Brand Image-->
             <img src="<?= asset('dist/assets/img/AdminLTELogo.png') ?>" alt="AdminLTE Logo"
                 class="brand-image opacity-75 shadow" />
-            <!--end::Brand Image-->
-            <!--begin::Brand Text-->
+
             <span class="brand-text fw-light">Quản Lý Tour</span>
             <!--end::Brand Text-->
         </a>
@@ -33,7 +32,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="<?= BASE_URL . 'tour' ?>" class="nav-link">
                         <i class="nav-icon bi bi-airplane-engines"></i>
                         <p>
                             Quản lý Tour
@@ -44,14 +43,14 @@
                     <ul class="nav nav-treeview">
 
                         <li class="nav-item">
-                            <a href="" class="nav-link">
+                            <a href="<?= BASE_URL . 'tour' ?>" class="nav-link">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Danh mục Tour</p>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a href="" class="nav-link">
+                            <a href="<?= BASE_URL . 'form-add-tour' ?>" class="nav-link">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Thêm danh mục mới</p>
                             </a>
@@ -125,7 +124,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a href="<?= BASE_URL . '?act=report' ?>" class="nav-link">
+                        <a href="<?= BASE_URL . 'report' ?>" class="nav-link">
                             <i class="nav-icon bi bi-graph-up"></i>
                             <p>Báo cáo thống kê</p>
                         </a>

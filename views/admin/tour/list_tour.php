@@ -10,9 +10,6 @@ ob_start();
 
             <div class="row mb-3">
                 <div class="col-12 d-flex justify-content-between align-items-center">
-                    <h3 class="fw-bold text-primary">
-                        <i class="bi bi-map"></i> Danh sách Tour
-                    </h3>
                     <a href="form-add-tour" class="btn btn-success">
                         <i class="bi bi-plus-circle"></i> Thêm tour mới
                     </a>
