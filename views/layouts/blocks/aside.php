@@ -32,7 +32,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= BASE_URL . 'tour' ?>" class="nav-link">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon bi bi-airplane-engines"></i>
                         <p>
                             Quản lý Tour
