@@ -79,7 +79,9 @@ match ($act) {
     // Route nguoi dung
     'user' => $userController->getListUser(),
     'form-add-user' => $userController->formAddUser(),
+    'form-update-user' => $userController->formUpdateUser(),
     'add-user' => $userController->addUser(),
+    'update-user' => $userController->updateUser(),
     'delete-user' => $userController->deleteUser(),
 
     // đường dẫn cho HDV

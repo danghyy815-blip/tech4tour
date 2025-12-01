@@ -14,16 +14,6 @@ function get_customer_value($customer, $key, $default = 'Chưa cập nhật')
 ?>
 
 <div class="content-wrapper">
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-12">
-                    <h1 class="m-0">Chi Tiết Khách Hàng:
-                        <?= get_customer_value($customer, 'ho_ten', 'Không xác định') ?></h1>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <section class="content">
         <div class="container-fluid mb-5">
