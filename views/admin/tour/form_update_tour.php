@@ -10,9 +10,9 @@ ob_start();
 <?php
 $selectedPolicies = [];
 if (!empty($old['chinh_sach_id']) && is_array($old['chinh_sach_id'])) {
-    $selectedPolicies = $old['chinh_sach_id']; // dữ liệu submit lỗi
-} elseif (!empty($tour['chinh_sach_id'])) {
-    $selectedPolicies = array_map('intval', explode(',', $tour['chinh_sach_id'])); // dữ liệu từ DB
+    $selectedPolicies = $old['chinh_sach_id']; 
+} elseif (!empty($tour['chinh_sach_ids'])) {
+    $selectedPolicies = array_map('intval', explode(',', $tour['chinh_sach_ids']));
 }
 ?>
 
@@ -20,6 +20,7 @@ if (!empty($old['chinh_sach_id']) && is_array($old['chinh_sach_id'])) {
     <form action="update-tour" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="id" value="<?= $tour['id'] ?>">
         <input type="hidden" name="old_image" value="<?= $tour['hinh_anh'] ?>">
+        <input type="hidden" name="old_chinh_sach_id" value="<?= htmlspecialchars($tour['chinh_sach_ids'] ?? '') ?>">
 
         <div class="mb-3">
             <label class="form-label">TÊN TOUR</label>
@@ -58,7 +59,7 @@ if (!empty($old['chinh_sach_id']) && is_array($old['chinh_sach_id'])) {
                     <label class="form-label">HÌNH ẢNH</label>
                     <?php if (!empty($tour['hinh_anh'])): ?>
                         <div class="mb-2">
-                            <img src="<?= BASE_URL . $tour['hinh_anh'] ?>" alt="" style="width:150px; border-radius:6px;">
+                            <img src="<?= BASE_URL ?>uploads/tours/<?= $tour['hinh_anh'] ?>" alt="" style="width:150px; border-radius:6px;">
                         </div>
                     <?php endif; ?>
                     <input type="file" name="hinh_anh" class="form-control">
@@ -102,15 +103,13 @@ if (!empty($old['chinh_sach_id']) && is_array($old['chinh_sach_id'])) {
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="chinh_sach_id" class="form-label">CHÍNH SÁCH ÁP DỤNG</label>
-                    <select class="selectpicker form-control" multiple data-live-search="true" name="chinh_sach_id[]">
+                    <select class="selectpicker form-control" multiple data-live-search="true" name="chinh_sach_id[]" id="chinh_sach_id">
                         <?php foreach ($listChinhSach as $cs): ?>
                             <option value="<?= $cs['id'] ?>" <?= in_array($cs['id'], $selectedPolicies) ? 'selected' : '' ?>>
                                 <?= $cs['ten_chinh_sach'] ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
-                    <input type="hidden" name="old_chinh_sach_id" value="<?= htmlspecialchars($tour['chinh_sach_id'] ?? '') ?>">
-                    <script>$('.selectpicker').selectpicker();</script>
                 </div>
             </div>
 
@@ -151,6 +150,12 @@ if (!empty($old['chinh_sach_id']) && is_array($old['chinh_sach_id'])) {
         <a href="tour" class="btn btn-secondary">Quay lại</a>
     </form>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('.selectpicker').selectpicker();
+    });
+</script>
 
 <?php
 $content = ob_get_clean();

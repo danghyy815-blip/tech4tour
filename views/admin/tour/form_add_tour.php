@@ -8,7 +8,6 @@ ob_start();
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/bootstrap-select.js"></script>
 
 <?php
-// Giữ dữ liệu cũ khi submit lỗi
 $selectedPolicies = $old['chinh_sach_id'] ?? [];
 ?>
 
@@ -89,7 +88,7 @@ $selectedPolicies = $old['chinh_sach_id'] ?? [];
 
         <!-- Chính sách + Loại Tour -->
         <div class="row">
-        <div class="col-md-6">
+            <div class="col-md-6">
                 <div class="mb-3">
                     <label for="chinh_sach_id" class="form-label">CHÍNH SÁCH ÁP DỤNG</label>
                     <select class="selectpicker form-control" multiple data-live-search="true" name="chinh_sach_id[]">
@@ -99,8 +98,6 @@ $selectedPolicies = $old['chinh_sach_id'] ?? [];
                             </option>
                         <?php endforeach; ?>
                     </select>
-                    <input type="hidden" name="old_chinh_sach_id" value="<?= htmlspecialchars($tour['chinh_sach_id'] ?? '') ?>">
-                    <script>$('.selectpicker').selectpicker();</script>
                 </div>
             </div>
             <div class="col-md-6">
@@ -142,7 +139,9 @@ $selectedPolicies = $old['chinh_sach_id'] ?? [];
 </div>
 
 <script>
-    $('.selectpicker').selectpicker();
+    $(document).ready(function() {
+        $('.selectpicker').selectpicker();
+    });
 </script>
 
 <?php

@@ -45,14 +45,14 @@
                         <li class="nav-item">
                             <a href="<?= BASE_URL . 'tour' ?>" class="nav-link">
                                 <i class="nav-icon bi bi-circle"></i>
-                                <p>Danh mục Tour</p>
+                                <p>Danh sách Tour</p>
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="<?= BASE_URL . 'form-add-tour' ?>" class="nav-link">
                                 <i class="nav-icon bi bi-circle"></i>
-                                <p>Thêm danh mục mới</p>
+                                <p>Thêm tour mới</p>
                             </a>
                         </li>
                     </ul>
