@@ -16,12 +16,146 @@ $errors = $errors ?? [];
 
 ?>
 
+<style>
+    :root {
+        --primary: #4a6cf7;
+        /* Xanh dương (Blue) - Cho Header */
+        --primary-hover: #3d5ae5;
+        --border: #dcdcdc;
+        --radius: 10px;
+        --input-radius: 6px;
+        --success-btn: #28a745;
+        /* Xanh lá - Cho nút Thêm */
+        --success-hover: #218838;
+    }
+
+    .card {
+        border-radius: var(--radius);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        border: 1px solid var(--border);
+    }
+
+    .card-header {
+        background: #28a745;
+        padding: 18px 24px;
+        border-top-left-radius: var(--radius);
+        border-top-right-radius: var(--radius);
+    }
+
+    .card-title {
+        color: #fff;
+        font-size: 18px;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .card-body {
+        padding: 25px 30px;
+    }
+
+    .card-footer {
+        padding: 20px 30px;
+        background-color: #f8f9fa;
+        /* Màu nền nhẹ cho footer */
+        border-top: 1px solid var(--border);
+        border-bottom-left-radius: var(--radius);
+        border-bottom-right-radius: var(--radius);
+    }
+
+    label {
+        font-weight: 600;
+        margin-bottom: 4px;
+        display: block;
+    }
+
+    /* Áp dụng styling form-control */
+    .form-control,
+    select.form-control,
+    textarea.form-control {
+        height: 44px;
+        border-radius: var(--input-radius);
+        border: 1px solid var(--border);
+        padding: 0 12px;
+        transition: .2s;
+        width: 100%;
+    }
+
+    textarea.form-control {
+        height: auto;
+        /* Cho phép textarea mở rộng */
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+
+    .form-control:focus {
+        border: 1px solid var(--primary);
+        box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.2);
+    }
+
+    .invalid {
+        border-color: red !important;
+    }
+
+    .error-text {
+        color: red;
+        font-size: 13px;
+        margin-top: 4px;
+    }
+
+    /* Các nút */
+    .btn-submit {
+        background: var(--success-btn);
+        /* Xanh lá */
+        padding: 10px 26px;
+        border-radius: 6px;
+        border: none;
+        font-weight: 600;
+        color: white;
+        cursor: pointer;
+        display: inline-block;
+        text-decoration: none;
+    }
+
+    .btn-submit:hover {
+        background: var(--success-hover);
+    }
+
+    .btn-secondary-custom {
+        background: #6c757d;
+        /* Xám */
+        padding: 10px 26px;
+        border-radius: 6px;
+        border: none;
+        font-weight: 600;
+        color: white;
+        margin-left: 10px;
+        cursor: pointer;
+        display: inline-block;
+        text-decoration: none;
+    }
+
+    .btn-secondary-custom:hover {
+        background: #5a6268;
+    }
+
+    /* Custom cho Radio button để không bị lỗi layout */
+    .custom-control {
+        padding-left: 1.5rem;
+        /* Điều chỉnh lại padding cho radio */
+    }
+
+    .custom-control-input:checked~.custom-control-label::before {
+        border-color: var(--primary);
+        background-color: var(--primary);
+    }
+</style>
 <div class="content-wrapper">
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-10 offset-md-1">
-                    <div class="card card-success">
+                <div class="col-12">
+                    <div class="card">
                         <div class="card-header">
                             <h3 class="card-title"><i class="fas fa-user-plus"></i> Thông tin Khách hàng</h3>
                         </div>
@@ -40,7 +174,7 @@ $errors = $errors ?? [];
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>Giới tính <span class="text-danger">*</span></label>
-                                        <div class="d-flex align-items-center mt-2">
+                                        <div class="d-flex align-items-center mt-2" style="height: 44px;">
                                             <div class="custom-control custom-radio mr-4">
                                                 <input class="custom-control-input" type="radio" id="genderNam"
                                                     name="gioi_tinh" value="Nam"
@@ -140,9 +274,9 @@ $errors = $errors ?? [];
                             </div>
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Thêm Khách
+                                <button type="submit" class="btn-submit"><i class="fas fa-save"></i> Thêm Khách
                                     hàng</button>
-                                <a href="<?= BASE_URL . 'khach-hang' ?>" class="btn btn-secondary ml-2"><i
+                                <a href="<?= BASE_URL . 'khach-hang' ?>" class="btn-secondary-custom ml-2"><i
                                         class="fas fa-arrow-left"></i> Quay lại</a>
                             </div>
                         </form>
