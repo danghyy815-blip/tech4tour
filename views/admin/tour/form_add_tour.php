@@ -8,7 +8,6 @@ ob_start();
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/bootstrap-select.js"></script>
 
 <?php
-// Mảng các chính sách đã chọn (giữ lại khi submit lỗi)
 $selectedPolicies = $old['chinh_sach_id'] ?? [];
 ?>
 
@@ -26,8 +25,18 @@ $selectedPolicies = $old['chinh_sach_id'] ?? [];
 
         <!-- Danh mục -->
         <div class="mb-3">
-            <label class="form-label">Danh mục (ID)</label>
-            <input type="number" name="id_danh_muc" class="form-control" value="<?= $old['id_danh_muc'] ?? '' ?>">
+            <label class="form-label">Danh mục</label>
+            <select name="id_danh_muc" class="form-select">
+                <option value="">-- Chọn danh mục --</option>
+                <?php foreach ($listDanhMuc as $dm): ?>
+                    <option value="<?= $dm['id'] ?>" <?= ($old['id_danh_muc'] ?? '') == $dm['id'] ? 'selected' : '' ?>>
+                        <?= $dm['ten_danh_muc'] ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+            <?php if(!empty($errors['id_danh_muc'])): ?>
+                <span class="text-danger"><?= $errors['id_danh_muc'] ?></span>
+            <?php endif; ?>
         </div>
 
         <!-- Lịch trình -->
@@ -47,7 +56,6 @@ $selectedPolicies = $old['chinh_sach_id'] ?? [];
                     <?php endif; ?>
                 </div>
             </div>
-
             <div class="col-md-6">
                 <div class="mb-3">
                     <label class="form-label">Giá Tour</label>
@@ -67,7 +75,6 @@ $selectedPolicies = $old['chinh_sach_id'] ?? [];
                     <input type="number" name="price" class="form-control" value="<?= $old['price'] ?? '' ?>">
                 </div>
             </div>
-
             <div class="col-md-6">
                 <div class="mb-3">
                     <label class="form-label">Nhà cung cấp</label>
@@ -83,7 +90,7 @@ $selectedPolicies = $old['chinh_sach_id'] ?? [];
         <div class="row">
             <div class="col-md-6">
                 <div class="mb-3">
-                    <label class="form-label">Chính sách áp dụng</label>
+                    <label for="chinh_sach_id" class="form-label">CHÍNH SÁCH ÁP DỤNG</label>
                     <select class="selectpicker form-control" multiple data-live-search="true" name="chinh_sach_id[]">
                         <?php foreach ($listChinhSach as $cs): ?>
                             <option value="<?= $cs['id'] ?>" <?= in_array($cs['id'], $selectedPolicies) ? 'selected' : '' ?>>
@@ -93,13 +100,12 @@ $selectedPolicies = $old['chinh_sach_id'] ?? [];
                     </select>
                 </div>
             </div>
-
             <div class="col-md-6">
                 <div class="mb-3">
                     <label class="form-label">Loại Tour</label>
                     <select name="loai_tour" class="form-control">
-                        <option value="Trong nước" <?= (isset($old['loai_tour']) && $old['loai_tour'] == 'Trong nước') ? 'selected' : '' ?>>Trong nước</option>
-                        <option value="Nước ngoài" <?= (isset($old['loai_tour']) && $old['loai_tour'] == 'Nước ngoài') ? 'selected' : '' ?>>Nước ngoài</option>
+                        <option value="Trong nước" <?= ($old['loai_tour'] ?? '') == 'Trong nước' ? 'selected' : '' ?>>Trong nước</option>
+                        <option value="Nước ngoài" <?= ($old['loai_tour'] ?? '') == 'Nước ngoài' ? 'selected' : '' ?>>Nước ngoài</option>
                     </select>
                 </div>
             </div>
@@ -111,12 +117,11 @@ $selectedPolicies = $old['chinh_sach_id'] ?? [];
                 <div class="mb-3">
                     <label class="form-label">Trạng thái</label>
                     <select name="trang_thai" class="form-control">
-                        <option value="1" <?= (isset($old['trang_thai']) && $old['trang_thai'] == 1) ? 'selected' : '' ?>>Hoạt động</option>
-                        <option value="0" <?= (isset($old['trang_thai']) && $old['trang_thai'] == 0) ? 'selected' : '' ?>>Tạm dừng</option>
+                        <option value="1" <?= ($old['trang_thai'] ?? '') == 1 ? 'selected' : '' ?>>Hoạt động</option>
+                        <option value="0" <?= ($old['trang_thai'] ?? '') == 0 ? 'selected' : '' ?>>Tạm dừng</option>
                     </select>
                 </div>
             </div>
-
             <div class="col-md-6">
                 <div class="mb-3">
                     <label class="form-label">Địa điểm</label>
@@ -134,7 +139,9 @@ $selectedPolicies = $old['chinh_sach_id'] ?? [];
 </div>
 
 <script>
-    $('.selectpicker').selectpicker();
+    $(document).ready(function() {
+        $('.selectpicker').selectpicker();
+    });
 </script>
 
 <?php

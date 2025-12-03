@@ -1,6 +1,5 @@
 <?php
 
-// Model User đại diện cho thực thể người dùng trong hệ thống
 class User
 {
     // Các thuộc tính của User
@@ -19,11 +18,11 @@ class User
     public $luong_co_ban;
     public $trang_thai;
     public $conn;
+    
     // Constructor để khởi tạo thực thể User
     public function __construct($data = [])
     {
         $this->conn = getDB();
-        // Nếu truyền vào mảng dữ liệu thì gán vào các thuộc tính
 
         if (is_array($data)) {
             $this->id = $data['id'] ?? null;
@@ -40,21 +39,21 @@ class User
             $this->ngay_vao_lam = $data['ngay_vao_lam'] ?? '';
             $this->luong_co_ban = $data['luong_co_ban'] ?? '';
             $this->trang_thai = $data['trang_thai'] ?? 1;
-            
         } else {
-            // Nếu truyền vào string thì coi như tên (tương thích với code cũ)
             $this->username = $data;
         }
     }
 
+    // Kiểm tra đăng nhập
     public function checkLogin($email, $password)
     {
         try {
             $sql = "SELECT * FROM users WHERE email = :email AND password_hash = :password_hash LIMIT 1";
             $stmt = $this->conn->prepare($sql);
-            $stmt->bindValue(':email', $email);
-            $stmt->bindValue(':password_hash', md5($password));
+            $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+            $stmt->bindValue(':password_hash', md5($password), PDO::PARAM_STR);
             $stmt->execute();
+            
             $userData = $stmt->fetch(PDO::FETCH_ASSOC);
             if ($userData) {
                 return new User($userData);
@@ -63,6 +62,7 @@ class User
             }
         } catch (PDOException $e) {
             echo "Lỗi: " . $e->getMessage();
+            return null;
         }
     }
 
@@ -73,21 +73,28 @@ class User
     }
 
     // Kiểm tra xem user có phải là admin không
-    // @return bool true nếu là admin, false nếu không
     public function isAdmin()
     {
-
         return $this->chuc_vu === 'Admin';
     }
 
     // Kiểm tra xem user có phải là hướng dẫn viên không
-    // @return bool true nếu là hướng dẫn viên, false nếu không
     public function isGuide()
     {
-        return $this->chuc_vu === 'Hướng dẫn viên';
+        return $this->chuc_vu === 'Hướng dẫn viên' || $this->chuc_vu === 'HDV';
     }
-    public function getAllUser() {
-        return $this->conn->query("SELECT * FROM users where chuc_vu <> 'Admin' order by id desc")->fetchAll(PDO::FETCH_ASSOC);
+    
+    // Lấy tất cả user (trừ Admin)
+    public function getAllUser() 
+    {
+        try {
+            $sql = "SELECT * FROM users WHERE chuc_vu <> 'Admin' ORDER BY id DESC";
+            $stmt = $this->conn->query($sql);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo "Lỗi: " . $e->getMessage();
+            return [];
+        }
     }
 
     // Thêm người dùng mới
@@ -98,24 +105,25 @@ class User
                     VALUES (:username, :password_hash, :ho_ten, :gioi_tinh, :ngay_sinh, :so_dien_thoai, :email, :dia_chi, :cccd, :chuc_vu, :ngay_vao_lam, :luong_co_ban, :trang_thai)";
 
             $stmt = $this->conn->prepare($sql);
-            $stmt->bindValue(':username', $username);
-            $stmt->bindValue(':password_hash', md5($password));
-            $stmt->bindValue(':ho_ten', $ho_ten);
-            $stmt->bindValue(':gioi_tinh', $gioi_tinh);
-            $stmt->bindValue(':ngay_sinh', $ngay_sinh);
-            $stmt->bindValue(':so_dien_thoai', $so_dien_thoai);
-            $stmt->bindValue(':email', $email);
-            $stmt->bindValue(':dia_chi', $dia_chi);
-            $stmt->bindValue(':cccd', $cccd);
-            $stmt->bindValue(':chuc_vu', $chuc_vu);
-            $stmt->bindValue(':ngay_vao_lam', $ngay_vao_lam);
-            $stmt->bindValue(':luong_co_ban', $luong_co_ban);
-            $stmt->bindValue(':trang_thai', $trang_thai);
+            $stmt->bindValue(':username', $username, PDO::PARAM_STR);
+            $stmt->bindValue(':password_hash', md5($password), PDO::PARAM_STR);
+            $stmt->bindValue(':ho_ten', $ho_ten, PDO::PARAM_STR);
+            $stmt->bindValue(':gioi_tinh', $gioi_tinh, PDO::PARAM_STR);
+            $stmt->bindValue(':ngay_sinh', $ngay_sinh, PDO::PARAM_STR);
+            $stmt->bindValue(':so_dien_thoai', $so_dien_thoai, PDO::PARAM_STR);
+            $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+            $stmt->bindValue(':dia_chi', $dia_chi, PDO::PARAM_STR);
+            $stmt->bindValue(':cccd', $cccd, PDO::PARAM_STR);
+            $stmt->bindValue(':chuc_vu', $chuc_vu, PDO::PARAM_STR);
+            $stmt->bindValue(':ngay_vao_lam', $ngay_vao_lam, PDO::PARAM_STR);
+            $stmt->bindValue(':luong_co_ban', $luong_co_ban, PDO::PARAM_STR);
+            $stmt->bindValue(':trang_thai', $trang_thai, PDO::PARAM_STR);
+            
             $success = $stmt->execute();
             if ($success) {
                 return $this->conn->lastInsertId();
             }
-            // Nếu execute trả về false, lấy thông tin lỗi từ statement
+            
             $err = $stmt->errorInfo();
             return ['error' => isset($err[2]) ? $err[2] : 'Thực thi SQL thất bại.'];
         } catch (PDOException $e) {
@@ -127,29 +135,55 @@ class User
     public function updateUser($id, $username, $password, $ho_ten, $gioi_tinh, $ngay_sinh, $so_dien_thoai, $email, $dia_chi, $cccd, $chuc_vu, $ngay_vao_lam, $luong_co_ban, $trang_thai)
     {
         try {
-            // Nếu cung cấp mật khẩu mới, cập nhật luôn, nếu không thì giữ nguyên
             if (!empty($password)) {
-                $sql = "UPDATE users SET username = :username, password_hash = :password_hash, ho_ten = :ho_ten, gioi_tinh = :gioi_tinh, ngay_sinh = :ngay_sinh, so_dien_thoai = :so_dien_thoai, email = :email, dia_chi = :dia_chi, cccd = :cccd, chuc_vu = :chuc_vu, ngay_vao_lam = :ngay_vao_lam, luong_co_ban = :luong_co_ban, trang_thai = :trang_thai WHERE id = :id";
+                $sql = "UPDATE users 
+                        SET username = :username, 
+                            password_hash = :password_hash, 
+                            ho_ten = :ho_ten, 
+                            gioi_tinh = :gioi_tinh, 
+                            ngay_sinh = :ngay_sinh, 
+                            so_dien_thoai = :so_dien_thoai, 
+                            email = :email, 
+                            dia_chi = :dia_chi, 
+                            cccd = :cccd, 
+                            chuc_vu = :chuc_vu, 
+                            ngay_vao_lam = :ngay_vao_lam, 
+                            luong_co_ban = :luong_co_ban, 
+                            trang_thai = :trang_thai 
+                        WHERE id = :id";
                 $stmt = $this->conn->prepare($sql);
-                $stmt->bindValue(':password_hash', md5($password));
+                $stmt->bindValue(':password_hash', md5($password), PDO::PARAM_STR);
             } else {
-                $sql = "UPDATE users SET username = :username, ho_ten = :ho_ten, gioi_tinh = :gioi_tinh, ngay_sinh = :ngay_sinh, so_dien_thoai = :so_dien_thoai, email = :email, dia_chi = :dia_chi, cccd = :cccd, chuc_vu = :chuc_vu, ngay_vao_lam = :ngay_vao_lam, luong_co_ban = :luong_co_ban, trang_thai = :trang_thai WHERE id = :id";
+                $sql = "UPDATE users 
+                        SET username = :username, 
+                            ho_ten = :ho_ten, 
+                            gioi_tinh = :gioi_tinh, 
+                            ngay_sinh = :ngay_sinh, 
+                            so_dien_thoai = :so_dien_thoai, 
+                            email = :email, 
+                            dia_chi = :dia_chi, 
+                            cccd = :cccd, 
+                            chuc_vu = :chuc_vu, 
+                            ngay_vao_lam = :ngay_vao_lam, 
+                            luong_co_ban = :luong_co_ban, 
+                            trang_thai = :trang_thai 
+                        WHERE id = :id";
                 $stmt = $this->conn->prepare($sql);
             }
 
-            $stmt->bindValue(':username', $username);
-            $stmt->bindValue(':ho_ten', $ho_ten);
-            $stmt->bindValue(':gioi_tinh', $gioi_tinh);
-            $stmt->bindValue(':ngay_sinh', $ngay_sinh);
-            $stmt->bindValue(':so_dien_thoai', $so_dien_thoai);
-            $stmt->bindValue(':email', $email);
-            $stmt->bindValue(':dia_chi', $dia_chi);
-            $stmt->bindValue(':cccd', $cccd);
-            $stmt->bindValue(':chuc_vu', $chuc_vu);
-            $stmt->bindValue(':ngay_vao_lam', $ngay_vao_lam);
-            $stmt->bindValue(':luong_co_ban', $luong_co_ban);
-            $stmt->bindValue(':trang_thai', $trang_thai);
-            $stmt->bindValue(':id', $id);
+            $stmt->bindValue(':username', $username, PDO::PARAM_STR);
+            $stmt->bindValue(':ho_ten', $ho_ten, PDO::PARAM_STR);
+            $stmt->bindValue(':gioi_tinh', $gioi_tinh, PDO::PARAM_STR);
+            $stmt->bindValue(':ngay_sinh', $ngay_sinh, PDO::PARAM_STR);
+            $stmt->bindValue(':so_dien_thoai', $so_dien_thoai, PDO::PARAM_STR);
+            $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+            $stmt->bindValue(':dia_chi', $dia_chi, PDO::PARAM_STR);
+            $stmt->bindValue(':cccd', $cccd, PDO::PARAM_STR);
+            $stmt->bindValue(':chuc_vu', $chuc_vu, PDO::PARAM_STR);
+            $stmt->bindValue(':ngay_vao_lam', $ngay_vao_lam, PDO::PARAM_STR);
+            $stmt->bindValue(':luong_co_ban', $luong_co_ban, PDO::PARAM_STR);
+            $stmt->bindValue(':trang_thai', $trang_thai, PDO::PARAM_STR);
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
 
             return $stmt->execute();
         } catch (PDOException $e) {
@@ -163,7 +197,7 @@ class User
     {
         try {
             $stmt = $this->conn->prepare("DELETE FROM users WHERE id = :id");
-            $stmt->bindValue(':id', $id);
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
             return $stmt->execute();
         } catch (PDOException $e) {
             echo "Lỗi khi xóa người dùng: " . $e->getMessage();
@@ -176,7 +210,7 @@ class User
     {
         try {
             $stmt = $this->conn->prepare("SELECT * FROM users WHERE id = :id LIMIT 1");
-            $stmt->bindValue(':id', $id);
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
             return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
@@ -184,5 +218,25 @@ class User
             return null;
         }
     }
+    
+    // Lấy tất cả hướng dẫn viên (HDV)
+    public function getAllHDV()
+    {
+        try {
+            // SỬA: So sánh với 1 thay vì 'active'
+            $sql = "SELECT * FROM users 
+                    WHERE chuc_vu IN ('HDV', 'Hướng dẫn viên') 
+                    AND trang_thai = 1 
+                    ORDER BY ho_ten ASC";
+            
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo "Lỗi: " . $e->getMessage();
+            return [];
+        }
+    }
 
+   
 }

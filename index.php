@@ -87,25 +87,7 @@ match ($act) {
     'add-user' => $userController->addUser(),
     'update-user' => $userController->updateUser(),
     'delete-user' => $userController->deleteUser(),
-
-    // đường dẫn cho HDV
-    'home' => $homeController->home(),
-    'booking' => $bookingController->getListBooking(),
-    'detail-booking' => $bookingController->detailBooking(),
-    'check-in' => $bookingController->checkInCustomer(),
-    'update-checkin' => $bookingController->updateCheckin(),
-    'update-booking-hdv-form' => $bookingController->updateHDVBookingForm(),
-    'update-booking-hdv' => $bookingController->updateBookingHDV(),
-
-
-    // Route khách hàng
-    'khach-hang' => $customerController->getList(),
-    'form-add-khach-hang' => $customerController->formAdd(),
-    'add-khach-hang' => $customerController->add(),
-    'delete-khach-hang' => $customerController->delete(),
-    'form-update-khach-hang' => $customerController->formUpdate(),
-    'update-khach-hang' => $customerController->update(),
-    'detail-khach-hang' => $customerController->detail(),
+    'detail-user' => $userController->detailUser(),
 
     // Route tour
     'tour' => $tourController->getListTour(),
@@ -119,6 +101,20 @@ match ($act) {
     // Route booking
     'booking' => $bookingController->getListBooking(),
     'detail-booking' => $bookingController->detailBooking(),
+    'check-in' => $bookingController->checkInCustomer(),
+    'update-checkin' => $bookingController->updateCheckin(),
+    'update-booking-hdv-form' => $bookingController->updateHDVBookingForm(),
+    'update-booking-hdv' => $bookingController->updateBookingHDV(),
+
+    // BOOKING - ADMIN ONLY
+    'form-add-booking' => $bookingController->formAddBooking(),
+    'add-booking' => $bookingController->addBooking(),
+    'form-update-booking' => $bookingController->formUpdateBooking(),
+    'update-booking' => $bookingController->updateBooking(),
+    'delete-booking' => $bookingController->deleteBooking(),
+    'add-khach-hang-vao-booking' => $bookingController->formAddCustomerToBooking(),
+    'add-customer-to-booking' => $bookingController->addCustomerToBooking(),
+    'remove-customer-from-booking' => $bookingController->removeCustomerFromBooking(),
 
     // Route báo cáo thống kê
     'report' => $reportController->getStatistics(),

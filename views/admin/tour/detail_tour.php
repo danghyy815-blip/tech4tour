@@ -6,16 +6,18 @@ ob_start();
 
     <div class="card shadow mb-4">
         <div class="card-body">
-
             <h4><?= htmlspecialchars($tour['ten_tour']) ?></h4>
+
+            <!-- Danh mục tour -->
+            <p><strong>Danh mục:</strong> <?= htmlspecialchars($tour['ten_danh_muc'] ?? 'Chưa xác định') ?></p>
 
             <p><strong>Địa điểm:</strong> <?= htmlspecialchars($tour['dia_diem']) ?></p>
             <p><strong>Giá:</strong> <?= number_format($tour['gia']) ?>đ</p>
             <p><strong>Nhà cung cấp:</strong> <?= htmlspecialchars($tour['nha_cung_cap']) ?></p>
             <p><strong>Loại tour:</strong> <?= htmlspecialchars($tour['loai_tour']) ?></p>
             <p><strong>Trạng thái:</strong>
-                <span class="badge <?= $tour['trang_thai'] == 1 ? 'bg-success' : 'bg-secondary' ?>">
-                    <?= $tour['trang_thai'] == 1 ? 'Hoạt động' : 'Tạm dừng' ?>
+                <span class="badge <?= $tour['trang_thai'] === 'Hoạt động' ? 'bg-success' : 'bg-secondary' ?>">
+                    <?= $tour['trang_thai'] === 'Hoạt động' ? 'Hoạt động' : 'Tạm dừng' ?>
                 </span>
             </p>
 
@@ -56,9 +58,13 @@ ob_start();
                             <td><?= date('d-m-Y', strtotime($policy['ngay_ap_dung'])) ?></td>
                             <td><?= date('d-m-Y', strtotime($policy['ngay_het_han'])) ?></td>
                             <td>
-                                <span class="badge <?= $policy['trang_thai'] == 1 ? 'bg-success' : 'bg-secondary' ?>">
-                                    <?= $policy['trang_thai'] == 1 ? 'Hoạt động' : 'Tạm dừng' ?>
-                                </span>
+                                <?php 
+                                    $status = $policy['trang_thai']; 
+                                    if ($status === 'Đang áp dụng') $badge = 'bg-success';
+                                    elseif ($status === 'Hết hạn') $badge = 'bg-warning';
+                                    else $badge = 'bg-secondary';
+                                ?>
+                                <span class="badge <?= $badge ?>"><?= $status ?></span>
                             </td>
                         </tr>
                     <?php endforeach; ?>

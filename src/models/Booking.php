@@ -27,7 +27,11 @@ class Booking
     public function getAllBookings()
     {
         try {
-            $sql = "SELECT booking.*, tour.ten_tour FROM booking join tour on booking.tour_id = tour.id ORDER BY booking.id DESC";
+            $sql = "SELECT b.*, t.ten_tour, u.ho_ten as user_ho_ten, u.email as user_email
+            FROM booking b
+            JOIN tour t ON b.tour_id = t.id
+            LEFT JOIN users u ON b.user_id = u.id
+            ORDER BY b.id DESC";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll();
@@ -36,48 +40,58 @@ class Booking
         }
     }
 
-    public function addPolicy($ten_chinh_sach, $loai_chinh_sach, $ngay_ap_dung, $ngay_het_han, $trang_thai, $mo_ta)
+    public function addBooking($tour_id, $user_id, $ngay_dat, $gia_tien, $trang_thai, $ghi_chu)
     {
-        try {
-            $sql = "INSERT INTO chinh_sach (ten_chinh_sach, loai_chinh_sach, ngay_ap_dung, ngay_het_han, trang_thai, mo_ta) 
-                    VALUES (:ten_chinh_sach, :loai_chinh_sach, :ngay_ap_dung, :ngay_het_han, :trang_thai, :mo_ta)";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(':ten_chinh_sach', $ten_chinh_sach);
-            $stmt->bindParam(':loai_chinh_sach', $loai_chinh_sach);
-            $stmt->bindParam(':ngay_ap_dung', $ngay_ap_dung);
-            $stmt->bindParam(':ngay_het_han', $ngay_het_han);
-            $stmt->bindParam(':trang_thai', $trang_thai);
-            $stmt->bindParam(':mo_ta', $mo_ta);
-            $stmt->execute();
-        } catch (PDOException $e) {
-            echo "Lỗi: " . $e->getMessage();
-        }
+        $sql = "INSERT INTO booking (tour_id, user_id, ngay_dat, gia_tien, trang_thai, ghi_chu)
+                VALUES (:tour_id, :user_id, :ngay_dat, :gia_tien, :trang_thai, :ghi_chu)";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':tour_id', $tour_id, PDO::PARAM_INT);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->bindParam(':ngay_dat', $ngay_dat, PDO::PARAM_STR);
+        $stmt->bindParam(':gia_tien', $gia_tien, PDO::PARAM_STR);
+        $stmt->bindParam(':trang_thai', $trang_thai, PDO::PARAM_STR);
+        $stmt->bindParam(':ghi_chu', $ghi_chu, PDO::PARAM_STR);
+        return $stmt->execute();
     }
 
-    public function deletePolicy($id)
+    public function deleteBooking($id)
     {
         try {
-            $sql = "DELETE FROM chinh_sach WHERE id = :id";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(':id', $id);
-            $stmt->execute();
+            $this->conn->beginTransaction();
+
+            $stmt1 = $this->conn->prepare("DELETE FROM booking_khach_hang WHERE booking_id = :id");
+            $stmt1->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt1->execute();
+
+            $stmt2 = $this->conn->prepare("DELETE FROM booking WHERE id = :id");
+            $stmt2->bindParam(':id', $id, PDO::PARAM_INT);
+            $result = $stmt2->execute();
+
+            $this->conn->commit();
+            return $result;
         } catch (PDOException $e) {
+            $this->conn->rollBack();
             echo "Lỗi: " . $e->getMessage();
+            return false;
         }
     }
-
     public function getBookingById($id, $user_id = null)
     {
-        try {
+        try { 
             if ($user_id) {
-                $sql = "SELECT booking.*, tour.*, booking.trang_thai as booking_trang_thai 
+                $sql = "SELECT booking.*, tour.*, booking.trang_thai as booking_trang_thai, booking.id as id, u.ho_ten as user_ho_ten, 
+                    u.email as user_email
                     FROM booking 
                     JOIN tour ON booking.tour_id = tour.id 
+                    LEFT JOIN users u ON booking.user_id = u.id
                     WHERE booking.id = :id AND booking.user_id = :user_id";
             } else {
-                $sql = "SELECT booking.*, tour.*, booking.trang_thai as booking_trang_thai 
+                $sql = "SELECT booking.*, tour.*, booking.trang_thai as booking_trang_thai, booking.id as id, u.ho_ten as user_ho_ten, 
+                    u.email as user_email
                     FROM booking 
                     JOIN tour ON booking.tour_id = tour.id 
+                    LEFT JOIN users u ON booking.user_id = u.id
                     WHERE booking.id = :id";
             }
 
@@ -98,30 +112,26 @@ class Booking
         }
     }
 
-
-    public function updatePolicy($id, $ten_chinh_sach, $loai_chinh_sach, $ngay_ap_dung, $ngay_het_han, $trang_thai, $mo_ta)
+    public function updateBooking($id, $tour_id, $user_id, $ngay_dat, $gia_tien, $trang_thai, $ghi_chu)
     {
-        try {
-            $sql = "UPDATE chinh_sach 
-                    SET ten_chinh_sach = :ten_chinh_sach, 
-                        loai_chinh_sach = :loai_chinh_sach, 
-                        ngay_ap_dung = :ngay_ap_dung, 
-                        ngay_het_han = :ngay_het_han, 
-                        trang_thai = :trang_thai, 
-                        mo_ta = :mo_ta 
-                    WHERE id = :id";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(':ten_chinh_sach', $ten_chinh_sach);
-            $stmt->bindParam(':loai_chinh_sach', $loai_chinh_sach);
-            $stmt->bindParam(':ngay_ap_dung', $ngay_ap_dung);
-            $stmt->bindParam(':ngay_het_han', $ngay_het_han);
-            $stmt->bindParam(':trang_thai', $trang_thai);
-            $stmt->bindParam(':mo_ta', $mo_ta);
-            $stmt->bindParam(':id', $id);
-            $stmt->execute();
-        } catch (PDOException $e) {
-            echo "Lỗi: " . $e->getMessage();
-        }
+        $sql = "UPDATE booking
+                SET tour_id = :tour_id,
+                    user_id = :user_id,
+                    ngay_dat = :ngay_dat,
+                    gia_tien = :gia_tien,
+                    trang_thai = :trang_thai,
+                    ghi_chu = :ghi_chu
+                WHERE id = :id";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':tour_id', $tour_id, PDO::PARAM_INT);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->bindParam(':ngay_dat', $ngay_dat, PDO::PARAM_STR);
+        $stmt->bindParam(':gia_tien', $gia_tien, PDO::PARAM_STR);
+        $stmt->bindParam(':trang_thai', $trang_thai, PDO::PARAM_STR);
+        $stmt->bindParam(':ghi_chu', $ghi_chu, PDO::PARAM_STR);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
     }
 
     public function getCustomersByBookingId($booking_id)
@@ -178,5 +188,35 @@ class Booking
             echo "Lỗi: " . $e->getMessage();
             return false;
         }
+    }
+
+    
+    public function addCustomersToBooking($booking_id, $customer_ids)
+    {
+
+        foreach ($customer_ids as $cid) {
+            $cid = intval($cid);
+            $stmt = $this->conn->prepare(
+                "INSERT INTO booking_khach_hang (booking_id, khach_hang_id, diem_danh)
+                 VALUES (:booking_id, :customer_id, :diem_danh)"
+            );
+            $dd = '0';
+            $stmt->bindParam(':booking_id', $booking_id, PDO::PARAM_INT);
+            $stmt->bindParam(':customer_id', $cid, PDO::PARAM_INT);
+            $stmt->bindParam(':diem_danh',$dd, PDO::PARAM_INT);
+            $stmt->execute();
+        }
+        return true;
+    }   
+
+    // Xóa khách hàng khỏi booking
+    public function removeCustomerFromBooking($booking_id, $customer_id)
+    {
+        $stmt = $this->conn->prepare(
+            "DELETE FROM booking_khach_hang WHERE booking_id=:booking_id AND khach_hang_id=:customer_id"
+        );
+        $stmt->bindParam(':booking_id', $booking_id, PDO::PARAM_INT);
+        $stmt->bindParam(':customer_id', $customer_id, PDO::PARAM_INT);
+        return $stmt->execute();
     }
 }
