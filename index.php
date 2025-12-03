@@ -92,10 +92,6 @@ match ($act) {
     'home' => $homeController->home(),
     'booking' => $bookingController->getListBooking(),
     'detail-booking' => $bookingController->detailBooking(),
-    'check-in' => $bookingController->checkInCustomer(),
-    'update-checkin' => $bookingController->updateCheckin(),
-    'update-booking-hdv-form' => $bookingController->updateHDVBookingForm(),
-    'update-booking-hdv' => $bookingController->updateBookingHDV(),
 
 
     // Route khách hàng
