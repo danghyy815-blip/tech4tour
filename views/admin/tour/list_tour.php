@@ -38,13 +38,12 @@ ob_start();
                                     <?php foreach ($tours as $key => $tour): ?>
                                         <tr>
                                             <td><?= $key + 1 ?></td>
-                                            <td><a
-                                                    href="detail-tour&id=<?= $tour['id'] ?>"><?= $tour['ten_tour'] ?></a>
+                                            <td><a href="detail-tour&id=<?= $tour['id'] ?>"><?= $tour['ten_tour'] ?></a>
                                             </td>
                                             <td>
                                                 <?php if (!empty($tour['hinh_anh'])): ?>
                                                     <img src="uploads/tours/<?= htmlspecialchars($tour['hinh_anh']) ?>"
-                                                        class="img-fluid rounded shadow-sm" width="150" >
+                                                        class="img-fluid rounded shadow-sm" width="150">
                                                 <?php endif; ?>
                                             </td>
                                             <td class="text-danger fw-bold"><?= number_format($tour['gia']) ?>đ</td>
@@ -63,8 +62,7 @@ ob_start();
                                                     class="btn btn-primary btn-sm me-1">
                                                     Sửa
                                                 </a>
-                                                <a href="delete-tour&id=<?= $tour['id'] ?>"
-                                                    class="btn btn-danger btn-sm"
+                                                <a href="delete-tour&id=<?= $tour['id'] ?>" class="btn btn-danger btn-sm"
                                                     onclick="return confirm('Bạn có chắc chắn muốn xóa tour này không?')">
                                                     Xóa
                                                 </a>
@@ -86,7 +84,7 @@ ob_start();
 <aside class="control-sidebar control-sidebar-dark"></aside>
 
 <script>
-    $(function () {
+    $(function() {
         $("#tourTable").DataTable({
             "responsive": true,
             "lengthChange": false,

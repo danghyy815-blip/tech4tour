@@ -3,6 +3,23 @@ ob_start();
 
 
 ?>
+<style>
+/* Link họ tên khách hàng */
+.customer-name {
+    text-decoration: none;
+    /* Bỏ gạch chân */
+    color: #007bff;
+    /* Màu xanh chuẩn admin */
+    transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+.customer-name:hover {
+    text-decoration: underline;
+    /* Khi hover mới gạch chân */
+    color: #0056b3;
+    /* Đậm hơn khi hover */
+}
+</style>
 
 <div class="content-wrapper">
     <section class="content">
@@ -35,45 +52,46 @@ ob_start();
                                 </thead>
                                 <tbody>
                                     <?php if (!empty($danhMucs)) : ?>
-                                        <?php foreach ($danhMucs as $dm) : ?>
-                                            <tr>
-                                                <td><?= htmlspecialchars($dm['id']) ?></td>
-                                                <td>
-                                                    <a href="<?= BASE_URL . 'detail-danh-muc-tour&id=' . htmlspecialchars($dm['id']) ?>"
-                                                        class="font-weight-bold">
-                                                        <?= htmlspecialchars($dm['ten_danh_muc']) ?>
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <?php
+                                    <?php foreach ($danhMucs as $dm) : ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($dm['id']) ?></td>
+                                        <td>
+                                            <a href="<?= BASE_URL . 'detail-danh-muc-tour&id=' . htmlspecialchars($dm['id']) ?>"
+                                                class="font-weight-bold customer-name">
+                                                <?= htmlspecialchars($dm['ten_danh_muc']) ?>
+                                            </a>
+
+                                        </td>
+                                        <td>
+                                            <?php
                                                     $loai_color = ($dm['loai'] == 'Trong nước') ? 'success' : (($dm['loai'] == 'Quốc tế') ? 'primary' : 'secondary');
                                                     ?>
-                                                    <span class="badge badge-<?= $loai_color ?>"
-                                                        style="color: #000000 !important; font-weight: bold;">
-                                                        <?= htmlspecialchars($dm['loai']) ?>
-                                                    </span>
-                                                </td>
-                                                <td><?= htmlspecialchars(substr($dm['mo_ta'], 0, 80)) . (strlen($dm['mo_ta']) > 80 ? '...' : '') ?>
-                                                </td>
-                                                <td>
-                                                    <button type="button"
-                                                        onclick="window.location.href='<?= BASE_URL . 'form-update-danh-muc-tour&id=' . htmlspecialchars($dm['id']) ?>'"
-                                                        class="btn btn-primary btn-sm mb-1" title="Sửa">
-                                                        <i class="fas fa-edit"></i> Sửa
-                                                    </button>
-                                                    <button type="button"
-                                                        onclick="if(confirm('Bạn có chắc chắn muốn xoá danh mục [<?= htmlspecialchars($dm['ten_danh_muc']) ?>] này không? Hành động này có thể ảnh hưởng đến các Tour liên quan!')) { window.location.href='<?= BASE_URL . 'delete-danh-muc-tour&id=' . htmlspecialchars($dm['id']) ?>'; }"
-                                                        class="btn btn-danger btn-sm mb-1" title="Xóa">
-                                                        <i class="fas fa-trash"></i> Xóa
-                                                    </button>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        <?php endforeach; ?>
+                                            <span class="badge badge-<?= $loai_color ?>"
+                                                style="color: #000000 !important; font-weight: bold;">
+                                                <?= htmlspecialchars($dm['loai']) ?>
+                                            </span>
+                                        </td>
+                                        <td><?= htmlspecialchars(substr($dm['mo_ta'], 0, 80)) . (strlen($dm['mo_ta']) > 80 ? '...' : '') ?>
+                                        </td>
+                                        <td>
+                                            <button type="button"
+                                                onclick="window.location.href='<?= BASE_URL . 'form-update-danh-muc-tour&id=' . htmlspecialchars($dm['id']) ?>'"
+                                                class="btn btn-primary btn-sm mb-1" title="Sửa">
+                                                <i class="fas fa-edit"></i> Sửa
+                                            </button>
+                                            <button type="button"
+                                                onclick="if(confirm('Bạn có chắc chắn muốn xoá danh mục [<?= htmlspecialchars($dm['ten_danh_muc']) ?>] này không? Hành động này có thể ảnh hưởng đến các Tour liên quan!')) { window.location.href='<?= BASE_URL . 'delete-danh-muc-tour&id=' . htmlspecialchars($dm['id']) ?>'; }"
+                                                class="btn btn-danger btn-sm mb-1" title="Xóa">
+                                                <i class="fas fa-trash"></i> Xóa
+                                            </button>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
                                     <?php else : ?>
-                                        <tr>
-                                            <td colspan="5" class="text-center">Chưa có danh mục tour nào được thêm.</td>
-                                        </tr>
+                                    <tr>
+                                        <td colspan="5" class="text-center">Chưa có danh mục tour nào được thêm.</td>
+                                    </tr>
                                     <?php endif; ?>
                                 </tbody>
                             </table>
@@ -89,35 +107,35 @@ ob_start();
 </aside>
 
 <script>
-    $(function() {
-        $("#example1").DataTable({
-            "responsive": true,
-            "lengthChange": false,
-            "autoWidth": false,
-            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-            "language": {
-                "sProcessing": "Đang xử lý...",
-                "sLengthMenu": "Xem _MENU_ mục",
-                "sZeroRecords": "Không tìm thấy kết quả",
-                "sInfo": "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
-                "sInfoEmpty": "Đang xem 0 đến 0 trong tổng số 0 mục",
-                "sInfoFiltered": "(được lọc từ tổng số _MAX_ mục)",
-                "sInfoPostFix": "",
-                "sSearch": "Tìm kiếm:",
-                "sUrl": "",
-                "oPaginate": {
-                    "sFirst": "Đầu",
-                    "sPrevious": "Trước",
-                    "sNext": "Tiếp",
-                    "sLast": "Cuối"
-                },
-                "oAria": {
-                    "sSortAscending": ": sắp xếp cột theo thứ tự tăng dần",
-                    "sSortDescending": ": sắp xếp cột theo thứ tự giảm dần"
-                }
+$(function() {
+    $("#example1").DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+        "language": {
+            "sProcessing": "Đang xử lý...",
+            "sLengthMenu": "Xem _MENU_ mục",
+            "sZeroRecords": "Không tìm thấy kết quả",
+            "sInfo": "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+            "sInfoEmpty": "Đang xem 0 đến 0 trong tổng số 0 mục",
+            "sInfoFiltered": "(được lọc từ tổng số _MAX_ mục)",
+            "sInfoPostFix": "",
+            "sSearch": "Tìm kiếm:",
+            "sUrl": "",
+            "oPaginate": {
+                "sFirst": "Đầu",
+                "sPrevious": "Trước",
+                "sNext": "Tiếp",
+                "sLast": "Cuối"
+            },
+            "oAria": {
+                "sSortAscending": ": sắp xếp cột theo thứ tự tăng dần",
+                "sSortDescending": ": sắp xếp cột theo thứ tự giảm dần"
             }
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    });
+        }
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+});
 </script>
 
 <?php

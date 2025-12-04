@@ -26,6 +26,22 @@ if (!isset($customers) || !is_array($customers)) {
         background-color: #6c757d !important;
         color: #ffffff !important;
     }
+
+    /* Link họ tên khách hàng */
+    .customer-name {
+        text-decoration: none;
+        /* Bỏ gạch chân */
+        color: #007bff;
+        /* Màu xanh chuẩn admin */
+        transition: color 0.2s ease, text-decoration 0.2s ease;
+    }
+
+    .customer-name:hover {
+        text-decoration: underline;
+        /* Khi hover mới gạch chân */
+        color: #0056b3;
+        /* Đậm hơn khi hover */
+    }
 </style>
 
 <div class="content-wrapper">
@@ -72,9 +88,10 @@ if (!isset($customers) || !is_array($customers)) {
                                                 <td><?= htmlspecialchars($customer['id']) ?></td>
                                                 <td>
                                                     <a href="<?= BASE_URL . 'detail-khach-hang&id=' . htmlspecialchars($customer['id']) ?>"
-                                                        class="font-weight-bold">
+                                                        class="font-weight-bold customer-name">
                                                         <?= htmlspecialchars($customer['ho_ten']) ?>
                                                     </a>
+
                                                 </td>
                                                 <td>
                                                     SĐT: <?= htmlspecialchars($customer['so_dien_thoai']) ?><br>
