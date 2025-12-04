@@ -13,7 +13,7 @@ $yeu_cau_dac_biet = $_POST['yeu_cau_dac_biet'] ?? '';
 $trang_thai = $_POST['trang_thai'] ?? 'đang hoạt động';
 
 $errors = $errors ?? [];
-
+//
 ?>
 
 <style>
@@ -272,7 +272,6 @@ $errors = $errors ?? [];
                                 </div>
 
                             </div>
-
                             <div class="card-footer">
                                 <button type="submit" class="btn-submit"><i class="fas fa-save"></i> Thêm Khách
                                     hàng</button>

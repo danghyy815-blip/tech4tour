@@ -181,8 +181,8 @@ ob_start();
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Cập
                                     nhật</button>
-                                <a href="danh-muc-tour" class="btn btn-secondary ml-2"><i
-                                        class="fas fa-arrow-left"></i> Quay lại</a>
+                                <a href="danh-muc-tour" class="btn btn-secondary ml-2"><i class="fas fa-arrow-left"></i>
+                                    Quay lại</a>
                             </div>
                         </form>
                     </div>

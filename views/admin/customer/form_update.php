@@ -8,7 +8,8 @@ $customer = $customer ?? [];
 $errors = $errors ?? [];
 
 // Hàm lấy giá trị ưu tiên từ POST, sau đó là từ $customer, cuối cùng là chuỗi rỗng
-function get_update_value($key, $customer, $default = '') {
+function get_update_value($key, $customer, $default = '')
+{
     // Ưu tiên dữ liệu từ $_POST (sau khi submit form bị lỗi)
     if (isset($_POST[$key])) {
         return htmlspecialchars($_POST[$key]);
@@ -63,7 +64,7 @@ if (empty($id)) {
                                         <input type="text" name="ho_ten" class="form-control" id="ho_ten"
                                             placeholder="Nhập họ và tên" value="<?= $ho_ten ?>">
                                         <?php if (isset($errors['ho_ten'])) : ?>
-                                        <span class="text-danger small mt-1 d-block"><?= $errors['ho_ten'] ?></span>
+                                            <span class="text-danger small mt-1 d-block"><?= $errors['ho_ten'] ?></span>
                                         <?php endif; ?>
                                     </div>
                                     <div class="form-group col-md-6">
@@ -92,7 +93,7 @@ if (empty($id)) {
                                             </div>
                                         </div>
                                         <?php if (isset($errors['gioi_tinh'])) : ?>
-                                        <span class="text-danger small mt-1 d-block"><?= $errors['gioi_tinh'] ?></span>
+                                            <span class="text-danger small mt-1 d-block"><?= $errors['gioi_tinh'] ?></span>
                                         <?php endif; ?>
                                     </div>
                                 </div>
@@ -113,7 +114,7 @@ if (empty($id)) {
                                         <input type="text" name="cccd" class="form-control" id="cccd"
                                             placeholder="Nhập CCCD (nếu có)" value="<?= $cccd ?>">
                                         <?php if (isset($errors['cccd'])) : ?>
-                                        <span class="text-danger small mt-1 d-block"><?= $errors['cccd'] ?></span>
+                                            <span class="text-danger small mt-1 d-block"><?= $errors['cccd'] ?></span>
                                         <?php endif; ?>
                                     </div>
                                 </div>
@@ -126,8 +127,8 @@ if (empty($id)) {
                                             placeholder="Nhập số điện thoại (10 hoặc 11 số)"
                                             value="<?= $so_dien_thoai ?>">
                                         <?php if (isset($errors['so_dien_thoai'])) : ?>
-                                        <span
-                                            class="text-danger small mt-1 d-block"><?= $errors['so_dien_thoai'] ?></span>
+                                            <span
+                                                class="text-danger small mt-1 d-block"><?= $errors['so_dien_thoai'] ?></span>
                                         <?php endif; ?>
                                     </div>
                                     <div class="form-group col-md-6">
@@ -135,7 +136,7 @@ if (empty($id)) {
                                         <input type="email" name="email" class="form-control" id="email"
                                             placeholder="Nhập địa chỉ email" value="<?= $email ?>">
                                         <?php if (isset($errors['email'])) : ?>
-                                        <span class="text-danger small mt-1 d-block"><?= $errors['email'] ?></span>
+                                            <span class="text-danger small mt-1 d-block"><?= $errors['email'] ?></span>
                                         <?php endif; ?>
                                     </div>
                                 </div>
@@ -170,8 +171,8 @@ if (empty($id)) {
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Cập
                                     nhật</button>
-                                <a href="<?= BASE_URL . 'detail-khach-hang&id=' . $id ?>"
-                                    class="btn btn-info ml-2"><i class="fas fa-eye"></i> Xem Chi Tiết</a>
+                                <a href="<?= BASE_URL . 'detail-khach-hang&id=' . $id ?>" class="btn btn-info ml-2"><i
+                                        class="fas fa-eye"></i> Xem Chi Tiết</a>
                                 <a href="<?= BASE_URL . 'khach-hang' ?>" class="btn btn-secondary ml-2"><i
                                         class="fas fa-arrow-left"></i> Quay lại Danh sách</a>
                             </div>
