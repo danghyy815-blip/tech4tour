@@ -45,7 +45,11 @@ if (!isset($customers) || !is_array($customers)) {
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Danh sách Khách hàng</h3>
+                            <a href="<?= BASE_URL . 'form-add-khach-hang' ?>">
+                                <button type="button" class="btn btn-primary">
+                                    <i class="fas fa-plus-circle"></i> Thêm khách hàng
+                                </button>
+                            </a>
                         </div>
 
                         <div class="card-body">
