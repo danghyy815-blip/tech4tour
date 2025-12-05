@@ -169,10 +169,12 @@ textarea.form-control {
                                         <label for="loai_danh_muc">Loại</label>
                                         <select name="loai" class="form-control" id="loai_danh_muc">
                                             <option value="Trong nước"
-                                                <?= $danhMuc['loai'] == 'Trong nước' ? 'selected' : '' ?>>Trong nước
+                                                <?= (isset($_POST['loai']) ? $_POST['loai'] : $danhMuc['loai']) == 'Trong nước' ? 'selected' : '' ?>>
+                                                Trong nước
                                             </option>
                                             <option value="Quốc tế"
-                                                <?= $danhMuc['loai'] == 'Quốc tế' ? 'selected' : '' ?>>Quốc tế
+                                                <?= (isset($_POST['loai']) ? $_POST['loai'] : $danhMuc['loai']) == 'Quốc tế' ? 'selected' : '' ?>>
+                                                Quốc tế
                                             </option>
                                         </select>
                                         <?php if (isset($errors['loai'])) : ?>
