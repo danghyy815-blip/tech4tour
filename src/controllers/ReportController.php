@@ -99,6 +99,53 @@ class ReportController
             $roleCounts[] = $role['count'];
         }
 
+        // Khách hàng mới nhất (5 người)
+        $recentCustomers = [];
+        try {
+            $stmt = $this->conn->query("SELECT id, ho_ten, email, ngay_dang_ky, trang_thai FROM khach_hang WHERE trang_thai != 'xóa' ORDER BY ngay_dang_ky DESC LIMIT 5");
+            $recentCustomers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            // Bỏ qua nếu lỗi
+        }
+
+        // Booking theo trạng thái
+        $bookingsByStatus = [];
+        try {
+            $stmt = $this->conn->query("SELECT trang_thai, COUNT(*) as count FROM booking GROUP BY trang_thai");
+            $bookingsByStatus = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            // Bỏ qua nếu lỗi
+        }
+
+        // Tour phổ biến (top 5 tour có nhiều booking nhất)
+        $popularTours = [];
+        try {
+            $stmt = $this->conn->query("
+                SELECT t.id, t.ten_tour, t.gia, COUNT(b.id) as booking_count 
+                FROM tour t 
+                LEFT JOIN booking b ON t.id = b.tour_id 
+                GROUP BY t.id, t.ten_tour, t.gia 
+                ORDER BY booking_count DESC 
+                LIMIT 5
+            ");
+            $popularTours = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            // Bỏ qua nếu lỗi
+        }
+
+        // Doanh thu theo từng booking trạng thái
+        $revenueByStatus = [];
+        try {
+            $stmt = $this->conn->query("
+                SELECT trang_thai, COALESCE(SUM(gia_tien), 0) as total 
+                FROM booking 
+                GROUP BY trang_thai
+            ");
+            $revenueByStatus = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            // Bỏ qua nếu lỗi
+        }
+
         require_once './views/admin/report/statistics.php';
     }
 }
