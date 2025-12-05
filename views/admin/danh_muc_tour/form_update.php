@@ -70,7 +70,6 @@ ob_start();
 
 .btn-secondary-custom {
     background: #6c757d;
-    /* Xám */
     padding: 10px 26px;
     border-radius: 6px;
     border: none;
@@ -87,7 +86,6 @@ ob_start();
 }
 
 
-/* Giữ nguyên các phần CSS còn lại của bạn */
 label {
     font-weight: 600;
     margin-bottom: 4px;

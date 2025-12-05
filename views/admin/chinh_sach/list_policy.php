@@ -31,27 +31,31 @@ ob_start();
                                 </thead>
                                 <tbody>
                                     <?php foreach ($policies as $key => $policy) : ?>
-                                        <tr>
-                                            <td><?= $key + 1 ?></td>
-                                            <td><a
-                                                    href="<?= BASE_URL . 'detail-policy&id=' . $policy['id'] ?>"><?= $policy['ten_chinh_sach'] ?></a>
-                                            </td>
-                                            <td><?= $policy['loai_chinh_sach'] ?></td>
-                                            <td><?= date('d-m-Y', strtotime($policy['ngay_ap_dung'])) ?></td>
-                                            <td><?= date('d-m-Y', strtotime($policy['ngay_het_han'])) ?></td>
-                                            <td><?= $policy['trang_thai'] ?></td>
-                                            <td>
-                                                <button type="button" class="btn btn-primary btn-sm">
-                                                    <a href="<?= BASE_URL . 'form-update-policy&id=' . $policy['id'] ?>"
-                                                        style="color: white;">Sửa</a>
-                                                </button>
-                                                <button type="button" class="btn btn-danger btn-sm">
-                                                    <a href="delete-policy&id=<?= $policy['id'] ?>"
-                                                        style="color: white;"
-                                                        onclick="return confirm('Bạn có đồng ý xóa chính sách này không?')">Xóa</a>
-                                                </button>
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td><?= $key + 1 ?></td>
+                                        <td><a
+                                                href="<?= BASE_URL . 'detail-policy&id=' . $policy['id'] ?>"><?= $policy['ten_chinh_sach'] ?></a>
+                                        </td>
+                                        <td><?= $policy['loai_chinh_sach'] ?></td>
+                                        <td><?= date('d-m-Y', strtotime($policy['ngay_ap_dung'])) ?></td>
+                                        <td><?= date('d-m-Y', strtotime($policy['ngay_het_han'])) ?></td>
+                                        <td><?= $policy['trang_thai'] ?></td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary btn-sm">
+                                                <a href="<?= BASE_URL . 'form-update-policy&id=' . $policy['id'] ?>"
+                                                    style="color: white; text-decoration: none;">Sửa</a>
+                                            </button>
+
+                                            <button type="button" class="btn btn-danger btn-sm">
+                                                <a href="delete-policy&id=<?= $policy['id'] ?>"
+                                                    style="color: white; text-decoration: none;"
+                                                    onclick="return confirm('Bạn có đồng ý xóa chính sách này không?')">
+                                                    Xóa
+                                                </a>
+                                            </button>
+                                        </td>
+
+                                    </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
@@ -75,61 +79,61 @@ ob_start();
 </div>
 
 <script>
-    $(function() {
-        $("#example1").DataTable({
-            "responsive": true,
-            "lengthChange": false,
-            "autoWidth": false,
-            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
-            "responsive": true,
-        });
+$(function() {
+    $("#example1").DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
     });
+});
 </script>
 <!-- Code injected by live-server -->
 <script>
-    // <![CDATA[  <-- For SVG support
-    if ('WebSocket' in window) {
-        (function() {
-            function refreshCSS() {
-                var sheets = [].slice.call(document.getElementsByTagName("link"));
-                var head = document.getElementsByTagName("head")[0];
-                for (var i = 0; i < sheets.length; ++i) {
-                    var elem = sheets[i];
-                    var parent = elem.parentElement || head;
-                    parent.removeChild(elem);
-                    var rel = elem.rel;
-                    if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
-                        var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
-                        elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date()
-                            .valueOf());
-                    }
-                    parent.appendChild(elem);
+// <![CDATA[  <-- For SVG support
+if ('WebSocket' in window) {
+    (function() {
+        function refreshCSS() {
+            var sheets = [].slice.call(document.getElementsByTagName("link"));
+            var head = document.getElementsByTagName("head")[0];
+            for (var i = 0; i < sheets.length; ++i) {
+                var elem = sheets[i];
+                var parent = elem.parentElement || head;
+                parent.removeChild(elem);
+                var rel = elem.rel;
+                if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+                    var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+                    elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date()
+                        .valueOf());
                 }
+                parent.appendChild(elem);
             }
-            var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
-            var address = protocol + window.location.host + window.location.pathname + '/ws';
-            var socket = new WebSocket(address);
-            socket.onmessage = function(msg) {
-                if (msg.data == 'reload') window.location.reload();
-                else if (msg.data == 'refreshcss') refreshCSS();
-            };
-            if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
-                console.log('Live reload enabled.');
-                sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
-            }
-        })();
-    } else {
-        console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
-    }
-    // ]]>
+        }
+        var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+        var address = protocol + window.location.host + window.location.pathname + '/ws';
+        var socket = new WebSocket(address);
+        socket.onmessage = function(msg) {
+            if (msg.data == 'reload') window.location.reload();
+            else if (msg.data == 'refreshcss') refreshCSS();
+        };
+        if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+            console.log('Live reload enabled.');
+            sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+        }
+    })();
+} else {
+    console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+}
+// ]]>
 </script>
 </body>
 
