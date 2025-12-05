@@ -1,78 +1,14 @@
 <?php
 ob_start();
 ?>
+
 <style>
-    /* Detail user page styles */
-    .user-detail-card {
-        max-width: 1000px;
-        margin: 0 auto 30px;
-    }
-
-    .user-panel {
-        display: grid;
-        grid-template-columns: 220px 1fr;
-        gap: 24px;
-        align-items: start;
-    }
-
-    .user-avatar {
-        width: 180px;
-        height: 180px;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 48px;
-        color: #fff;
-        background: linear-gradient(135deg, #4a6cf7, #6f87ff);
-        box-shadow: 0 8px 24px rgba(74,108,247,0.18);
-        margin-bottom: 12px;
-    }
-
-    .user-meta {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-    }
-
-    .user-name {
-        font-size: 20px;
-        font-weight: 700;
-        color: #1e293b;
-    }
-
-    .user-role {
-        font-size: 13px;
-        color: #64748b;
-    }
-
-    .user-actions a, .user-actions button {
-        margin-left: 8px;
-    }
-
-    .detail-list dt {
-        color: #475569;
-        font-weight: 600;
-    }
-
-    .detail-list dd {
-        color: #0f172a;
-    }
-
-    .badge-custom {
-        padding: 6px 12px;
-        border-radius: 999px;
-        font-weight: 700;
-        font-size: 13px;
-    }
-
-    .status-active { background: #d1fae5; color: #065f46; }
-    .status-inactive { background: #fee2e2; color: #7f1d1d; }
-
-    @media (max-width: 820px) {
-        .user-panel { grid-template-columns: 1fr; }
-        .user-avatar { width: 140px; height: 140px; font-size: 36px; }
-    }
+    .user-detail-card { border: 1px solid #e5e7eb; border-radius: 10px; }
+    .user-detail-card .card-header { background: #f8fafc; border-bottom: 1px solid #e5e7eb; padding: 16px 20px; }
+    .user-detail-card .card-body { padding: 20px; }
+    .badge-soft-success { background: #e6f4ea; color: #1f7a3d; }
+    .badge-soft-secondary { background: #f1f2f4; color: #475467; }
+    dl.row dt { font-weight: 600; color: #475467; }
 </style>
 
 <div class="content-wrapper">
@@ -80,93 +16,80 @@ ob_start();
         <div class="container-fluid mb-5">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card card-primary card-outline mb-5 user-detail-card">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h3 class="card-title">
-                                <i class="fas fa-info-circle"></i> Thông tin cơ bản
-                            </h3>
-                            <div class="card-tools user-actions">
+                    <div class="card user-detail-card shadow-sm mb-5">
+                        <div class="card-header d-flex align-items-center flex-wrap gap-2">
+                            <div>
+                                <h5 class="mb-0 fw-semibold"><i class="fas fa-info-circle"></i> Thông tin nhân viên</h5>
+                                <small class="text-muted">Chi tiết hồ sơ và trạng thái</small>
+                            </div>
+                            <div class="ms-auto d-flex gap-2">
                                 <?php
                                 $currentUser = getCurrentUser();
                                 $isCurrent = $currentUser && isset($currentUser->id) && $currentUser->id == $user['id'];
                                 ?>
-                                <a href="<?= BASE_URL . 'form-update-user&id=' . $user['id'] ?>" class="btn btn-sm btn-outline-primary">
+                                <a href="<?= BASE_URL . 'form-update-user&id=' . $user['id'] ?>" class="btn btn-primary btn-sm">
                                     <i class="fas fa-edit"></i> Sửa
                                 </a>
                                 <?php if ($isCurrent) : ?>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary" disabled title="Không thể xóa chính bạn">
-                                        <i class="fas fa-user-lock"></i> Bảo vệ
+                                    <button type="button" class="btn btn-secondary btn-sm" disabled title="Không thể xóa chính bạn">
+                                        <i class="fas fa-trash"></i> Xóa
                                     </button>
                                 <?php else : ?>
-                                    <a href="delete-user&id=<?= $user['id'] ?>" onclick="return confirmDelete()" class="btn btn-sm btn-outline-danger">
+                                    <a href="delete-user&id=<?= $user['id'] ?>" class="btn btn-outline-danger btn-sm"
+                                        onclick="return confirmDelete()">
                                         <i class="fas fa-trash"></i> Xóa
                                     </a>
                                 <?php endif; ?>
                             </div>
                         </div>
                         <div class="card-body">
-                            <?php
-                            // Tạo initials cho avatar
-                            $initials = '';
-                            if (!empty($user['ho_ten'])) {
-                                $parts = preg_split('/\s+/', trim($user['ho_ten']));
-                                foreach ($parts as $p) {
-                                    $initials .= mb_substr($p, 0, 1);
-                                    if (mb_strlen($initials) >= 2) break;
-                                }
-                                $initials = mb_strtoupper($initials);
-                            }
-                            $active = !empty($user['trang_thai']) && ($user['trang_thai'] == 1 || $user['trang_thai'] === '1' || $user['trang_thai'] === 'Kích hoạt' || $user['trang_thai'] === 'Hoạt động');
-                            ?>
+                            <dl class="row">
+                                <dt class="col-sm-4">Tên đăng nhập:</dt>
+                                <dd class="col-sm-8"><?= htmlspecialchars($user['username']) ?></dd>
 
-                            <div class="user-panel">
-                                <div>
-                                    <div class="user-avatar"><?= htmlspecialchars($initials ?: 'NV') ?></div>
-                                    <div class="user-meta">
-                                        <div class="user-name"><?= htmlspecialchars($user['ho_ten']) ?></div>
-                                        <div class="user-role"><?= htmlspecialchars($user['chuc_vu']) ?></div>
-                                        <div style="margin-top:8px;">
-                                            <span class="badge-custom <?= $active ? 'status-active' : 'status-inactive' ?>">
-                                                <?= $active ? 'Kích hoạt' : 'Vô hiệu' ?>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
+                                <dt class="col-sm-4">Mật khẩu:</dt>
+                                <dd class="col-sm-8"><?= !empty($user['password_hash']) ? '******' : '' ?></dd>
 
-                                <div>
-                                    <dl class="row detail-list">
-                                        <dt class="col-sm-4">Tên đăng nhập:</dt>
-                                        <dd class="col-sm-8"><?= htmlspecialchars($user['username']) ?></dd>
+                                <dt class="col-sm-4">Tên nhân viên:</dt>
+                                <dd class="col-sm-8"><?= htmlspecialchars($user['ho_ten']) ?></dd>
 
-                                        <dt class="col-sm-4">Mật khẩu:</dt>
-                                        <dd class="col-sm-8"><?= !empty($user['password_hash']) ? '******' : '' ?></dd>
+                                <dt class="col-sm-4">Giới tính:</dt>
+                                <dd class="col-sm-8"><?= htmlspecialchars($user['gioi_tinh']) ?></dd>
 
-                                        <dt class="col-sm-4">Giới tính:</dt>
-                                        <dd class="col-sm-8"><?= htmlspecialchars($user['gioi_tinh']) ?></dd>
+                                <dt class="col-sm-4">Ngày sinh:</dt>
+                                <dd class="col-sm-8"><?= !empty($user['ngay_sinh']) ? date('d-m-Y', strtotime($user['ngay_sinh'])) : '' ?></dd>
 
-                                        <dt class="col-sm-4">Ngày sinh:</dt>
-                                        <dd class="col-sm-8"><?= !empty($user['ngay_sinh']) ? date('d-m-Y', strtotime($user['ngay_sinh'])) : '' ?></dd>
+                                <dt class="col-sm-4">Số điện thoại:</dt>
+                                <dd class="col-sm-8"><?= htmlspecialchars($user['so_dien_thoai']) ?></dd>
 
-                                        <dt class="col-sm-4">Số điện thoại:</dt>
-                                        <dd class="col-sm-8"><?= htmlspecialchars($user['so_dien_thoai']) ?></dd>
+                                <dt class="col-sm-4">Email:</dt>
+                                <dd class="col-sm-8"><?= htmlspecialchars($user['email']) ?></dd>
 
-                                        <dt class="col-sm-4">Email:</dt>
-                                        <dd class="col-sm-8"><?= htmlspecialchars($user['email']) ?></dd>
+                                <dt class="col-sm-4">Địa chỉ:</dt>
+                                <dd class="col-sm-8"><?= htmlspecialchars($user['dia_chi']) ?></dd>
 
-                                        <dt class="col-sm-4">Địa chỉ:</dt>
-                                        <dd class="col-sm-8"><?= htmlspecialchars($user['dia_chi']) ?></dd>
+                                <dt class="col-sm-4">CCCD:</dt>
+                                <dd class="col-sm-8"><?= htmlspecialchars($user['cccd']) ?></dd>
 
-                                        <dt class="col-sm-4">CCCD:</dt>
-                                        <dd class="col-sm-8"><?= htmlspecialchars($user['cccd']) ?></dd>
+                                <dt class="col-sm-4">Chức vụ:</dt>
+                                <dd class="col-sm-8"><span class="badge bg-light text-dark border px-3 py-2"><?= htmlspecialchars($user['chuc_vu']) ?></span></dd>
 
-                                        <dt class="col-sm-4">Ngày vào làm:</dt>
-                                        <dd class="col-sm-8"><?= !empty($user['ngay_vao_lam']) ? date('d-m-Y', strtotime($user['ngay_vao_lam'])) : '' ?></dd>
+                                <dt class="col-sm-4">Ngày vào làm:</dt>
+                                <dd class="col-sm-8"><?= !empty($user['ngay_vao_lam']) ? date('d-m-Y', strtotime($user['ngay_vao_lam'])) : '' ?></dd>
 
-                                        <dt class="col-sm-4">Lương cơ bản:</dt>
-                                        <dd class="col-sm-8"><?= is_numeric($user['luong_co_ban']) ? number_format((float)$user['luong_co_ban'], 0, ',', '.') : htmlspecialchars($user['luong_co_ban']) ?></dd>
-                                    </dl>
-                                </div>
-                            </div>
+                                <dt class="col-sm-4">Lương cơ bản:</dt>
+                                <dd class="col-sm-8"><?= is_numeric($user['luong_co_ban']) ? number_format((float)$user['luong_co_ban'], 0, ',', '.') : htmlspecialchars($user['luong_co_ban']) ?></dd>
+
+                                <dt class="col-sm-4">Trạng thái:</dt>
+                                <dd class="col-sm-8">
+                                    <?php
+                                    $active = !empty($user['trang_thai']) && ($user['trang_thai'] == 1 || $user['trang_thai'] === '1' || $user['trang_thai'] === 'Kích hoạt' || $user['trang_thai'] === 'Hoạt động');
+                                    $status_text = $active ? 'Kích hoạt' : 'Vô hiệu';
+                                    $badgeClass = $active ? 'badge-soft-success' : 'badge-soft-secondary';
+                                    ?>
+                                    <span class="badge <?= $badgeClass ?> px-3 py-2"><?= htmlspecialchars($status_text) ?></span>
+                                </dd>
+                            </dl>
                         </div>
                     </div>
                     
