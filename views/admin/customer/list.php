@@ -10,16 +10,54 @@ if (!isset($customers) || !is_array($customers)) {
 ?>
 
 <style>
-    .cust-card { border-radius: 10px; border: 1px solid #e5e7eb; }
-    .cust-card .card-header { background: #f8fafc; border-bottom: 1px solid #e5e7eb; }
-    .cust-table thead th { background: #f5f6f8; color: #1f2b3d; }
-    .cust-table tbody td { vertical-align: middle; }
-    .badge-success { background-color: #e6f4ea !important; color: #1f7a3d !important; }
-    .badge-warning { background-color: #fff7e6 !important; color: #b45309 !important; }
-    .badge-secondary { background-color: #f1f2f4 !important; color: #475467 !important; }
-    .customer-name { text-decoration: none; color: #0f4db8; font-weight: 600; }
-    .customer-name:hover { text-decoration: underline; }
-    .action-btn { border-radius: 6px; padding: 6px 10px; }
+.cust-card {
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+}
+
+.cust-card .card-header {
+    background: #f8fafc;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.cust-table thead th {
+    background: #f5f6f8;
+    color: #1f2b3d;
+}
+
+.cust-table tbody td {
+    vertical-align: middle;
+}
+
+.badge-success {
+    background-color: #e6f4ea !important;
+    color: #1f7a3d !important;
+}
+
+.badge-warning {
+    background-color: #fff7e6 !important;
+    color: #b45309 !important;
+}
+
+.badge-secondary {
+    background-color: #f1f2f4 !important;
+    color: #475467 !important;
+}
+
+.customer-name {
+    text-decoration: none;
+    color: #0f4db8;
+    font-weight: 600;
+}
+
+.customer-name:hover {
+    text-decoration: underline;
+}
+
+.action-btn {
+    border-radius: 6px;
+    padding: 6px 10px;
+}
 </style>
 
 <div class="content-wrapper">
@@ -40,7 +78,6 @@ if (!isset($customers) || !is_array($customers)) {
                     <div class="card cust-card shadow-sm">
                         <div class="card-header d-flex align-items-center flex-wrap gap-2">
                             <div>
-                                <h5 class="mb-0 fw-semibold">Danh sách Khách hàng</h5>
                                 <small class="text-muted">Quản lý thông tin liên hệ và trạng thái</small>
                             </div>
                             <a href="<?= BASE_URL . 'form-add-khach-hang' ?>" class="btn btn-success ms-auto">
@@ -63,26 +100,26 @@ if (!isset($customers) || !is_array($customers)) {
                                 </thead>
                                 <tbody>
                                     <?php if (!empty($customers)) : ?>
-                                        <?php foreach ($customers as $customer) : ?>
-                                            <tr>
-                                                <td><?= htmlspecialchars($customer['id']) ?></td>
-                                                <td>
-                                                    <a href="<?= BASE_URL . 'detail-khach-hang&id=' . htmlspecialchars($customer['id']) ?>"
-                                                        class="font-weight-bold customer-name">
-                                                        <?= htmlspecialchars($customer['ho_ten']) ?>
-                                                    </a>
+                                    <?php foreach ($customers as $customer) : ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($customer['id']) ?></td>
+                                        <td>
+                                            <a href="<?= BASE_URL . 'detail-khach-hang&id=' . htmlspecialchars($customer['id']) ?>"
+                                                class="font-weight-bold customer-name">
+                                                <?= htmlspecialchars($customer['ho_ten']) ?>
+                                            </a>
 
-                                                </td>
-                                                <td>
-                                                    SĐT: <?= htmlspecialchars($customer['so_dien_thoai']) ?><br>
-                                                    Email: <?= htmlspecialchars($customer['email']) ?>
-                                                </td>
-                                                <td><?= htmlspecialchars($customer['gioi_tinh']) ?></td>
-                                                <td>
-                                                    <?= date('d/m/Y', strtotime(htmlspecialchars($customer['ngay_dang_ky']))) ?>
-                                                </td>
-                                                <td>
-                                                    <?php
+                                        </td>
+                                        <td>
+                                            SĐT: <?= htmlspecialchars($customer['so_dien_thoai']) ?><br>
+                                            Email: <?= htmlspecialchars($customer['email']) ?>
+                                        </td>
+                                        <td><?= htmlspecialchars($customer['gioi_tinh']) ?></td>
+                                        <td>
+                                            <?= date('d/m/Y', strtotime(htmlspecialchars($customer['ngay_dang_ky']))) ?>
+                                        </td>
+                                        <td>
+                                            <?php
                                                     $status = htmlspecialchars($customer['trang_thai']);
                                                     $status_color = 'secondary'; // Mặc định
                                                     if ($status == 'đang hoạt động') {
@@ -92,29 +129,29 @@ if (!isset($customers) || !is_array($customers)) {
                                                     }
                                                     // Trạng thái 'xóa' đã được lọc ra ở Model
                                                     ?>
-                                                    <span class="badge badge-<?= $status_color ?>">
-                                                        <?= $status ?>
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <a href="<?= BASE_URL . 'form-update-khach-hang&id=' . htmlspecialchars($customer['id']) ?>"
-                                                        class="btn btn-primary btn-sm action-btn me-1" title="Sửa">
-                                                        <i class="fas fa-edit"></i> Sửa
-                                                    </a>
-                                                    <a href="<?= BASE_URL . 'delete-khach-hang&id=' . htmlspecialchars($customer['id']) ?>"
-                                                        class="btn btn-outline-danger btn-sm action-btn"
-                                                        onclick="return confirm('Bạn có chắc chắn muốn XÓA (đưa vào trạng thái \'xóa\') khách hàng [<?= htmlspecialchars($customer['ho_ten']) ?>] này không?')"
-                                                        title="Xóa">
-                                                        <i class="fas fa-trash"></i> Xóa
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        <?php endforeach; ?>
+                                            <span class="badge badge-<?= $status_color ?>">
+                                                <?= $status ?>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <a href="<?= BASE_URL . 'form-update-khach-hang&id=' . htmlspecialchars($customer['id']) ?>"
+                                                class="btn btn-primary btn-sm action-btn me-1" title="Sửa">
+                                                <i class="fas fa-edit"></i> Sửa
+                                            </a>
+                                            <a href="<?= BASE_URL . 'delete-khach-hang&id=' . htmlspecialchars($customer['id']) ?>"
+                                                class="btn btn-outline-danger btn-sm action-btn"
+                                                onclick="return confirm('Bạn có chắc chắn muốn XÓA (đưa vào trạng thái \'xóa\') khách hàng [<?= htmlspecialchars($customer['ho_ten']) ?>] này không?')"
+                                                title="Xóa">
+                                                <i class="fas fa-trash"></i> Xóa
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
                                     <?php else : ?>
-                                        <tr>
-                                            <td colspan="7" class="text-center">Chưa có khách hàng nào được thêm hoặc đang
-                                                hoạt động.</td>
-                                        </tr>
+                                    <tr>
+                                        <td colspan="7" class="text-center">Chưa có khách hàng nào được thêm hoặc đang
+                                            hoạt động.</td>
+                                    </tr>
                                     <?php endif; ?>
                                 </tbody>
                             </table>
@@ -130,35 +167,35 @@ if (!isset($customers) || !is_array($customers)) {
 </aside>
 
 <script>
-    $(function() {
-        $("#example1").DataTable({
-            "responsive": true,
-            "lengthChange": false,
-            "autoWidth": false,
-            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-            "language": {
-                "sProcessing": "Đang xử lý...",
-                "sLengthMenu": "Xem _MENU_ mục",
-                "sZeroRecords": "Không tìm thấy kết quả",
-                "sInfo": "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
-                "sInfoEmpty": "Đang xem 0 đến 0 trong tổng số 0 mục",
-                "sInfoFiltered": "(được lọc từ tổng số _MAX_ mục)",
-                "sInfoPostFix": "",
-                "sSearch": "Tìm kiếm:",
-                "sUrl": "",
-                "oPaginate": {
-                    "sFirst": "Đầu",
-                    "sPrevious": "Trước",
-                    "sNext": "Tiếp",
-                    "sLast": "Cuối"
-                },
-                "oAria": {
-                    "sSortAscending": ": sắp xếp cột theo thứ tự tăng dần",
-                    "sSortDescending": ": sắp xếp cột theo thứ tự giảm dần"
-                }
+$(function() {
+    $("#example1").DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+        "language": {
+            "sProcessing": "Đang xử lý...",
+            "sLengthMenu": "Xem _MENU_ mục",
+            "sZeroRecords": "Không tìm thấy kết quả",
+            "sInfo": "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+            "sInfoEmpty": "Đang xem 0 đến 0 trong tổng số 0 mục",
+            "sInfoFiltered": "(được lọc từ tổng số _MAX_ mục)",
+            "sInfoPostFix": "",
+            "sSearch": "Tìm kiếm:",
+            "sUrl": "",
+            "oPaginate": {
+                "sFirst": "Đầu",
+                "sPrevious": "Trước",
+                "sNext": "Tiếp",
+                "sLast": "Cuối"
+            },
+            "oAria": {
+                "sSortAscending": ": sắp xếp cột theo thứ tự tăng dần",
+                "sSortDescending": ": sắp xếp cột theo thứ tự giảm dần"
             }
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    });
+        }
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+});
 </script>
 
 <?php
