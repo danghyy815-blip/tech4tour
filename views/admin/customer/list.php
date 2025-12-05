@@ -10,38 +10,16 @@ if (!isset($customers) || !is_array($customers)) {
 ?>
 
 <style>
-    /* Đảm bảo chữ trong badge có màu dễ đọc */
-    .badge-success {
-        background-color: #28a745 !important;
-        color: #ffffff !important;
-    }
-
-    .badge-warning {
-        background-color: #ffc107 !important;
-        color: #212529 !important;
-        /* Màu chữ tối cho nền vàng */
-    }
-
-    .badge-secondary {
-        background-color: #6c757d !important;
-        color: #ffffff !important;
-    }
-
-    /* Link họ tên khách hàng */
-    .customer-name {
-        text-decoration: none;
-        /* Bỏ gạch chân */
-        color: #007bff;
-        /* Màu xanh chuẩn admin */
-        transition: color 0.2s ease, text-decoration 0.2s ease;
-    }
-
-    .customer-name:hover {
-        text-decoration: underline;
-        /* Khi hover mới gạch chân */
-        color: #0056b3;
-        /* Đậm hơn khi hover */
-    }
+    .cust-card { border-radius: 10px; border: 1px solid #e5e7eb; }
+    .cust-card .card-header { background: #f8fafc; border-bottom: 1px solid #e5e7eb; }
+    .cust-table thead th { background: #f5f6f8; color: #1f2b3d; }
+    .cust-table tbody td { vertical-align: middle; }
+    .badge-success { background-color: #e6f4ea !important; color: #1f7a3d !important; }
+    .badge-warning { background-color: #fff7e6 !important; color: #b45309 !important; }
+    .badge-secondary { background-color: #f1f2f4 !important; color: #475467 !important; }
+    .customer-name { text-decoration: none; color: #0f4db8; font-weight: 600; }
+    .customer-name:hover { text-decoration: underline; }
+    .action-btn { border-radius: 6px; padding: 6px 10px; }
 </style>
 
 <div class="content-wrapper">
@@ -59,17 +37,19 @@ if (!isset($customers) || !is_array($customers)) {
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <a href="<?= BASE_URL . 'form-add-khach-hang' ?>">
-                                <button type="button" class="btn btn-primary">
-                                    <i class="fas fa-plus-circle"></i> Thêm khách hàng
-                                </button>
+                    <div class="card cust-card shadow-sm">
+                        <div class="card-header d-flex align-items-center flex-wrap gap-2">
+                            <div>
+                                <h5 class="mb-0 fw-semibold">Danh sách Khách hàng</h5>
+                                <small class="text-muted">Quản lý thông tin liên hệ và trạng thái</small>
+                            </div>
+                            <a href="<?= BASE_URL . 'form-add-khach-hang' ?>" class="btn btn-success ms-auto">
+                                <i class="fas fa-plus-circle"></i> Thêm khách hàng
                             </a>
                         </div>
 
                         <div class="card-body">
-                            <table id="example1" class="table table-bordered table-striped">
+                            <table id="example1" class="table table-hover align-middle cust-table">
                                 <thead>
                                     <tr>
                                         <th style="width: 5%">ID</th>
@@ -117,16 +97,16 @@ if (!isset($customers) || !is_array($customers)) {
                                                     </span>
                                                 </td>
                                                 <td>
-                                                    <button type="button"
-                                                        onclick="window.location.href='<?= BASE_URL . 'form-update-khach-hang&id=' . htmlspecialchars($customer['id']) ?>'"
-                                                        class="btn btn-primary btn-sm mb-1" title="Sửa">
-                                                        <i class="fas fa-edit"></i>Sửa
-                                                    </button>
-                                                    <button type="button"
-                                                        onclick="if(confirm('Bạn có chắc chắn muốn XÓA (đưa vào trạng thái \'xóa\') khách hàng [<?= htmlspecialchars($customer['ho_ten']) ?>] này không?')) { window.location.href='<?= BASE_URL . 'delete-khach-hang&id=' . htmlspecialchars($customer['id']) ?>'; }"
-                                                        class="btn btn-danger btn-sm mb-1" title="Xóa">
-                                                        <i class="fas fa-trash"></i>Xóa
-                                                    </button>
+                                                    <a href="<?= BASE_URL . 'form-update-khach-hang&id=' . htmlspecialchars($customer['id']) ?>"
+                                                        class="btn btn-primary btn-sm action-btn me-1" title="Sửa">
+                                                        <i class="fas fa-edit"></i> Sửa
+                                                    </a>
+                                                    <a href="<?= BASE_URL . 'delete-khach-hang&id=' . htmlspecialchars($customer['id']) ?>"
+                                                        class="btn btn-outline-danger btn-sm action-btn"
+                                                        onclick="return confirm('Bạn có chắc chắn muốn XÓA (đưa vào trạng thái \'xóa\') khách hàng [<?= htmlspecialchars($customer['ho_ten']) ?>] này không?')"
+                                                        title="Xóa">
+                                                        <i class="fas fa-trash"></i> Xóa
+                                                    </a>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>

@@ -1,68 +1,30 @@
 <?php ob_start(); ?>
 
 <style>
-    :root {
-        --primary: #4a6cf7;
-        --primary-hover: #3d5ae5;
-        --border: #dcdcdc;
-        --radius: 10px;
-        --input-radius: 6px;
-    }
-    .card {
-        border-radius: var(--radius);
-        box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-    }
-    .card-header {
-        background: var(--primary);
-        padding: 18px 24px;
-    }
-    .card-title {
-        color: #fff;
-        font-size: 18px;
-        font-weight: 600;
-        margin: 0;
-    }
-    .card-body { padding: 25px 30px; }
-    .card-footer { padding: 20px 30px; }
-
-    label { font-weight: 600; margin-bottom: 4px; display: block; }
-
-    .form-control {
-        height: 44px;
-        border-radius: var(--input-radius);
-        border: 1px solid var(--border);
-        padding: 0 12px;
-        transition: .2s;
-    }
-    .form-control:focus {
-        border: 1px solid var(--primary);
-        box-shadow: 0 0 0 3px rgba(74,108,247,0.2);
-    }
-
+    .user-form-card { border: 1px solid #e5e7eb; border-radius: 10px; background: #fff; }
+    .user-form-card .card-header { background: #f8fafc; border-bottom: 1px solid #e5e7eb; padding: 16px 20px; }
+    .user-form-card .card-body { padding: 20px; }
+    .user-form-card .card-footer { padding: 16px 20px; background: #f9fafb; border-top: 1px solid #e5e7eb; }
+    label { font-weight: 600; margin-bottom: 6px; display: block; }
+    .form-control { height: 42px; border-radius: 6px; border: 1px solid #e5e7eb; padding: 0 12px; }
+    .form-control:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.15); }
     .invalid { border-color: red !important; }
-    .error-text {
-        color: red;
-        font-size: 13px;
-        margin-top: 4px;
-    }
-
-    .form-row { display: flex; gap: 20px; margin-bottom: 18px; }
+    .error-text { color: red; font-size: 13px; margin-top: 4px; }
+    .form-row { display: flex; gap: 16px; margin-bottom: 16px; }
     .form-group { flex: 1; display: flex; flex-direction: column; }
-
-    .btn-primary {
-        background: var(--primary);
-        padding: 10px 26px;
-        border-radius: 6px;
-        border: none;
-        font-weight: 600;
-    }
-    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-primary { background: #2563eb; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; }
+    .btn-primary:hover { background: #1d4ed8; }
+    .btn-secondary { background: #6b7280; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; }
 </style>
 
 
-<div class="card">
-    <div class="card-header">
-        <h3 class="card-title">Thêm nhân viên</h3>
+<div class="card user-form-card shadow-sm">
+    <div class="card-header d-flex align-items-center justify-content-between">
+        <div>
+            <h5 class="mb-0 fw-semibold">Thêm nhân viên</h5>
+            <small class="text-muted">Nhập thông tin tài khoản và hồ sơ</small>
+        </div>
+        <a href="user" class="btn btn-secondary text-white">Quay lại</a>
     </div>
 
     <form action="add-user" method="POST">
@@ -235,8 +197,9 @@
 
         </div>
 
-        <div class="card-footer">
+        <div class="card-footer d-flex gap-2">
             <button type="submit" class="btn-primary">Thêm</button>
+            <a href="user" class="btn btn-secondary text-white">Hủy</a>
         </div>
 
     </form>
