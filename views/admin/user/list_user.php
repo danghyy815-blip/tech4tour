@@ -2,6 +2,35 @@
 ob_start();
 ?>
 
+<style>
+    /* User list improvements to match detail UI */
+    .tbl-avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 8px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        color: white;
+        background: linear-gradient(135deg,#4a6cf7,#6f87ff);
+        box-shadow: 0 6px 18px rgba(74,108,247,0.16);
+        margin-right: 10px;
+    }
+    .name-cell { display: flex; align-items: center; gap: 8px; }
+    .name-cell .meta { display: flex; flex-direction: column; }
+    .name-cell .meta .name { font-weight:700; color:#0f172a; }
+    .name-cell .meta .email { color:#64748b; font-size:13px; word-break:break-all; }
+    .badge-custom { padding:6px 10px; border-radius:12px; font-weight:700; font-size:12px; }
+    .status-active { background:#d1fae5; color:#065f46; }
+    .status-inactive { background:#fee2e2; color:#7f1d1d; }
+    .action-link { text-decoration:none; }
+    .btn-action { margin-right:6px; }
+    @media (max-width: 768px) {
+        .name-cell .meta .email { display:none; }
+    }
+</style>
+
 <div class="content-wrapper">
 
     <!-- Main content -->
@@ -23,22 +52,16 @@ ob_start();
                             <?php if ($msg = getFlash('error')): ?>
                                 <div class="alert alert-danger" role="alert"><?= htmlspecialchars($msg) ?></div>
                             <?php endif; ?>
-                            <table id="example1" class="table table-bordered table-striped">
+                            <table id="example1" class="table table-hover table-striped">
                                 <thead>
                                     <tr>
-                                        <th>STT</th>
-                                        <th>Họ và tên</th>
+                                        <th style="width:60px">STT</th>
+                                        <th>Người</th>
                                         <th>Giới tính</th>
-                                        
-                                        
-                                        <th>Email</th>
                                         <th>Địa chỉ</th>
-                                        
                                         <th>Chức vụ</th>
-                                        
-                                        
                                         <th>Trạng thái</th>
-                                        <th>Thao tác</th>
+                                        <th style="width:150px">Thao tác</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -46,32 +69,50 @@ ob_start();
                                     $currentUser = getCurrentUser();
                                     foreach ($users as $key => $user) :
                                         $isCurrent = $currentUser && isset($currentUser->id) && $currentUser->id == $user['id'];
+                                        // initials
+                                        $initials = '';
+                                        if (!empty($user['ho_ten'])) {
+                                            $parts = preg_split('/\s+/', trim($user['ho_ten']));
+                                            foreach ($parts as $p) {
+                                                $initials .= mb_substr($p, 0, 1);
+                                                if (mb_strlen($initials) >= 2) break;
+                                            }
+                                            $initials = mb_strtoupper($initials);
+                                        }
                                     ?>
                                         <tr class="<?= $isCurrent ? 'table-success' : '' ?>">
                                             <td><?= $key + 1 ?></td>
-                                            
-                                            <td><?= htmlspecialchars($user['ho_ten']) ?></td>
-                                            <td><?= htmlspecialchars($user['gioi_tinh']) ?></td>
-                                            
-                                            
-                                            <td><?= htmlspecialchars($user['email']) ?></td>
-                                            <td><?= htmlspecialchars($user['dia_chi']) ?></td>
-                                            
-                                            <td><?= htmlspecialchars($user['chuc_vu']) ?></td>
-                                           
-                                            <td><?= $user['trang_thai'] ? 'Kích hoạt' : 'Vô hiệu' ?></td>
                                             <td>
-                                                <button type="button" class="btn btn-primary btn-sm">
-                                                    <a href="<?= BASE_URL . 'form-update-user&id=' . $user['id'] ?>" style="color: white;">Sửa</a>
-                                                </button>
+                                                <div class="name-cell">
+                                                    <div class="tbl-avatar"><?= htmlspecialchars($initials ?: 'NV') ?></div>
+                                                    <div class="meta">
+                                                        <div class="name"><?= htmlspecialchars($user['ho_ten']) ?></div>
+                                                        <div class="email"><?= htmlspecialchars($user['email']) ?></div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td><?= htmlspecialchars($user['gioi_tinh']) ?></td>
+                                            <td><?= htmlspecialchars($user['dia_chi']) ?></td>
+                                            <td><?= htmlspecialchars($user['chuc_vu']) ?></td>
+                                            <td>
+                                                <?php if (!empty($user['trang_thai']) && ($user['trang_thai'] == 1 || $user['trang_thai'] === '1' || $user['trang_thai'] === 'Kích hoạt' || $user['trang_thai'] === 'Hoạt động')): ?>
+                                                    <span class="badge-custom status-active">Kích hoạt</span>
+                                                <?php else: ?>
+                                                    <span class="badge-custom status-inactive">Vô hiệu</span>
+                                                <?php endif; ?>
+                                            </td>
+                                            <td>
+                                                <a href="<?= BASE_URL . 'form-update-user&id=' . $user['id'] ?>" class="btn btn-sm btn-outline-primary btn-action action-link" title="Sửa">
+                                                    <i class="fas fa-edit"></i> Sửa
+                                                </a>
                                                 <?php if ($isCurrent) : ?>
-                                                    <button type="button" class="btn btn-danger btn-sm" disabled title="Không thể xóa chính bạn">
-                                                        Xóa
+                                                    <button type="button" class="btn btn-sm btn-outline-secondary" disabled title="Không thể xóa chính bạn">
+                                                        <i class="fas fa-user-lock"></i>
                                                     </button>
                                                 <?php else : ?>
-                                                    <button type="button" class="btn btn-danger btn-sm">
-                                                        <a href="delete-user&id=<?= $user['id'] ?>" style="color: white;" onclick="return confirm('Bạn có đồng ý xóa nhân viên này không?')">Xóa</a>
-                                                    </button>
+                                                    <a href="delete-user&id=<?= $user['id'] ?>" class="btn btn-sm btn-outline-danger action-link" onclick="return confirm('Bạn có đồng ý xóa nhân viên này không?')" title="Xóa">
+                                                        <i class="fas fa-trash"></i> Xóa
+                                                    </a>
                                                 <?php endif; ?>
                                             </td>
                                         </tr>
