@@ -208,7 +208,7 @@ class UserController
             if (empty($luong_co_ban)) {
                 $errors['luong_co_ban'] = "Lương không được để trống.";
             }
-             if (empty($trang_thai)) {
+            if (!isset($_POST['trang_thai']) || $_POST['trang_thai'] === '') {
                 $errors['trang_thai'] = "Trạng thái không được để trống.";
             }
 
