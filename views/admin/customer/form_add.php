@@ -13,17 +13,34 @@ $yeu_cau_dac_biet = $_POST['yeu_cau_dac_biet'] ?? '';
 $trang_thai = $_POST['trang_thai'] ?? 'đang hoạt động';
 
 $errors = $errors ?? [];
-
+//
 ?>
 
+<style>
+    .cust-form-card { border: 1px solid #e5e7eb; border-radius: 10px; background: #fff; }
+    .cust-form-card .card-header { background: #f8fafc; border-bottom: 1px solid #e5e7eb; padding: 16px 20px; }
+    .cust-form-card .card-body { padding: 20px; }
+    .cust-form-card .card-footer { padding: 16px 20px; background: #f9fafb; border-top: 1px solid #e5e7eb; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; }
+    label { font-weight: 600; margin-bottom: 6px; display: block; }
+    .form-control, select.form-control, textarea.form-control {
+        height: 42px; border-radius: 6px; border: 1px solid #e5e7eb; padding: 0 12px;
+    }
+    textarea.form-control { height: auto; padding-top: 10px; padding-bottom: 10px; }
+    .form-control:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.15); }
+    .btn-submit { background: #16a34a; border: none; padding: 10px 20px; border-radius: 6px; color: #fff; font-weight: 600; }
+    .btn-submit:hover { background: #15803d; }
+    .btn-secondary-custom { background: #6b7280; border: none; padding: 10px 20px; border-radius: 6px; color: #fff; font-weight: 600; }
+    .custom-control { padding-left: 1.5rem; }
+    .custom-control-input:checked~.custom-control-label::before { border-color: #2563eb; background-color: #2563eb; }
+</style>
 <div class="content-wrapper">
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-10 offset-md-1">
-                    <div class="card card-success">
+                <div class="col-12">
+                    <div class="card cust-form-card shadow-sm">
                         <div class="card-header">
-                            <h3 class="card-title"><i class="fas fa-user-plus"></i> Thông tin Khách hàng</h3>
+                            <h5 class="mb-0 fw-semibold"><i class="fas fa-user-plus"></i> Thông tin Khách hàng</h5>
                         </div>
 
                         <form action="<?= BASE_URL . 'add-khach-hang' ?>" method="POST">
@@ -40,7 +57,7 @@ $errors = $errors ?? [];
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>Giới tính <span class="text-danger">*</span></label>
-                                        <div class="d-flex align-items-center mt-2">
+                                        <div class="d-flex align-items-center mt-2" style="height: 44px;">
                                             <div class="custom-control custom-radio mr-4">
                                                 <input class="custom-control-input" type="radio" id="genderNam"
                                                     name="gioi_tinh" value="Nam"
@@ -138,12 +155,9 @@ $errors = $errors ?? [];
                                 </div>
 
                             </div>
-
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Thêm Khách
-                                    hàng</button>
-                                <a href="<?= BASE_URL . 'khach-hang' ?>" class="btn btn-secondary ml-2"><i
-                                        class="fas fa-arrow-left"></i> Quay lại</a>
+                            <div class="card-footer d-flex gap-2">
+                                <button type="submit" class="btn-submit"><i class="fas fa-save"></i> Thêm Khách hàng</button>
+                                <a href="<?= BASE_URL . 'khach-hang' ?>" class="btn-secondary-custom"><i class="fas fa-arrow-left"></i> Quay lại</a>
                             </div>
                         </form>
                     </div>

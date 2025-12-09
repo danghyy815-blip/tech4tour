@@ -56,19 +56,19 @@ ob_start();
                                     };
                                     ?>
                                     <span class="badge" style="background-color: <?= match ($status) {
-                                        'DaXacNhan' => '#d4edda',
-                                        'ChoDuyet' => '#fff3cd',
-                                        'Huy' => '#f8d7da',
-                                        'HoanThanh' => '#d1ecf1',
-                                        default => '#e2e3e5'
-                                    }; ?>; 
-      color: <?= match ($status) {
-          'DaXacNhan' => '#155724',
-          'ChoDuyet' => '#856404',
-          'Huy' => '#721c24',
-          'HoanThanh' => '#0c5460',
-          default => '#6c757d'
-      }; ?>;">
+                                                                                        'DaXacNhan' => '#d4edda',
+                                                                                        'ChoDuyet' => '#fff3cd',
+                                                                                        'Huy' => '#f8d7da',
+                                                                                        'HoanThanh' => '#d1ecf1',
+                                                                                        default => '#e2e3e5'
+                                                                                    }; ?>; 
+                                        color: <?= match ($status) {
+                                                    'DaXacNhan' => '#155724',
+                                                    'ChoDuyet' => '#856404',
+                                                    'Huy' => '#721c24',
+                                                    'HoanThanh' => '#0c5460',
+                                                    default => '#6c757d'
+                                                }; ?>;">
                                         <?= $statusText ?>
                                     </span>
                                 </dd>
@@ -219,7 +219,7 @@ ob_start();
                                                     <td><?= htmlspecialchars($c['ghi_chu'] ?? '') ?></td>
                                                     <td>
                                                         <span
-                                                            class="badge badge-<?= ($c['trang_thai'] ?? '') === 'active' ? 'success' : 'secondary' ?> text-dark">
+                                                            class="badge badge-<?= ($c['trang_thai'] ?? '') === 'active' ? 'success' : 'secondary' ?>">
                                                             <?= htmlspecialchars($c['trang_thai'] ?? '') ?>
                                                         </span>
                                                     </td>
@@ -228,26 +228,11 @@ ob_start();
                                                         $dd = $c['diem_danh'] ?? null;
 
                                                         if ($dd === '1' || $dd === 1) {
-                                                            // Có mặt – xanh
-                                                            echo '
-        <span class="badge" 
-              style="background:white; color:#155724; border:1px solid #28a745; padding:6px 10px;">
-            <i class="fas fa-check"></i> Có mặt
-        </span>';
+                                                            echo '<span class="badge badge-success"><i class="fas fa-check"></i> Có mặt</span>';
                                                         } elseif ($dd === '0' || $dd === 0) {
-                                                            // Chưa điểm danh – xám
-                                                            echo '
-        <span class="badge" 
-              style="background:white; color:#6c757d; border:1px solid #6c757d; padding:6px 10px;">
-            Chưa điểm danh
-        </span>';
+                                                            echo '<span class="badge badge-secondary">Chưa điểm danh</span>';
                                                         } else {
-                                                            // Vắng mặt – đỏ
-                                                            echo '
-        <span class="badge" 
-              style="background:white; color:#721c24; border:1px solid #dc3545; padding:6px 10px;">
-            <i class="fas fa-times"></i> Vắng mặt
-        </span>';
+                                                            echo '<span class="badge badge-danger"><i class="fas fa-times"></i> Vắng mặt</span>';
                                                         }
                                                         ?>
                                                     </td>
@@ -255,8 +240,8 @@ ob_start();
                                                     <td>
                                                         <a href="<?= BASE_URL ?>remove-customer-from-booking&booking_id=<?= $booking['id'] ?>&customer_id=<?= $c['khach_hang_id'] ?>"
                                                             class="btn btn-danger btn-sm"
-                                                            onclick="return confirm('Bạn có chắc chắn muốn xóa tour này không?')">
-                                                            Xóa
+                                                            onclick="return confirm('Bạn có chắc muốn xóa khách hàng này khỏi booking?')">
+                                                            <i class="fas fa-trash"></i>
                                                         </a>
                                                     </td>
                                                 </tr>
