@@ -91,6 +91,31 @@
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
+                        <i class="nav-icon bi bi-calendar-week"></i>
+                        <p>
+                            Quản lý Lịch Trình
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="<?= BASE_URL . 'tour-lich-trinh' ?>" class="nav-link">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Danh sách Lịch Trình</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="<?= BASE_URL . 'form-add-lich-trinh' ?>" class="nav-link">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Thêm Lịch Trình</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon bi bi-people-fill"></i>
                         <p>
                             Quản lý Khách hàng

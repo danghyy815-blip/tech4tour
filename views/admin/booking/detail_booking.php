@@ -46,7 +46,7 @@ ob_start();
                                 <dt class="col-sm-4">Trạng thái:</dt>
                                 <dd class="col-sm-8">
                                     <?php
-                                    $status = $booking['trang_thai'] ?? 'ChoDuyet';                         
+                                    $status = $booking['trang_thai'] ?? 'ChoDuyet';
                                     $statusText = match ($status) {
                                         'DaXacNhan' => 'Đã xác nhận',
                                         'ChoDuyet' => 'Chờ duyệt',
@@ -100,6 +100,73 @@ ob_start();
                             </dl>
                         </div>
                     </div>
+                    <div class="card shadow-sm mt-4">
+                        <div class="card-header">
+                            <h4 class="card-title">Lịch trình của tour</h4>
+                        </div>
+
+                        <div class="card-body">
+
+                            <?php if (empty($lichTrinh)): ?>
+                                <p class="text-muted">Tour này chưa có lịch trình nào.</p>
+                            <?php else: ?>
+
+                                <table class="table table-bordered table-striped">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Ảnh</th>
+                                            <th>Tiêu đề</th>
+                                            <th>Ngày</th>
+                                            <th>Thứ tự</th>
+                                            <th>Nội dung</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <?php foreach ($lichTrinh as $lt): ?>
+                                            <tr>
+                                                <!-- ID -->
+                                                <td><?= $lt['id'] ?></td>
+
+                                                <!-- Ảnh -->
+                                                <td>
+                                                    <?php if (!empty($lt['hinh_anh'])): ?>
+                                                        <img src="<?= BASE_URL . 'uploads/tour_lich_trinh/' . $lt['hinh_anh'] ?>"
+                                                            width="80" class="img-thumbnail">
+                                                    <?php else: ?>
+                                                        <span class="text-muted">Không có</span>
+                                                    <?php endif; ?>
+                                                </td>
+
+                                                <!-- Tiêu đề -->
+                                                <td><?= htmlspecialchars($lt['tieu_de']) ?></td>
+
+                                                <!-- Ngày -->
+                                                <td>
+                                                    <?= !empty($lt['ngay_thu'])
+                                                        ? date("d/m/Y", strtotime($lt['ngay_thu']))
+                                                        : '---'
+                                                        ?>
+                                                </td>
+
+                                                <!-- Thứ tự -->
+                                                <td><?= $lt['thu_tu'] ?></td>
+
+                                                <!-- Nội dung -->
+                                                <td style="white-space: pre-line;">
+                                                    <?= nl2br(htmlspecialchars($lt['noi_dung'] ?? '')) ?>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+
+                            <?php endif; ?>
+
+                        </div>
+                    </div>
+
 
                     <!-- Danh sách khách hàng -->
                     <div class="card card-info card-outline">
@@ -152,27 +219,44 @@ ob_start();
                                                     <td><?= htmlspecialchars($c['ghi_chu'] ?? '') ?></td>
                                                     <td>
                                                         <span
-                                                            class="badge badge-<?= ($c['trang_thai'] ?? '') === 'active' ? 'success' : 'secondary' ?>">
+                                                            class="badge badge-<?= ($c['trang_thai'] ?? '') === 'active' ? 'success' : 'secondary' ?> text-dark">
                                                             <?= htmlspecialchars($c['trang_thai'] ?? '') ?>
                                                         </span>
                                                     </td>
                                                     <td>
                                                         <?php
                                                         $dd = $c['diem_danh'] ?? null;
+
                                                         if ($dd === '1' || $dd === 1) {
-                                                            echo '<span class="badge badge-success"><i class="fas fa-check"></i> Có mặt</span>';
+                                                            // Có mặt – xanh
+                                                            echo '
+        <span class="badge" 
+              style="background:white; color:#155724; border:1px solid #28a745; padding:6px 10px;">
+            <i class="fas fa-check"></i> Có mặt
+        </span>';
                                                         } elseif ($dd === '0' || $dd === 0) {
-                                                            echo '<span class="badge badge-secondary">Chưa điểm danh</span>';
+                                                            // Chưa điểm danh – xám
+                                                            echo '
+        <span class="badge" 
+              style="background:white; color:#6c757d; border:1px solid #6c757d; padding:6px 10px;">
+            Chưa điểm danh
+        </span>';
                                                         } else {
-                                                            echo '<span class="badge badge-danger"><i class="fas fa-times"></i> Vắng mặt</span>';
+                                                            // Vắng mặt – đỏ
+                                                            echo '
+        <span class="badge" 
+              style="background:white; color:#721c24; border:1px solid #dc3545; padding:6px 10px;">
+            <i class="fas fa-times"></i> Vắng mặt
+        </span>';
                                                         }
                                                         ?>
                                                     </td>
+
                                                     <td>
                                                         <a href="<?= BASE_URL ?>remove-customer-from-booking&booking_id=<?= $booking['id'] ?>&customer_id=<?= $c['khach_hang_id'] ?>"
                                                             class="btn btn-danger btn-sm"
-                                                            onclick="return confirm('Bạn có chắc muốn xóa khách hàng này khỏi booking?')">
-                                                            <i class="fas fa-trash"></i>
+                                                            onclick="return confirm('Bạn có chắc chắn muốn xóa tour này không?')">
+                                                            Xóa
                                                         </a>
                                                     </td>
                                                 </tr>

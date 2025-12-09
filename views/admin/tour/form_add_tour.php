@@ -17,7 +17,8 @@ $selectedPolicies = $old['chinh_sach_id'] ?? [];
         <!-- Tên Tour -->
         <div class="mb-3">
             <label class="form-label">Tên Tour</label>
-            <input type="text" name="ten_tour" class="form-control" value="<?= htmlspecialchars($old['ten_tour'] ?? '') ?>">
+            <input type="text" name="ten_tour" class="form-control"
+                value="<?= htmlspecialchars($old['ten_tour'] ?? '') ?>">
             <?php if (!empty($errors['ten_tour'])): ?>
                 <small class="text-danger"><?= $errors['ten_tour'] ?></small>
             <?php endif; ?>
@@ -34,7 +35,7 @@ $selectedPolicies = $old['chinh_sach_id'] ?? [];
                     </option>
                 <?php endforeach; ?>
             </select>
-            <?php if(!empty($errors['id_danh_muc'])): ?>
+            <?php if (!empty($errors['id_danh_muc'])): ?>
                 <span class="text-danger"><?= $errors['id_danh_muc'] ?></span>
             <?php endif; ?>
         </div>
@@ -42,8 +43,93 @@ $selectedPolicies = $old['chinh_sach_id'] ?? [];
         <!-- Lịch trình -->
         <div class="mb-3">
             <label class="form-label">Lịch trình</label>
-            <textarea name="lich_trinh" class="form-control" rows="3"><?= htmlspecialchars($old['lich_trinh'] ?? '') ?></textarea>
+            <textarea name="lich_trinh" class="form-control"
+                rows="3"><?= htmlspecialchars($old['lich_trinh'] ?? '') ?></textarea>
         </div>
+        <!-- LỊCH TRÌNH CHI TIẾT -->
+        <div class="mb-3">
+            <label class="form-label"><b>LỊCH TRÌNH CHI TIẾT</b></label>
+
+            <div id="lichTrinhContainer">
+                <?php
+                if (!empty($old['time']) && is_array($old['time'])) {
+                    foreach ($old['time'] as $i => $t) {
+                        ?>
+                        <div class="lich-trinh-row border p-3 mb-2 rounded" style="background-color: #f8f9fa;">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label class="form-label">Thời gian</label>
+                                    <input type="time" name="time[]" class="form-control"
+                                        value="<?= htmlspecialchars($t ?? '') ?>">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Tiêu đề</label>
+                                    <input type="text" name="tieu_de[]" class="form-control"
+                                        value="<?= htmlspecialchars($old['tieu_de'][$i] ?? '') ?>" placeholder="VD: Khởi hành">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Mô tả</label>
+                                    <input type="text" name="mo_ta[]" class="form-control"
+                                        value="<?= htmlspecialchars($old['mo_ta'][$i] ?? '') ?>"
+                                        placeholder="VD: Xe đón khách tại điểm hẹn">
+                                </div>
+                                <div class="col-md-1 d-flex align-items-end">
+                                    <button type="button" class="btn btn-danger btn-sm btn-remove">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                }
+                ?>
+            </div>
+
+            <button type="button" class="btn btn-primary mt-2" id="addLichTrinh">
+                <i class="fas fa-plus"></i> Thêm dòng mới
+            </button>
+        </div>
+
+        <script>
+            $(document).ready(function () {
+                // Thêm dòng mới
+                $('#addLichTrinh').click(function (e) {
+                    e.preventDefault();
+                    const html = `
+                    <div class="lich-trinh-row border p-3 mb-2 rounded" style="background-color: #f8f9fa;">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label">Thời gian</label>
+                                <input type="time" name="time[]" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Tiêu đề</label>
+                                <input type="text" name="tieu_de[]" class="form-control" 
+                                    placeholder="VD: Khởi hành">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Mô tả</label>
+                                <input type="text" name="mo_ta[]" class="form-control" 
+                                    placeholder="VD: Xe đón khách tại điểm hẹn">
+                            </div>
+                            <div class="col-md-1 d-flex align-items-end">
+                                <button type="button" class="btn btn-danger btn-sm btn-remove">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>`;
+                    $('#lichTrinhContainer').append(html);
+                });
+
+                // Xóa dòng
+                $(document).on('click', '.btn-remove', function (e) {
+                    e.preventDefault();
+                    $(this).closest('.lich-trinh-row').remove();
+                });
+            });
+        </script>
 
         <!-- Hình ảnh + Giá -->
         <div class="row">
@@ -78,7 +164,8 @@ $selectedPolicies = $old['chinh_sach_id'] ?? [];
             <div class="col-md-6">
                 <div class="mb-3">
                     <label class="form-label">Nhà cung cấp</label>
-                    <input type="text" name="nha_cung_cap" class="form-control" value="<?= htmlspecialchars($old['nha_cung_cap'] ?? '') ?>">
+                    <input type="text" name="nha_cung_cap" class="form-control"
+                        value="<?= htmlspecialchars($old['nha_cung_cap'] ?? '') ?>">
                     <?php if (!empty($errors['nha_cung_cap'])): ?>
                         <small class="text-danger"><?= $errors['nha_cung_cap'] ?></small>
                     <?php endif; ?>
@@ -104,8 +191,10 @@ $selectedPolicies = $old['chinh_sach_id'] ?? [];
                 <div class="mb-3">
                     <label class="form-label">Loại Tour</label>
                     <select name="loai_tour" class="form-control">
-                        <option value="Trong nước" <?= ($old['loai_tour'] ?? '') == 'Trong nước' ? 'selected' : '' ?>>Trong nước</option>
-                        <option value="Nước ngoài" <?= ($old['loai_tour'] ?? '') == 'Nước ngoài' ? 'selected' : '' ?>>Nước ngoài</option>
+                        <option value="Trong nước" <?= ($old['loai_tour'] ?? '') == 'Trong nước' ? 'selected' : '' ?>>Trong
+                            nước</option>
+                        <option value="Nước ngoài" <?= ($old['loai_tour'] ?? '') == 'Nước ngoài' ? 'selected' : '' ?>>Nước
+                            ngoài</option>
                     </select>
                 </div>
             </div>
@@ -125,7 +214,8 @@ $selectedPolicies = $old['chinh_sach_id'] ?? [];
             <div class="col-md-6">
                 <div class="mb-3">
                     <label class="form-label">Địa điểm</label>
-                    <input type="text" name="dia_diem" class="form-control" value="<?= htmlspecialchars($old['dia_diem'] ?? '') ?>">
+                    <input type="text" name="dia_diem" class="form-control"
+                        value="<?= htmlspecialchars($old['dia_diem'] ?? '') ?>">
                     <?php if (!empty($errors['dia_diem'])): ?>
                         <small class="text-danger"><?= $errors['dia_diem'] ?></small>
                     <?php endif; ?>
@@ -139,7 +229,7 @@ $selectedPolicies = $old['chinh_sach_id'] ?? [];
 </div>
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('.selectpicker').selectpicker();
     });
 </script>

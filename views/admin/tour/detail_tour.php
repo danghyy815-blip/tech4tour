@@ -26,11 +26,11 @@ ob_start();
 
             <?php if (!empty($tour['hinh_anh'])): ?>
                 <p class="mt-3"><strong>Hình ảnh:</strong></p>
-                <img src="uploads/tours/<?= htmlspecialchars($tour['hinh_anh']) ?>" class="img-fluid rounded shadow-sm" width="400">
+                <img src="uploads/tours/<?= htmlspecialchars($tour['hinh_anh']) ?>" class="img-fluid rounded shadow-sm"
+                    width="400">
             <?php endif; ?>
         </div>
     </div>
-
     <!-- Bảng chính sách áp dụng -->
     <div class="card shadow">
         <div class="card-header">
@@ -38,47 +38,118 @@ ob_start();
         </div>
         <div class="card-body">
             <?php if (!empty($policies) && is_array($policies)): ?>
-            <table id="policyTable" class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>STT</th>
-                        <th>Tên chính sách</th>
-                        <th>Loại chính sách</th>
-                        <th>Ngày áp dụng</th>
-                        <th>Ngày hết hạn</th>
-                        <th>Trạng thái</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($policies as $key => $policy): ?>
+                <table id="policyTable" class="table table-bordered table-striped">
+                    <thead>
                         <tr>
-                            <td><?= $key + 1 ?></td>
-                            <td><?= htmlspecialchars($policy['ten_chinh_sach']) ?></td>
-                            <td><?= htmlspecialchars($policy['loai_chinh_sach']) ?></td>
-                            <td><?= date('d-m-Y', strtotime($policy['ngay_ap_dung'])) ?></td>
-                            <td><?= date('d-m-Y', strtotime($policy['ngay_het_han'])) ?></td>
-                            <td>
-                                <?php 
-                                    $status = $policy['trang_thai']; 
-                                    if ($status === 'Đang áp dụng') $badge = 'bg-success';
-                                    elseif ($status === 'Hết hạn') $badge = 'bg-warning';
-                                    else $badge = 'bg-secondary';
-                                ?>
-                                <span class="badge <?= $badge ?>"><?= $status ?></span>
-                            </td>
+                            <th>STT</th>
+                            <th>Tên chính sách</th>
+                            <th>Loại chính sách</th>
+                            <th>Ngày áp dụng</th>
+                            <th>Ngày hết hạn</th>
+                            <th>Trạng thái</th>
                         </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($policies as $key => $policy): ?>
+                            <tr>
+                                <td><?= $key + 1 ?></td>
+                                <td><?= htmlspecialchars($policy['ten_chinh_sach']) ?></td>
+                                <td><?= htmlspecialchars($policy['loai_chinh_sach']) ?></td>
+                                <td><?= date('d-m-Y', strtotime($policy['ngay_ap_dung'])) ?></td>
+                                <td><?= date('d-m-Y', strtotime($policy['ngay_het_han'])) ?></td>
+                                <td>
+                                    <?php
+                                    $status = $policy['trang_thai'];
+                                    if ($status === 'Đang áp dụng')
+                                        $badge = 'bg-success';
+                                    elseif ($status === 'Hết hạn')
+                                        $badge = 'bg-warning';
+                                    else
+                                        $badge = 'bg-secondary';
+                                    ?>
+                                    <span class="badge <?= $badge ?>"><?= $status ?></span>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
             <?php else: ?>
                 <p>Tour này chưa áp dụng chính sách nào.</p>
             <?php endif; ?>
         </div>
     </div>
+
+    <div class="card shadow-sm mt-4">
+        <div class="card-header">
+            <h4 class="card-title">Lịch trình của tour</h4>
+        </div>
+
+        <div class="card-body">
+
+            <?php if (empty($lichTrinh)): ?>
+                <p class="text-muted">Tour này chưa có lịch trình nào.</p>
+            <?php else: ?>
+
+                <table class="table table-bordered table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Ảnh</th>
+                            <th>Tiêu đề</th>
+                            <th>Ngày</th>
+                            <th>Thứ tự</th>
+                            <th>Nội dung</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <?php foreach ($lichTrinh as $lt): ?>
+                            <tr>
+                                <!-- ID -->
+                                <td><?= $lt['id'] ?></td>
+
+                                <!-- Ảnh -->
+                                <td>
+                                    <?php if (!empty($lt['hinh_anh'])): ?>
+                                        <img src="<?= BASE_URL . 'uploads/tour_lich_trinh/' . $lt['hinh_anh'] ?>" width="80"
+                                            class="img-thumbnail">
+                                    <?php else: ?>
+                                        <span class="text-muted">Không có</span>
+                                    <?php endif; ?>
+                                </td>
+
+                                <!-- Tiêu đề -->
+                                <td><?= htmlspecialchars($lt['tieu_de']) ?></td>
+
+                                <!-- Ngày -->
+                                <td>
+                                    <?= !empty($lt['ngay_thu'])
+                                        ? date("d/m/Y", strtotime($lt['ngay_thu']))
+                                        : '---'
+                                        ?>
+                                </td>
+
+                                <!-- Thứ tự -->
+                                <td><?= $lt['thu_tu'] ?></td>
+
+                                <!-- Nội dung -->
+                                <td style="white-space: pre-line;">
+                                    <?= nl2br(htmlspecialchars($lt['noi_dung'] ?? '')) ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+
+            <?php endif; ?>
+
+        </div>
+    </div>
+
 </div>
 
 <script>
-    $(function() {
+    $(function () {
         $("#policyTable").DataTable({
             "responsive": true,
             "lengthChange": false,
