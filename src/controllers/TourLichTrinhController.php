@@ -30,17 +30,15 @@ class TourLichTrinhController
             $tour_id = $_POST['tour_id'];
             $tieu_de = $_POST['tieu_de'];
             $noi_dung = $_POST['noi_dung'];
-            $ngay_thu = $_POST['ngay_thu'];
+            $ngay_bat_dau = $_POST['ngay_bat_dau'];
+            $ngay_ket_thuc = $_POST['ngay_ket_thuc'];
             $thu_tu = $_POST['thu_tu'];
 
-            /* ---- Xử lý upload ảnh ---- */
-            $hinh_anh = null;
+            // HANDLE FILE UPLOAD
+            $hinh_anh = "";
+            $errors = [];
 
             if (!empty($_FILES['hinh_anh']['name'])) {
-
-                $file = $_FILES['hinh_anh'];
-
-                // Đường dẫn tuyệt đối
                 $targetDir = BASE_PATH . "/public/uploads/tour_lich_trinh/";
 
                 // Tạo thư mục nếu chưa có
@@ -48,23 +46,41 @@ class TourLichTrinhController
                     mkdir($targetDir, 0777, true);
                 }
 
-                // Tạo tên file
-                $fileName = time() . "_" . preg_replace('/\s+/', '_', basename($file['name']));
+                // Tạo tên file unique
+                $fileExtension = pathinfo($_FILES["hinh_anh"]["name"], PATHINFO_EXTENSION);
+                $fileName = time() . "_" . uniqid() . "." . $fileExtension;
                 $targetFile = $targetDir . $fileName;
 
-                // Di chuyển ảnh
-                if (move_uploaded_file($file['tmp_name'], $targetFile)) {
+                // Kiểm tra loại file
+                $allowedTypes = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+                if (!in_array(strtolower($fileExtension), $allowedTypes)) {
+                    $errors['hinh_anh'] = "Chỉ chấp nhận file ảnh (jpg, jpeg, png, gif, webp)";
+                }
+                // Kiểm tra kích thước file (max 5MB)
+                elseif ($_FILES["hinh_anh"]["size"] > 5242880) {
+                    $errors['hinh_anh'] = "File ảnh quá lớn (max 5MB)";
+                }
+                // Upload file
+                elseif (move_uploaded_file($_FILES["hinh_anh"]["tmp_name"], $targetFile)) {
                     $hinh_anh = $fileName;
                 } else {
-                    die("Upload ảnh thất bại!");
+                    $errors['hinh_anh'] = "Lỗi upload ảnh. Kiểm tra quyền thư mục.";
                 }
+            } else {
+                $errors['hinh_anh'] = "Vui lòng chọn ảnh.";
             }
 
-            $this->model->add($tour_id, $tieu_de, $noi_dung, $ngay_thu, $hinh_anh, $thu_tu);
+            // Chỉ lưu vào DB nếu không có lỗi
+            if (empty($errors)) {
+                $this->model->add($tour_id, $tieu_de, $noi_dung, $ngay_bat_dau, $ngay_ket_thuc, $hinh_anh, $thu_tu);
+                header("Location: tour-lich-trinh");
+                exit;
+            } else {
+                // Quay lại form với lỗi
+                $tours = $this->modelTour->getAllTours();
+                require_once "./views/admin/tour_lich_trinh/form_add.php";
+            }
         }
-
-        header("Location: tour-lich-trinh");
-        exit;
     }
 
     public function formUpdate()
@@ -84,7 +100,8 @@ class TourLichTrinhController
             $tour_id = $_POST['tour_id'];
             $tieu_de = $_POST['tieu_de'];
             $noi_dung = $_POST['noi_dung'];
-            $ngay_thu = $_POST['ngay_thu'];
+            $ngay_bat_dau = $_POST['ngay_bat_dau'];
+            $ngay_ket_thuc = $_POST['ngay_ket_thuc'];
             $thu_tu = $_POST['thu_tu'];
 
             // Giữ ảnh cũ
@@ -114,7 +131,7 @@ class TourLichTrinhController
                 }
             }
 
-            $this->model->update($id, $tour_id, $tieu_de, $noi_dung, $ngay_thu, $hinh_anh, $thu_tu);
+            $this->model->update($id, $tour_id, $tieu_de, $noi_dung, $ngay_bat_dau, $ngay_ket_thuc, $hinh_anh, $thu_tu);
         }
 
         header("Location: tour-lich-trinh");

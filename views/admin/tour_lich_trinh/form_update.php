@@ -22,6 +22,7 @@ ob_start();
                     <form action="update-lich-trinh" method="POST" enctype="multipart/form-data">
 
                         <input type="hidden" name="id" value="<?= $item['id'] ?>">
+                        <input type="hidden" name="hinh_anh_old" value="<?= $item['hinh_anh'] ?>">
 
                         <!-- CHỌN TOUR -->
                         <div class="mb-3">
@@ -33,13 +34,6 @@ ob_start();
                                     </option>
                                 <?php endforeach; ?>
                             </select>
-                        </div>
-
-                        <!-- NGÀY -->
-                        <div class="mb-3">
-                            <label class="form-label">Ngày <span class="text-danger">*</span></label>
-                            <input type="date" name="ngay_thu" class="form-control"
-                                value="<?= htmlspecialchars($item['ngay_thu']) ?>" required>
                         </div>
 
                         <!-- TIÊU ĐỀ -->
@@ -56,35 +50,64 @@ ob_start();
                                 rows="4"><?= htmlspecialchars($item['noi_dung']) ?></textarea>
                         </div>
 
+                        <!-- NGÀY BẮT ĐẦU & KẾT THÚC -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Ngày bắt đầu <span class="text-danger">*</span></label>
+                                    <input type="date" name="ngay_bat_dau" class="form-control"
+                                        value="<?= htmlspecialchars($item['ngay_bat_dau']) ?>" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Ngày kết thúc <span class="text-danger">*</span></label>
+                                    <input type="date" name="ngay_ket_thuc" class="form-control"
+                                        value="<?= htmlspecialchars($item['ngay_ket_thuc']) ?>" required>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- HÌNH ẢNH -->
                         <div class="mb-3">
                             <label class="form-label">Hình ảnh</label>
-                            <input type="file" name="hinh_anh" class="form-control">
 
                             <?php if (!empty($item['hinh_anh'])): ?>
-                                <div class="mt-2">
-                                    <img src="<?= BASE_URL . 'uploads/lich_trinh/' . $item['hinh_anh'] ?>" width="150"
-                                        class="img-thumbnail">
+                                <div class="mb-2">
+                                    <img src="<?= BASE_URL ?>public/uploads/tour_lich_trinh/<?= htmlspecialchars($item['hinh_anh']) ?>"
+                                        class="img-thumbnail" style="max-width: 200px; max-height: 200px;"
+                                        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                    <p class="text-danger small" style="display:none;">⚠️ Không tìm thấy ảnh</p>
+                                    <p class="text-muted small mt-1">Ảnh hiện tại:
+                                        <?= htmlspecialchars($item['hinh_anh']) ?></p>
                                 </div>
                             <?php endif; ?>
 
-                            <input type="hidden" name="hinh_anh_cu" value="<?= $item['hinh_anh'] ?>">
+                            <input type="file" name="hinh_anh" class="form-control" accept="image/*">
+                            <small class="text-muted">Để trống nếu không muốn thay đổi ảnh</small>
+
+                            <?php if (!empty($errors['hinh_anh'])): ?>
+                                <small class="text-danger d-block"><?= $errors['hinh_anh'] ?></small>
+                            <?php endif; ?>
                         </div>
 
                         <!-- THỨ TỰ -->
                         <div class="mb-3">
                             <label class="form-label">Thứ tự <span class="text-danger">*</span></label>
                             <input type="number" name="thu_tu" class="form-control"
-                                value="<?= htmlspecialchars($item['thu_tu']) ?>" required>
+                                value="<?= htmlspecialchars($item['thu_tu']) ?>" min="1" required>
                         </div>
 
-                        <button type="submit" class="btn btn-success">
-                            <i class="bi bi-check-circle"></i> Cập nhật
-                        </button>
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-check-circle"></i> Cập nhật
+                            </button>
 
-                        <a href="tour-lich-trinh" class="btn btn-outline-secondary ms-2">
-                            Hủy
-                        </a>
+                            <a href="tour-lich-trinh" class="btn btn-outline-secondary ms-2">
+                                Hủy
+                            </a>
+                        </div>
 
                     </form>
 

@@ -34,12 +34,6 @@ ob_start();
                             </select>
                         </div>
 
-                        <!-- NGÀY THỨ -->
-                        <div class="mb-3">
-                            <label class="form-label">Ngày <span class="text-danger">*</span></label>
-                            <input type="date" name="ngay_thu" class="form-control" required>
-                        </div>
-
                         <!-- TIÊU ĐỀ -->
                         <div class="mb-3">
                             <label class="form-label">Tiêu đề <span class="text-danger">*</span></label>
@@ -54,25 +48,48 @@ ob_start();
                                 placeholder="Nhập nội dung..."></textarea>
                         </div>
 
+                        <!-- NGÀY BẮT ĐẦU -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Ngày bắt đầu <span class="text-danger">*</span></label>
+                                    <input type="date" name="ngay_bat_dau" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <!-- NGÀY KẾT THÚC -->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Ngày kết thúc <span class="text-danger">*</span></label>
+                                    <input type="date" name="ngay_ket_thuc" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- HÌNH ẢNH -->
                         <div class="mb-3">
-                            <label class="form-label">Hình ảnh</label>
-                            <input type="file" name="hinh_anh" class="form-control">
+                            <label class="form-label">Hình ảnh <span class="text-danger">*</span></label>
+                            <input type="file" name="hinh_anh" class="form-control" accept="image/*" required>
+                            <?php if (!empty($errors['hinh_anh'])): ?>
+                                <small class="text-danger"><?= $errors['hinh_anh'] ?></small>
+                            <?php endif; ?>
                         </div>
 
                         <!-- THỨ TỰ -->
                         <div class="mb-3">
                             <label class="form-label">Thứ tự <span class="text-danger">*</span></label>
-                            <input type="number" name="thu_tu" class="form-control" value="1" required>
+                            <input type="number" name="thu_tu" class="form-control" value="1" min="1" required>
                         </div>
 
-                        <button type="submit" class="btn btn-success">
-                            <i class="bi bi-check-circle"></i> Thêm mới
-                        </button>
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-check-circle"></i> Thêm mới
+                            </button>
 
-                        <a href="tour-lich-trinh" class="btn btn-outline-secondary ms-2">
-                            Hủy
-                        </a>
+                            <a href="tour-lich-trinh" class="btn btn-outline-secondary ms-2">
+                                Hủy
+                            </a>
+                        </div>
 
                     </form>
 

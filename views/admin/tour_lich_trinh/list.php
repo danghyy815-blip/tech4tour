@@ -28,7 +28,8 @@ ob_start();
                                         <th>Tour</th>
                                         <th>Ảnh</th>
                                         <th>Tiêu đề</th>
-                                        <th>Ngày</th>
+                                        <th>Ngày bắt đầu</th>
+                                        <th>Ngày kết thúc</th>
                                         <th>Thứ tự</th>
                                         <th>Thao tác</th>
                                     </tr>
@@ -43,23 +44,35 @@ ob_start();
                                                 <!-- Tên tour -->
                                                 <td><?= htmlspecialchars($lt['ten_tour'] ?? '---') ?></td>
 
-                                                <!-- Ảnh lịch trình -->
+                                                <!-- Ảnh lịch trình - ĐÃ SỬA -->
                                                 <td>
                                                     <?php if (!empty($lt['hinh_anh'])): ?>
-                                                        <img src="<?= BASE_URL . 'uploads/tour_lich_trinh/' . $lt['hinh_anh'] ?>"
-                                                            alt="Ảnh lịch trình" width="70" class="img-thumbnail">
+                                                        <?php
+                                                        $imagePath = BASE_URL . 'public/uploads/tour_lich_trinh/' . htmlspecialchars($lt['hinh_anh']);
+                                                        ?>
+                                                        <img src="<?= $imagePath ?>" class="thumb-sm" alt="thumb"
+                                                            style="width: 150px; height: 100px;"
+                                                            onerror="console.error('Image not found:', this.src); this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                                        <span class="text-danger small" style="display:none;">Ảnh lỗi</span>
                                                     <?php else: ?>
-                                                        <span class="text-muted">Không có</span>
+                                                        <span class="text-muted small">Không có ảnh</span>
                                                     <?php endif; ?>
                                                 </td>
 
                                                 <!-- Tiêu đề -->
                                                 <td><?= htmlspecialchars($lt['tieu_de'] ?? '') ?></td>
 
-                                                <!-- Ngày -->
+                                                <!-- Ngày bắt đầu -->
                                                 <td>
-                                                    <?= !empty($lt['ngay_thu'])
-                                                        ? date("d/m/Y", strtotime($lt['ngay_thu']))
+                                                    <?= !empty($lt['ngay_bat_dau'])
+                                                        ? date("d/m/Y", strtotime($lt['ngay_bat_dau']))
+                                                        : '---' ?>
+                                                </td>
+
+                                                <!-- Ngày kết thúc -->
+                                                <td>
+                                                    <?= !empty($lt['ngay_ket_thuc'])
+                                                        ? date("d/m/Y", strtotime($lt['ngay_ket_thuc']))
                                                         : '---' ?>
                                                 </td>
 
@@ -83,7 +96,7 @@ ob_start();
                                         <?php endforeach; ?>
                                     <?php else: ?>
                                         <tr>
-                                            <td colspan="7" class="text-center text-muted py-3">
+                                            <td colspan="8" class="text-center text-muted py-3">
                                                 Không có dữ liệu lịch trình
                                             </td>
                                         </tr>

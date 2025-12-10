@@ -7,7 +7,8 @@ class TourLichTrinh
     public $tour_id;
     public $tieu_de;
     public $noi_dung;
-    public $ngay_thu;
+    public $ngay_bat_dau;
+    public $ngay_ket_thuc;
     public $hinh_anh;
     public $thu_tu;
     public $created_at;
@@ -24,7 +25,8 @@ class TourLichTrinh
             $this->tour_id = $data['tour_id'] ?? null;
             $this->tieu_de = $data['tieu_de'] ?? '';
             $this->noi_dung = $data['noi_dung'] ?? '';
-            $this->ngay_thu = $data['ngay_thu'] ?? '';
+            $this->ngay_bat_dau = $data['ngay_bat_dau'] ?? '';
+            $this->ngay_ket_thuc = $data['ngay_ket_thuc'] ?? '';
             $this->hinh_anh = $data['hinh_anh'] ?? '';
             $this->thu_tu = $data['thu_tu'] ?? 1;
             $this->created_at = $data['created_at'] ?? null;
@@ -71,17 +73,20 @@ class TourLichTrinh
     }
 
     // Thêm mới
-    public function add($tour_id, $tieu_de, $noi_dung, $ngay_thu, $hinh_anh, $thu_tu)
+    public function add($tour_id, $tieu_de, $noi_dung, $ngay_bat_dau, $ngay_ket_thuc, $hinh_anh, $thu_tu)
     {
-        $sql = "INSERT INTO tour_lich_trinh (tour_id, tieu_de, noi_dung, ngay_thu, hinh_anh, thu_tu, created_at, updated_at)
-                VALUES (:tour_id, :tieu_de, :noi_dung, :ngay_thu, :hinh_anh, :thu_tu, NOW(), NOW())";
+        $sql = "INSERT INTO tour_lich_trinh 
+                (tour_id, tieu_de, noi_dung, ngay_bat_dau, ngay_ket_thuc, hinh_anh, thu_tu, created_at, updated_at)
+                VALUES 
+                (:tour_id, :tieu_de, :noi_dung, :ngay_bat_dau, :ngay_ket_thuc, :hinh_anh, :thu_tu, NOW(), NOW())";
 
         $stmt = $this->conn->prepare($sql);
 
         $stmt->bindParam(':tour_id', $tour_id);
         $stmt->bindParam(':tieu_de', $tieu_de);
         $stmt->bindParam(':noi_dung', $noi_dung);
-        $stmt->bindParam(':ngay_thu', $ngay_thu);
+        $stmt->bindParam(':ngay_bat_dau', $ngay_bat_dau);
+        $stmt->bindParam(':ngay_ket_thuc', $ngay_ket_thuc);
         $stmt->bindParam(':hinh_anh', $hinh_anh);
         $stmt->bindParam(':thu_tu', $thu_tu);
 
@@ -89,14 +94,15 @@ class TourLichTrinh
     }
 
     // Cập nhật
-    public function update($id, $tour_id, $tieu_de, $noi_dung, $ngay_thu, $hinh_anh, $thu_tu)
+    public function update($id, $tour_id, $tieu_de, $noi_dung, $ngay_bat_dau, $ngay_ket_thuc, $hinh_anh, $thu_tu)
     {
         $sql = "UPDATE tour_lich_trinh 
                 SET 
                     tour_id = :tour_id,
                     tieu_de = :tieu_de,
                     noi_dung = :noi_dung,
-                    ngay_thu = :ngay_thu,
+                    ngay_bat_dau = :ngay_bat_dau,
+                    ngay_ket_thuc = :ngay_ket_thuc,
                     hinh_anh = :hinh_anh,
                     thu_tu = :thu_tu,
                     updated_at = NOW()
@@ -108,7 +114,8 @@ class TourLichTrinh
         $stmt->bindParam(':tour_id', $tour_id);
         $stmt->bindParam(':tieu_de', $tieu_de);
         $stmt->bindParam(':noi_dung', $noi_dung);
-        $stmt->bindParam(':ngay_thu', $ngay_thu);
+        $stmt->bindParam(':ngay_bat_dau', $ngay_bat_dau);
+        $stmt->bindParam(':ngay_ket_thuc', $ngay_ket_thuc);
         $stmt->bindParam(':hinh_anh', $hinh_anh);
         $stmt->bindParam(':thu_tu', $thu_tu);
 

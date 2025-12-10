@@ -43,34 +43,19 @@ ob_start();
                                     <?= !empty($booking['ngay_dat']) ? date('d-m-Y', strtotime($booking['ngay_dat'])) : '' ?>
                                 </dd>
 
-                                <dt class="col-sm-4">Trạng thái:</dt>
+
+                                <dt class="col-sm-4">Trạng thái</dt>
                                 <dd class="col-sm-8">
-                                    <?php
-                                    $status = $booking['trang_thai'] ?? 'ChoDuyet';
-                                    $statusText = match ($status) {
-                                        'DaXacNhan' => 'Đã xác nhận',
-                                        'ChoDuyet' => 'Chờ duyệt',
-                                        'Huy' => 'Đã huỷ',
-                                        'HoanThanh' => 'Hoàn thành',
-                                        default => $status
-                                    };
-                                    ?>
-                                    <span class="badge" style="background-color: <?= match ($status) {
-                                        'DaXacNhan' => '#d4edda',
-                                        'ChoDuyet' => '#fff3cd',
-                                        'Huy' => '#f8d7da',
-                                        'HoanThanh' => '#d1ecf1',
-                                        default => '#e2e3e5'
-                                    }; ?>; 
-                                        color: <?= match ($status) {
-                                            'DaXacNhan' => '#155724',
-                                            'ChoDuyet' => '#856404',
-                                            'Huy' => '#721c24',
-                                            'HoanThanh' => '#0c5460',
-                                            default => '#6c757d'
-                                        }; ?>;">
-                                        <?= $statusText ?>
-                                    </span>
+                                    <span class=""><?php
+                                    if ($booking['booking_trang_thai'] == "DaXacNhan")
+                                        echo "Đã xác nhận";
+                                    else if ($booking['booking_trang_thai'] == "ChoDuyet")
+                                        echo "Chờ duyệt";
+                                    else if ($booking['booking_trang_thai'] == "Huy")
+                                        echo "Đã huỷ";
+                                    else if ($booking['booking_trang_thai'] == "HoanThanh")
+                                        echo "Hoàn thành";
+                                    ?></span>
                                 </dd>
 
                                 <dt class="col-sm-4">Giá tiền:</dt>
@@ -100,72 +85,87 @@ ob_start();
                             </dl>
                         </div>
                     </div>
-                    <div class="card shadow-sm mt-4">
-                        <div class="card-header">
-                            <h4 class="card-title">Lịch trình của tour</h4>
+                    <!-- LỊCH TRÌNH CHI TIẾT -->
+                    <div class="card shadow-sm border-0 mb-4">
+                        <div class="card-header bg-dark text-white">
+                            <h5 class="mb-0">Lịch trình của tour</h5>
                         </div>
 
                         <div class="card-body">
-
                             <?php if (empty($lichTrinh)): ?>
-                                <p class="text-muted">Tour này chưa có lịch trình nào.</p>
+                                <p class="text-muted">Tour này chưa có lịch trình.</p>
                             <?php else: ?>
-
-                                <table class="table table-bordered table-striped">
-                                    <thead class="table-dark">
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Ảnh</th>
-                                            <th>Tiêu đề</th>
-                                            <th>Ngày</th>
-                                            <th>Thứ tự</th>
-                                            <th>Nội dung</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        <?php foreach ($lichTrinh as $lt): ?>
+                                <div class="table-responsive">
+                                    <table id="lichTrinhTable" class="table table-striped table-bordered align-middle">
+                                        <thead class="table-dark">
                                             <tr>
-                                                <!-- ID -->
-                                                <td><?= $lt['id'] ?></td>
-
-                                                <!-- Ảnh -->
-                                                <td>
-                                                    <?php if (!empty($lt['hinh_anh'])): ?>
-                                                        <img src="<?= BASE_URL . 'uploads/tour_lich_trinh/' . $lt['hinh_anh'] ?>"
-                                                            width="80" class="img-thumbnail">
-                                                    <?php else: ?>
-                                                        <span class="text-muted">Không có</span>
-                                                    <?php endif; ?>
-                                                </td>
-
-                                                <!-- Tiêu đề -->
-                                                <td><?= htmlspecialchars($lt['tieu_de']) ?></td>
-
-                                                <!-- Ngày -->
-                                                <td>
-                                                    <?= !empty($lt['ngay_thu'])
-                                                        ? date("d/m/Y", strtotime($lt['ngay_thu']))
-                                                        : '---'
-                                                        ?>
-                                                </td>
-
-                                                <!-- Thứ tự -->
-                                                <td><?= $lt['thu_tu'] ?></td>
-
-                                                <!-- Nội dung -->
-                                                <td style="white-space: pre-line;">
-                                                    <?= nl2br(htmlspecialchars($lt['noi_dung'] ?? '')) ?>
-                                                </td>
+                                                <th>ID</th>
+                                                <th>Ảnh</th>
+                                                <th>Tiêu đề</th>
+                                                <th>Ngày bắt đầu</th>
+                                                <th>Ngày kết thúc</th>
+                                                <th>Thứ tự</th>
+                                                <th>Nội dung</th>
                                             </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($lichTrinh as $lt): ?>
+                                                <tr>
+                                                    <td><?= $lt['id'] ?></td>
 
+                                                    <td>
+                                                        <?php if (!empty($lt['hinh_anh'])): ?>
+                                                            <?php
+                                                            $imagePath = BASE_URL . 'public/uploads/tour_lich_trinh/' . htmlspecialchars($lt['hinh_anh']);
+                                                            ?>
+                                                            <img src="<?= $imagePath ?>" class="thumb-sm" alt="thumb"
+                                                                style="width: 150px; height: 100px;"
+                                                                onerror="console.error('Image not found:', this.src); this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                                            <span class="text-danger small" style="display:none;">Ảnh lỗi</span>
+                                                        <?php else: ?>
+                                                            <span class="text-muted small">Không có ảnh</span>
+                                                        <?php endif; ?>
+                                                    </td>
+
+                                                    <!-- Tiêu đề -->
+                                                    <td><?= htmlspecialchars($lt['tieu_de']) ?></td>
+
+                                                    <!-- Ngày bắt đầu -->
+                                                    <td><?= !empty($lt['ngay_bat_dau']) ? date("d/m/Y", strtotime($lt['ngay_bat_dau'])) : '---' ?>
+                                                    </td>
+
+                                                    <!-- Ngày kết thúc -->
+                                                    <td><?= !empty($lt['ngay_ket_thuc']) ? date("d/m/Y", strtotime($lt['ngay_ket_thuc'])) : '---' ?>
+                                                    </td>
+
+                                                    <!-- Thứ tự -->
+                                                    <td><?= $lt['thu_tu'] ?></td>
+
+                                                    <!-- Nội dung -->
+                                                    <td style="white-space: pre-line;">
+                                                        <?= nl2br(htmlspecialchars($lt['noi_dung'])) ?>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             <?php endif; ?>
-
                         </div>
                     </div>
+
+                    <script>
+                        $(function () {
+                            $("#lichTrinhTable").DataTable({
+                                responsive: true,
+                                lengthChange: false,
+                                autoWidth: false,
+                                buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"]
+                            }).buttons()
+                                .container()
+                                .appendTo('#lichTrinhTable_wrapper .col-md-6:eq(0)');
+                        });
+                    </script>
                     <!-- Danh sách khách hàng -->
                     <div class="card card-info card-outline">
                         <div class="card-header">

@@ -120,19 +120,18 @@
         </div>
 
         <div class="card-body">
-
             <?php if (empty($lichTrinh)): ?>
                 <p class="text-muted">Tour này chưa có lịch trình.</p>
             <?php else: ?>
-
                 <div class="table-responsive">
-                    <table class="table table-striped table-bordered align-middle">
+                    <table id="lichTrinhTable" class="table table-striped table-bordered align-middle">
                         <thead class="table-dark">
                             <tr>
                                 <th>ID</th>
                                 <th>Ảnh</th>
                                 <th>Tiêu đề</th>
-                                <th>Ngày</th>
+                                <th>Ngày bắt đầu</th>
+                                <th>Ngày kết thúc</th>
                                 <th>Thứ tự</th>
                                 <th>Nội dung</th>
                             </tr>
@@ -144,56 +143,66 @@
 
                                     <td>
                                         <?php if (!empty($lt['hinh_anh'])): ?>
-                                            <img src="<?= BASE_URL . 'uploads/tour_lich_trinh/' . $lt['hinh_anh'] ?>" width="70"
-                                                class="rounded shadow-sm">
+                                            <?php
+                                            $imagePath = BASE_URL . 'public/uploads/tour_lich_trinh/' . htmlspecialchars($lt['hinh_anh']);
+                                            ?>
+                                            <img src="<?= $imagePath ?>" class="thumb-sm" alt="thumb"
+                                                style="width: 150px; height: 100px;"
+                                                onerror="console.error('Image not found:', this.src); this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                            <span class="text-danger small" style="display:none;">Ảnh lỗi</span>
                                         <?php else: ?>
-                                            <span class="text-muted">Không có</span>
+                                            <span class="text-muted small">Không có ảnh</span>
                                         <?php endif; ?>
                                     </td>
 
+                                    <!-- Tiêu đề -->
                                     <td><?= htmlspecialchars($lt['tieu_de']) ?></td>
 
-                                    <td><?= !empty($lt['ngay_thu']) ? date("d/m/Y", strtotime($lt['ngay_thu'])) : '---' ?></td>
+                                    <!-- Ngày bắt đầu -->
+                                    <td><?= !empty($lt['ngay_bat_dau']) ? date("d/m/Y", strtotime($lt['ngay_bat_dau'])) : '---' ?>
+                                    </td>
 
+                                    <!-- Ngày kết thúc -->
+                                    <td><?= !empty($lt['ngay_ket_thuc']) ? date("d/m/Y", strtotime($lt['ngay_ket_thuc'])) : '---' ?>
+                                    </td>
+
+                                    <!-- Thứ tự -->
                                     <td><?= $lt['thu_tu'] ?></td>
 
-                                    <td style="white-space: pre-line;">
-                                        <?= nl2br(htmlspecialchars($lt['noi_dung'])) ?>
-                                    </td>
+                                    <!-- Nội dung -->
+                                    <td style="white-space: pre-line;"><?= nl2br(htmlspecialchars($lt['noi_dung'])) ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
-
             <?php endif; ?>
-
         </div>
     </div>
 
-</div>
+    <script>
+        $(function () {
+            $("#lichTrinhTable").DataTable({
+                responsive: true,
+                lengthChange: false,
+                autoWidth: false,
+                buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons()
+                .container()
+                .appendTo('#lichTrinhTable_wrapper .col-md-6:eq(0)');
+        });
+    </script>
 
-<script>
-    $(function () {
-        $("#policyTable").DataTable({
-            responsive: true,
-            lengthChange: false,
-            autoWidth: false,
-            buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"]
-        }).buttons().container().appendTo('#policyTable_wrapper .col-md-6:eq(0)');
-    });
-</script>
+    <?php
+    $content = ob_get_clean();
 
-<?php
-$content = ob_get_clean();
-
-view('layouts.AdminLayout', [
-    'title' => $title ?? 'Chi tiết Tour - Hệ thống quản lý Tour',
-    'pageTitle' => 'Chi tiết Tour',
-    'content' => $content,
-    'breadcrumb' => [
-        ['label' => 'Quản lý Tour', 'url' => BASE_URL . 'tour', 'active' => false],
-        ['label' => 'Chi tiết Tour', 'url' => '#', 'active' => true],
-    ],
-]);
-?>
+    view('layouts.AdminLayout', [
+        'title' => $title ?? 'Chi tiết Tour - Hệ thống quản lý Tour',
+        'pageTitle' => 'Chi tiết Tour',
+        'content' => $content,
+        'breadcrumb' => [
+            ['label' => 'Quản lý Tour', 'url' => BASE_URL . 'tour', 'active' => false],
+            ['label' => 'Chi tiết Tour', 'url' => '#', 'active' => true],
+        ],
+    ]);
+    ?>
