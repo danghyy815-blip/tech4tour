@@ -2,6 +2,15 @@
 ob_start();
 ?>
 
+<style>
+    .user-card { border: 1px solid #e5e7eb; border-radius: 10px; }
+    .user-card .card-header { background: #f8fafc; border-bottom: 1px solid #e5e7eb; }
+    .user-table thead th { background: #f5f6f8; color: #1f2b3d; }
+    .user-table tbody td { vertical-align: middle; }
+    .action-btn { border-radius: 6px; padding: 6px 10px; }
+    .badge-soft-success { background: #e6f4ea; color: #1f7a3d; }
+    .badge-soft-secondary { background: #f1f2f4; color: #475467; }
+</style>
 <div class="content-wrapper">
 
     <!-- Main content -->
@@ -9,10 +18,14 @@ ob_start();
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <a href="form-add-user">
-                                <button type="button" class="btn btn-success">Thêm nhân viên</button>
+                    <div class="card user-card shadow-sm">
+                        <div class="card-header d-flex align-items-center flex-wrap gap-2">
+                            <div>
+                                <h5 class="mb-0 fw-semibold">Danh sách nhân viên</h5>
+                                <small class="text-muted">Quản lý tài khoản và trạng thái</small>
+                            </div>
+                            <a href="form-add-user" class="btn btn-success ms-auto">
+                                <i class="fas fa-plus-circle"></i> Thêm nhân viên
                             </a>
                         </div>
                         <!-- /.card-header -->
@@ -23,7 +36,7 @@ ob_start();
                             <?php if ($msg = getFlash('error')): ?>
                                 <div class="alert alert-danger" role="alert"><?= htmlspecialchars($msg) ?></div>
                             <?php endif; ?>
-                            <table id="example1" class="table table-bordered table-striped">
+                            <table id="example1" class="table table-hover align-middle user-table">
                                 <thead>
                                     <tr>
                                         <th>STT</th>
@@ -49,29 +62,28 @@ ob_start();
                                     ?>
                                         <tr class="<?= $isCurrent ? 'table-success' : '' ?>">
                                             <td><?= $key + 1 ?></td>
-                                            
                                             <td><?= htmlspecialchars($user['ho_ten']) ?></td>
                                             <td><?= htmlspecialchars($user['gioi_tinh']) ?></td>
-                                            
-                                            
                                             <td><?= htmlspecialchars($user['email']) ?></td>
                                             <td><?= htmlspecialchars($user['dia_chi']) ?></td>
-                                            
-                                            <td><?= htmlspecialchars($user['chuc_vu']) ?></td>
-                                           
-                                            <td><?= $user['trang_thai'] ? 'Kích hoạt' : 'Vô hiệu' ?></td>
+                                            <td><span class="badge bg-light text-dark border px-3 py-2"><?= htmlspecialchars($user['chuc_vu']) ?></span></td>
                                             <td>
-                                                <button type="button" class="btn btn-primary btn-sm">
-                                                    <a href="<?= BASE_URL . 'form-update-user&id=' . $user['id'] ?>" style="color: white;">Sửa</a>
-                                                </button>
+                                                <?php
+                                                    $active = !empty($user['trang_thai']);
+                                                    $badgeClass = $active ? 'badge-soft-success' : 'badge-soft-secondary';
+                                                    $statusText = $active ? 'Kích hoạt' : 'Vô hiệu';
+                                                ?>
+                                                <span class="badge <?= $badgeClass ?> px-3 py-2"><?= $statusText ?></span>
+                                            </td>
+                                            <td>
+                                                <a href="<?= BASE_URL . 'form-update-user&id=' . $user['id'] ?>" class="btn btn-primary btn-sm action-btn me-1">Sửa</a>
                                                 <?php if ($isCurrent) : ?>
-                                                    <button type="button" class="btn btn-danger btn-sm" disabled title="Không thể xóa chính bạn">
+                                                    <button type="button" class="btn btn-secondary btn-sm action-btn" disabled title="Không thể xóa chính bạn">
                                                         Xóa
                                                     </button>
                                                 <?php else : ?>
-                                                    <button type="button" class="btn btn-danger btn-sm">
-                                                        <a href="delete-user&id=<?= $user['id'] ?>" style="color: white;" onclick="return confirm('Bạn có đồng ý xóa nhân viên này không?')">Xóa</a>
-                                                    </button>
+                                                    <a href="delete-user&id=<?= $user['id'] ?>" class="btn btn-outline-danger btn-sm action-btn"
+                                                        onclick="return confirm('Bạn có đồng ý xóa nhân viên này không?')">Xóa</a>
                                                 <?php endif; ?>
                                             </td>
                                         </tr>

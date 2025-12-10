@@ -14,6 +14,7 @@ require_once __DIR__ . '/src/models/Booking.php';
 require_once __DIR__ . '/src/models/DanhMucTour.php';
 require_once __DIR__ . '/src/models/Customer.php';
 require_once __DIR__ . '/src/models/Tour.php';
+require_once __DIR__ . '/src/models/TourLichTrinh.php';
 
 // Nạp các file chứa controller
 require_once __DIR__ . '/src/controllers/HomeController.php';
@@ -25,6 +26,8 @@ require_once __DIR__ . '/src/controllers/CustomerController.php';
 require_once __DIR__ . '/src/controllers/UserController.php';
 require_once __DIR__ . '/src/controllers/ReportController.php';
 require_once __DIR__ . '/src/controllers/TourController.php';
+require_once __DIR__ . '/src/controllers/TourLichTrinhController.php';
+
 
 // Khởi tạo các controller
 $homeController = new HomeController();
@@ -34,8 +37,10 @@ $bookingController = new BookingController();
 $danhmuctourController = new DanhMucTourController();
 $customerController = new CustomerController();
 $userController = new UserController();
-$reportController  = new ReportController();
-$tourController  = new TourController();
+$reportController = new ReportController();
+$tourController = new TourController();
+$tourLichTrinhController = new TourLichTrinhController();
+
 // Xác định route dựa trên tham số act (mặc định là trang chủ '/')
 $act = $_GET['act'] ?? '/';
 
@@ -62,22 +67,22 @@ match ($act) {
     'detail-policy' => $chinhSachController->detailPolicy(),
 
     // Route danh mục tour
-    'danh-muc-tour'         => $danhmuctourController->getList(),
+    'danh-muc-tour' => $danhmuctourController->getList(),
     'form-add-danh-muc-tour' => $danhmuctourController->formAdd(),
-    'add-danh-muc-tour'      => $danhmuctourController->add(),
-    'delete-danh-muc-tour'   => $danhmuctourController->delete(),
+    'add-danh-muc-tour' => $danhmuctourController->add(),
+    'delete-danh-muc-tour' => $danhmuctourController->delete(),
     'form-update-danh-muc-tour' => $danhmuctourController->formUpdate(),
-    'update-danh-muc-tour'   => $danhmuctourController->update(),
-    'detail-danh-muc-tour'   => $danhmuctourController->detail(),
+    'update-danh-muc-tour' => $danhmuctourController->update(),
+    'detail-danh-muc-tour' => $danhmuctourController->detail(),
 
     // Route khách hàng
-    'khach-hang'         => $customerController->getList(),
+    'khach-hang' => $customerController->getList(),
     'form-add-khach-hang' => $customerController->formAdd(),
-    'add-khach-hang'      => $customerController->add(),
-    'delete-khach-hang'   => $customerController->delete(),
+    'add-khach-hang' => $customerController->add(),
+    'delete-khach-hang' => $customerController->delete(),
     'form-update-khach-hang' => $customerController->formUpdate(),
-    'update-khach-hang'   => $customerController->update(),
-    'detail-khach-hang'   => $customerController->detail(),
+    'update-khach-hang' => $customerController->update(),
+    'detail-khach-hang' => $customerController->detail(),
 
 
     // Route nguoi dung
@@ -97,6 +102,15 @@ match ($act) {
     'form-update-tour' => $tourController->formUpdateTour(),
     'update-tour' => $tourController->updateTour(),
     'detail-tour' => $tourController->detailTour(),
+
+    // Route lịch trình tour
+    'tour-lich-trinh' => $tourLichTrinhController->index(),
+    'form-add-lich-trinh' => $tourLichTrinhController->formAdd(),
+    'add-lich-trinh' => $tourLichTrinhController->add(),
+    'form-update-lich-trinh' => $tourLichTrinhController->formUpdate(),
+    'update-lich-trinh' => $tourLichTrinhController->update(),
+    'delete-lich-trinh' => $tourLichTrinhController->delete(),
+
 
     // Route booking
     'booking' => $bookingController->getListBooking(),

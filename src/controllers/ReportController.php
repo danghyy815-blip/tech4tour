@@ -33,6 +33,13 @@ class ReportController
         // Thống kê theo chức vụ
         $usersByRole = $this->conn->query("SELECT chuc_vu, COUNT(*) as count FROM users GROUP BY chuc_vu")->fetchAll(PDO::FETCH_ASSOC);
 
+        // Lấy danh sách chi tiết người dùng theo chức vụ
+        $userDetailsByRole = [];
+        foreach ($usersByRole as $role) {
+            $roleUsers = $this->conn->query("SELECT ho_ten, email, trang_thai FROM users WHERE chuc_vu = '" . $role['chuc_vu'] . "' ORDER BY ho_ten")->fetchAll(PDO::FETCH_ASSOC);
+            $userDetailsByRole[$role['chuc_vu']] = $roleUsers;
+        }
+
         // Thống kê tour (nếu bảng tour tồn tại)
         $totalTours = 0;
         try {

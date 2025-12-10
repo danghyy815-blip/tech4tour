@@ -9,7 +9,7 @@ class Tour
     public $lich_trinh;
     public $hinh_anh;
     public $gia;
-    public $chinh_sach_ids; 
+    public $chinh_sach_ids;
     public $nha_cung_cap;
     public $loai_tour;
     public $trang_thai;
@@ -31,7 +31,7 @@ class Tour
             $this->lich_trinh = $data['lich_trinh'] ?? '';
             $this->hinh_anh = $data['hinh_anh'] ?? '';
             $this->gia = $data['gia'] ?? 0;
-            $this->chinh_sach_ids = $data['chinh_sach_ids'] ?? null; 
+            $this->chinh_sach_ids = $data['chinh_sach_ids'] ?? null;
             $this->nha_cung_cap = $data['nha_cung_cap'] ?? '';
             $this->loai_tour = $data['loai_tour'] ?? '';
             $this->trang_thai = $data['trang_thai'] ?? '';
@@ -56,9 +56,19 @@ class Tour
         }
     }
 
-    public function addTour($ten_tour, $id_danh_muc, $lich_trinh, $hinh_anh, $gia, 
-        $chinh_sach_ids, $nha_cung_cap, $loai_tour, $trang_thai, $dia_diem, $price)
-    {
+    public function addTour(
+        $ten_tour,
+        $id_danh_muc,
+        $lich_trinh,
+        $hinh_anh,
+        $gia,
+        $chinh_sach_ids,
+        $nha_cung_cap,
+        $loai_tour,
+        $trang_thai,
+        $dia_diem,
+        $price
+    ) {
         try {
             $sql = "INSERT INTO tour (ten_tour, id_danh_muc, lich_trinh, hinh_anh, gia, 
                     chinh_sach_ids, nha_cung_cap, loai_tour, trang_thai, ngay_tao, 
@@ -66,9 +76,9 @@ class Tour
                     VALUES (:ten_tour, :id_danh_muc, :lich_trinh, :hinh_anh, :gia, 
                     :chinh_sach_ids, :nha_cung_cap, :loai_tour, :trang_thai, NOW(), 
                     NOW(), :dia_diem, :price)";
-            
+
             $stmt = $this->conn->prepare($sql);
-            
+
             $stmt->bindParam(':ten_tour', $ten_tour);
             $stmt->bindParam(':id_danh_muc', $id_danh_muc);
             $stmt->bindParam(':lich_trinh', $lich_trinh);
@@ -80,7 +90,7 @@ class Tour
             $stmt->bindParam(':trang_thai', $trang_thai);
             $stmt->bindParam(':dia_diem', $dia_diem);
             $stmt->bindParam(':price', $price);
-            
+
             $stmt->execute();
             return true;
         } catch (PDOException $e) {
@@ -114,9 +124,20 @@ class Tour
         }
     }
 
-    public function updateTour($id, $ten_tour, $id_danh_muc, $lich_trinh, $hinh_anh, 
-        $gia, $chinh_sach_ids, $nha_cung_cap, $loai_tour, $trang_thai, $dia_diem, $price)
-    {
+    public function updateTour(
+        $id,
+        $ten_tour,
+        $id_danh_muc,
+        $lich_trinh,
+        $hinh_anh,
+        $gia,
+        $chinh_sach_ids,
+        $nha_cung_cap,
+        $loai_tour,
+        $trang_thai,
+        $dia_diem,
+        $price
+    ) {
         try {
             $sql = "UPDATE tour SET 
                         ten_tour = :ten_tour,
@@ -132,9 +153,9 @@ class Tour
                         dia_diem = :dia_diem,
                         price = :price
                     WHERE id = :id";
-            
+
             $stmt = $this->conn->prepare($sql);
-            
+
             $stmt->bindParam(':ten_tour', $ten_tour);
             $stmt->bindParam(':id_danh_muc', $id_danh_muc);
             $stmt->bindParam(':lich_trinh', $lich_trinh);
@@ -147,12 +168,16 @@ class Tour
             $stmt->bindParam(':dia_diem', $dia_diem);
             $stmt->bindParam(':price', $price);
             $stmt->bindParam(':id', $id);
-            
+
             $stmt->execute();
             return true;
         } catch (PDOException $e) {
             echo "Lỗi updateTour: " . $e->getMessage();
             return false;
         }
+    }
+    public function getLastInsertId()
+    {
+        return $this->conn->lastInsertId();
     }
 }
