@@ -51,14 +51,22 @@ class DanhMucTour
         }
     }
 
-    public function delete($id)
+public function delete($id)
     {
         try {
-            $sql = "DELETE FROM danh_muc_tour WHERE id = :id";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bindValue(':id', $id);
-            return $stmt->execute();
+            $this->conn->beginTransaction();
+            $sqlUpdate = "UPDATE tour SET id_danh_muc = NULL WHERE id_danh_muc = :id";
+            $stmtUpdate = $this->conn->prepare($sqlUpdate);
+            $stmtUpdate->bindValue(':id', $id);
+            $stmtUpdate->execute();
+            $sqlDelete = "DELETE FROM danh_muc_tour WHERE id = :id";
+            $stmtDelete = $this->conn->prepare($sqlDelete);
+            $stmtDelete->bindValue(':id', $id);
+            $stmtDelete->execute();
+            $this->conn->commit();
+            return true;
         } catch (PDOException $e) {
+            $this->conn->rollBack();
             throw $e;
         }
     }

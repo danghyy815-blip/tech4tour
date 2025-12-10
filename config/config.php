@@ -18,7 +18,7 @@ return [
         'host' => 'localhost', // Host cơ sở dữ liệu
         'name' => 'du_lich', // Tên cơ sở dữ liệu
         'user' => 'root', // Tên người dùng
-        'pass' => '', // Mật khẩu
+        'pass' => '1234567890@', // Mật khẩu
         'charset' => 'utf8mb4', // Mã hóa
     ],
 ];
