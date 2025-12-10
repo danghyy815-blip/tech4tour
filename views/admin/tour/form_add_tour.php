@@ -90,7 +90,7 @@
             <div class="mb-3 mt-3">
                 <label class="form-section-title">Lịch trình</label>
                 <textarea name="lich_trinh" class="form-control"
-                    rows="3"><?= htmlspecialchars($old['lich_trinh'] ?? '') ?></textarea>
+                    rows="15"><?= htmlspecialchars($old['lich_trinh'] ?? '') ?></textarea>
             </div>
 
             <!-- GIÁ + GIÁ KM -->

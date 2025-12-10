@@ -70,10 +70,6 @@ class CustomerController
                 $errors['email'] = "Email không hợp lệ.";
             }
 
-            if (!empty($cccd)) {
-                $errors['cccd'] = "CCCD không hợp lệ.";
-            }
-
             if (empty($errors)) {
                 $this->modelCustomer->add(
                     $ho_ten,
@@ -176,10 +172,6 @@ class CustomerController
                 $errors['email'] = "Email không được để trống.";
             } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $errors['email'] = "Email không hợp lệ.";
-            }
-
-            if (!empty($cccd)) {
-                $errors['cccd'] = "CCCD không hợp lệ.";
             }
 
             if (empty($errors)) {

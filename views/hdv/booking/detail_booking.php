@@ -66,6 +66,9 @@ ob_start();
                                 </dd>
 
                                 <dt class="col-sm-4">Lịch trình</dt>
+                                                    <div class="border rounded p-3 bg-light">
+                        <?= nl2br(htmlspecialchars($tour['lich_trinh'])) ?>
+                    </div>
                                 <dd class="col-sm-8">
                                     <span class=""><?= htmlspecialchars($booking['lich_trinh']) ?></span>
                                 </dd>
@@ -82,74 +85,6 @@ ob_start();
                                 </dd>
 
                             </dl>
-                        </div>
-                    </div>
-                    <!-- LỊCH TRÌNH CHI TIẾT -->
-                    <div class="card shadow-sm border-0 mb-4">
-                        <div class="card-header bg-dark text-white">
-                            <h5 class="mb-0">Lịch trình của tour</h5>
-                        </div>
-
-                        <div class="card-body">
-                            <?php if (empty($lichTrinh)): ?>
-                                <p class="text-muted">Tour này chưa có lịch trình.</p>
-                            <?php else: ?>
-                                <div class="table-responsive">
-                                    <table id="lichTrinhTable" class="table table-striped table-bordered align-middle">
-                                        <thead class="table-dark">
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Ảnh</th>
-                                                <th>Tiêu đề</th>
-                                                <th>Ngày bắt đầu</th>
-                                                <th>Ngày kết thúc</th>
-                                                <th>Thứ tự</th>
-                                                <th>Nội dung</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php foreach ($lichTrinh as $lt): ?>
-                                                <tr>
-                                                    <td><?= $lt['id'] ?></td>
-
-                                                    <td>
-                                                        <?php if (!empty($lt['hinh_anh'])): ?>
-                                                            <?php
-                                                            $imagePath = BASE_URL . 'public/uploads/tour_lich_trinh/' . htmlspecialchars($lt['hinh_anh']);
-                                                            ?>
-                                                            <img src="<?= $imagePath ?>" class="thumb-sm" alt="thumb"
-                                                                style="width: 150px; height: 100px;"
-                                                                onerror="console.error('Image not found:', this.src); this.style.display='none'; this.nextElementSibling.style.display='block';">
-                                                            <span class="text-danger small" style="display:none;">Ảnh lỗi</span>
-                                                        <?php else: ?>
-                                                            <span class="text-muted small">Không có ảnh</span>
-                                                        <?php endif; ?>
-                                                    </td>
-
-                                                    <!-- Tiêu đề -->
-                                                    <td><?= htmlspecialchars($lt['tieu_de']) ?></td>
-
-                                                    <!-- Ngày bắt đầu -->
-                                                    <td><?= !empty($lt['ngay_bat_dau']) ? date("d/m/Y", strtotime($lt['ngay_bat_dau'])) : '---' ?>
-                                                    </td>
-
-                                                    <!-- Ngày kết thúc -->
-                                                    <td><?= !empty($lt['ngay_ket_thuc']) ? date("d/m/Y", strtotime($lt['ngay_ket_thuc'])) : '---' ?>
-                                                    </td>
-
-                                                    <!-- Thứ tự -->
-                                                    <td><?= $lt['thu_tu'] ?></td>
-
-                                                    <!-- Nội dung -->
-                                                    <td style="white-space: pre-line;">
-                                                        <?= nl2br(htmlspecialchars($lt['noi_dung'])) ?>
-                                                    </td>
-                                                </tr>
-                                            <?php endforeach; ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            <?php endif; ?>
                         </div>
                     </div>
 

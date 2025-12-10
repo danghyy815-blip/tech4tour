@@ -108,7 +108,7 @@ $isAdmin = $currentUser->isAdmin();
                                     <!-- Lịch trình -->
                                     <dt class="col-sm-4">Lịch trình:</dt>
                                     <dd class="col-sm-8">
-                                        <textarea class="form-control" name="lich_trinh" rows="3"
+                                        <textarea class="form-control" name="lich_trinh" rows="15"
                                                   <?= $isAdmin ? '' : 'disabled' ?>><?= htmlspecialchars($booking['lich_trinh'] ?? '') ?></textarea>
                                     </dd>
 

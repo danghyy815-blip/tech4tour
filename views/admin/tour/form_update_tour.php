@@ -91,7 +91,7 @@ if (!empty($old['chinh_sach_id'])) {
             <!-- Lịch Trình -->
             <div class="mb-3">
                 <label class="form-section-title">Lịch trình</label>
-                <textarea name="lich_trinh" class="form-control" rows="3"><?= 
+                <textarea name="lich_trinh" class="form-control" rows="15"><?= 
                     htmlspecialchars($old['lich_trinh'] ?? $tour['lich_trinh']) 
                 ?></textarea>
             </div>
